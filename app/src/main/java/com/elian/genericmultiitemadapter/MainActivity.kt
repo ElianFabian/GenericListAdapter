@@ -3,14 +3,10 @@ package com.elian.genericmultiitemadapter
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import com.elian.genericmultiitemadapter.adapter.OperationAndPersonAdapter
 import com.elian.genericmultiitemadapter.databinding.ActivityMainBinding
 import com.elian.genericmultiitemadapter.model.OperationInfo
 import com.elian.genericmultiitemadapter.model.Person
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity()
 {
@@ -37,11 +33,11 @@ class MainActivity : AppCompatActivity()
 			onPersonClick =
 			{
 				Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
-			}
+			},
 		)
 
 		binding.rvMultiItems.adapter = multiItemAdapter
-	
+
 		binding.fabShuffle.setOnClickListener()
 		{
 			multiItemAdapter.submitList(listOfMultiItem.shuffled())
