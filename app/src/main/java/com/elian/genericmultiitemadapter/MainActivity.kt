@@ -44,9 +44,7 @@ class MainActivity : AppCompatActivity()
 	
 		binding.fabShuffle.setOnClickListener()
 		{
-			multiItemAdapter.submitList(listOfMultiItem.shuffled()) {
-				binding.rvMultiItems.smoothScrollToPosition(0)
-			}
+			multiItemAdapter.submitList(listOfMultiItem.shuffled())
 		}
 
 		//binding.rvMultiItems.adapter = OperationAdapter(listOfOperation)
