@@ -71,6 +71,6 @@ fun OperationAndPersonAdapter(
 			}
 
 			root.setOnClickListener { onPersonClick?.invoke(item) }
-		}
+		},
 	),
 )
