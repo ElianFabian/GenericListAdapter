@@ -68,7 +68,6 @@ fun OperationAndPersonAdapter(
 			{
 				tvName.text = "$name ($position)"
 				tvLastname.text = lastname
-				println("$$$$ $name-$position")
 			}
 
 			root.setOnClickListener { onPersonClick?.invoke(item) }
