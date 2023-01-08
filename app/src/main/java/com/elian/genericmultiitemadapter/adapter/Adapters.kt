@@ -49,7 +49,7 @@ fun OperationAndPersonAdapter(
 			else             -> error("Unexpected type '${oldItem::class}' in adapter")
 		}
 	},
-	bindings = listOf(
+	itemBindings = listOf(
 		ItemBinding(ItemOperationBinding::inflate) { item: OperationInfo, _ ->
 
 			item.apply()

@@ -11,7 +11,7 @@ import kotlin.reflect.KClass
 
 class GenericMultiItemAdapter<ItemT : Any>(
 	items: List<ItemT> = emptyList(),
-	private val bindings: List<ItemBindingData<ItemT>>,
+	private val itemBindings: List<ItemBindingData<ItemT>>,
 	areItemsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
 	areContentsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
 ) : ListAdapter<ItemT, GenericMultiItemAdapter<ItemT>.ViewHolder>(
@@ -32,14 +32,14 @@ class GenericMultiItemAdapter<ItemT : Any>(
 	inner class ViewHolder(val binding: ViewBinding, val bindingData: ItemBindingData<ItemT>) : RecyclerView.ViewHolder(binding.root)
 
 
-	private val itemToBindingData = bindings.associateBy { it.itemClass }
+	private val itemToBindingData = itemBindings.associateBy { it.itemClass }
 
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder
 	{
 		val inflater = LayoutInflater.from(parent.context)
 
-		val itemBindingData = bindings[viewType]
+		val itemBindingData = itemBindings[viewType]
 
 		val binding = itemBindingData.inflate(inflater, parent, false)
 
