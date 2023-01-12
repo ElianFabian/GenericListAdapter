@@ -4,8 +4,12 @@ import com.elian.genericmultiitemadapter.databinding.ItemOperationBinding
 import com.elian.genericmultiitemadapter.databinding.ItemPersonBinding
 import com.elian.genericmultiitemadapter.model.OperationInfo
 import com.elian.genericmultiitemadapter.model.Person
+import com.google.android.material.transition.Hold
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 
-fun ItemOperationBinding.bindItem(item: OperationInfo) = item.apply()
+fun ItemOperationBinding.bind(item: OperationInfo) = item.apply()
 {
 	tvFirstNumber.text = "$firstNumber"
 	tvSecondNumber.text = "$secondNumber"
@@ -13,7 +17,7 @@ fun ItemOperationBinding.bindItem(item: OperationInfo) = item.apply()
 	tvExpectedResult.text = "$result"
 }
 
-fun ItemPersonBinding.bindItem(item: Person) = item.apply()
+fun ItemPersonBinding.bind(item: Person) = item.apply()
 {
 	tvName.text = name
 	tvLastname.text = lastname
@@ -25,7 +29,7 @@ fun OperationAdapter(items: List<OperationInfo>) = GenericAdapter(
 	inflate = ItemOperationBinding::inflate,
 ) { item, _ ->
 
-	bindItem(item)
+	bind(item)
 }
 
 @Suppress("FunctionName")
@@ -34,7 +38,7 @@ fun PersonAdapter(items: List<Person>) = GenericAdapter(
 	inflate = ItemPersonBinding::inflate,
 ) { item, _ ->
 
-	bindItem(item)
+	bind(item)
 }
 
 @Suppress("FunctionName")
@@ -56,13 +60,13 @@ fun OperationAndPersonAdapter(
 	itemBindings = listOf(
 		ItemBinding(ItemOperationBinding::inflate) { item: OperationInfo, _ ->
 
-			bindItem(item)
+			bind(item)
 
 			root.setOnClickListener { onOperationClick?.invoke(item) }
 		},
 		ItemBinding(ItemPersonBinding::inflate) { item: Person, _ ->
 
-			bindItem(item)
+			bind(item)
 
 			root.setOnClickListener { onPersonClick?.invoke(item) }
 		},
