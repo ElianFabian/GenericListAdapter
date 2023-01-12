@@ -5,19 +5,27 @@ import com.elian.genericmultiitemadapter.databinding.ItemPersonBinding
 import com.elian.genericmultiitemadapter.model.OperationInfo
 import com.elian.genericmultiitemadapter.model.Person
 
+fun ItemOperationBinding.bindItem(item: OperationInfo) = item.apply()
+{
+	tvFirstNumber.text = "$firstNumber"
+	tvSecondNumber.text = "$secondNumber"
+	tvOperationSymbol.text = operationSymbol
+	tvExpectedResult.text = "$result"
+}
+
+fun ItemPersonBinding.bindItem(item: Person) = item.apply()
+{
+	tvName.text = name
+	tvLastname.text = lastname
+}
+
 @Suppress("FunctionName")
 fun OperationAdapter(items: List<OperationInfo>) = GenericAdapter(
 	items = items,
 	inflate = ItemOperationBinding::inflate,
 ) { item, _ ->
 
-	item.apply()
-	{
-		tvFirstNumber.text = "$firstNumber"
-		tvSecondNumber.text = "$secondNumber"
-		tvOperationSymbol.text = operationSymbol
-		tvExpectedResult.text = "$result"
-	}
+	bindItem(item)
 }
 
 @Suppress("FunctionName")
@@ -26,11 +34,7 @@ fun PersonAdapter(items: List<Person>) = GenericAdapter(
 	inflate = ItemPersonBinding::inflate,
 ) { item, _ ->
 
-	item.apply()
-	{
-		tvName.text = name
-		tvLastname.text = lastname
-	}
+	bindItem(item)
 }
 
 @Suppress("FunctionName")
@@ -52,23 +56,13 @@ fun OperationAndPersonAdapter(
 	itemBindings = listOf(
 		ItemBinding(ItemOperationBinding::inflate) { item: OperationInfo, _ ->
 
-			item.apply()
-			{
-				tvFirstNumber.text = "$firstNumber"
-				tvOperationSymbol.text = operationSymbol
-				tvSecondNumber.text = "$secondNumber"
-				tvExpectedResult.text = "$result"
-			}
+			bindItem(item)
 
 			root.setOnClickListener { onOperationClick?.invoke(item) }
 		},
-		ItemBinding(ItemPersonBinding::inflate) { item: Person, position ->
+		ItemBinding(ItemPersonBinding::inflate) { item: Person, viewHolder ->
 
-			item.apply()
-			{
-				tvName.text = "$name ($position)"
-				tvLastname.text = lastname
-			}
+			bindItem(item)
 
 			root.setOnClickListener { onPersonClick?.invoke(item) }
 		},

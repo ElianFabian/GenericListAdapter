@@ -50,7 +50,7 @@ class GenericMultiItemAdapter<ItemT : Any>(
 	{
 		val item = getItem(position)
 
-		holder.bindingData.onBind(holder.binding, item, position)
+		holder.bindingData.onBind(holder.binding, item, holder)
 	}
 
 	override fun getItemViewType(position: Int): Int
@@ -65,18 +65,18 @@ class GenericMultiItemAdapter<ItemT : Any>(
 data class ItemBindingData<out ItemT : Any>(
 	val itemClass: KClass<@UnsafeVariance ItemT>,
 	val inflate: (LayoutInflater, ViewGroup, Boolean) -> ViewBinding,
-	val onBind: ViewBinding.(item: Any, position: Int) -> Unit,
+	val onBind: ViewBinding.(item: @UnsafeVariance ItemT, viewHolder: GenericMultiItemAdapter<@UnsafeVariance ItemT>.ViewHolder) -> Unit,
 )
 
 @Suppress("FunctionName", "UNCHECKED_CAST")
 inline fun <reified ItemT : Any, VB : ViewBinding> ItemBinding(
 	noinline inflate: (LayoutInflater, ViewGroup, Boolean) -> VB,
-	noinline onBind: VB.(item: ItemT, position: Int) -> Unit,
+	noinline onBind: VB.(item: ItemT, viewHolder: GenericMultiItemAdapter<ItemT>.ViewHolder) -> Unit,
 ): ItemBindingData<ItemT>
 {
 	return ItemBindingData(
 		itemClass = ItemT::class,
 		inflate = inflate,
-		onBind = onBind as ViewBinding.(item: Any, position: Int) -> Unit,
+		onBind = onBind as ViewBinding.(item: ItemT, viewHolder: GenericMultiItemAdapter<ItemT>.ViewHolder) -> Unit,
 	)
 }

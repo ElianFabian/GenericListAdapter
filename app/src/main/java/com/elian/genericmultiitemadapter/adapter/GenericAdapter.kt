@@ -14,7 +14,7 @@ class GenericAdapter<ItemT : Any, VB : ViewBinding>(
 	items: List<ItemT> = emptyList(),
 	areItemsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
 	areContentsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
-	private inline val bind: VB.(item: ItemT, position: Int) -> Unit,
+	private inline val bind: VB.(item: ItemT, viewHolder: GenericAdapter<ItemT, VB>.ViewHolder) -> Unit,
 ) : ListAdapter<ItemT, GenericAdapter<ItemT, VB>.ViewHolder>(
 	object : DiffUtil.ItemCallback<ItemT>()
 	{
@@ -46,6 +46,6 @@ class GenericAdapter<ItemT : Any, VB : ViewBinding>(
 	{
 		val item = getItem(position)
 
-		bind(holder.binding, item, position)
+		bind(holder.binding, item, holder)
 	}
 }
