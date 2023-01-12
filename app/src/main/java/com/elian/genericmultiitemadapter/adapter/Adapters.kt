@@ -60,7 +60,7 @@ fun OperationAndPersonAdapter(
 
 			root.setOnClickListener { onOperationClick?.invoke(item) }
 		},
-		ItemBinding(ItemPersonBinding::inflate) { item: Person, viewHolder ->
+		ItemBinding(ItemPersonBinding::inflate) { item: Person, _ ->
 
 			bindItem(item)
 
