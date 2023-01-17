@@ -1,12 +1,13 @@
-package com.elian.genericmultiitemadapter
+package com.elian.genericadapter
 
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.elian.genericmultiitemadapter.adapter.OperationAndPersonAdapter
-import com.elian.genericmultiitemadapter.databinding.ActivityMainBinding
-import com.elian.genericmultiitemadapter.model.OperationInfo
-import com.elian.genericmultiitemadapter.model.Person
+import com.elian.genericadapter.adapter.OperationAdapter
+import com.elian.genericadapter.adapter.OperationAndPersonAdapter
+import com.elian.genericadapter.databinding.ActivityMainBinding
+import com.elian.genericadapter.model.OperationInfo
+import com.elian.genericadapter.model.Person
 
 class MainActivity : AppCompatActivity()
 {
@@ -18,13 +19,16 @@ class MainActivity : AppCompatActivity()
 
 		binding = ActivityMainBinding.inflate(layoutInflater)
 		setContentView(binding.root)
-
+	
 		initUi()
 	}
 
 	private fun initUi()
 	{
-		val multiItemAdapter = OperationAndPersonAdapter(
+		// In here you have 2 examples of the regular GenericAdapter and 1 of the GenericMultiItemAdapter
+		// Comment out the code you want to try out
+
+		val operationAndPersonAdapter = OperationAndPersonAdapter(
 			items = listOfMultiItem,
 			onOperationClick =
 			{
@@ -35,20 +39,34 @@ class MainActivity : AppCompatActivity()
 				Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
 			},
 		)
-
+		binding.rvMultiItems.adapter = operationAndPersonAdapter
 		binding.fabShuffle.setOnClickListener()
 		{
-			multiItemAdapter.submitList(listOfMultiItem.shuffled())
+			operationAndPersonAdapter.submitList(listOfMultiItem.shuffled())
 		}
 
-		binding.rvMultiItems.adapter = multiItemAdapter
-		//binding.rvMultiItems.adapter = OperationAdapter(listOfOperation)
-		//binding.rvMultiItems.adapter = PersonAdapter(listOfPerson)
+		// ------------------------------------------------------------------------------
+
+//		val operationAdapter = OperationAdapter(listOfOperation)
+//		binding.rvMultiItems.adapter = operationAdapter
+//		binding.fabShuffle.setOnClickListener()
+//		{
+//			operationAdapter.submitList(listOfOperation.shuffled())
+//		}
+
+		// ------------------------------------------------------------------------------
+
+//		val personAdapter = PersonAdapter(listOfPerson)
+//		binding.rvMultiItems.adapter = personAdapter
+//		binding.fabShuffle.setOnClickListener()
+//		{
+//			personAdapter.submitList(listOfPerson.shuffled())
+//		}
 	}
 }
 
-
-val listOfMultiItem = listOf(
+// In here the list is of type any, in a real scenario you would probably better use a sealed class
+private val listOfMultiItem: List<Any> = listOf(
 	OperationInfo(1, 2, "+", 3),
 	OperationInfo(1, 1, "+", 2),
 	Person("Lisa", "Brown"),
@@ -66,7 +84,7 @@ val listOfMultiItem = listOf(
 	OperationInfo(5, 2, "+", 7),
 )
 
-val listOfOperation = listOf(
+private val listOfOperation = listOf(
 	OperationInfo(1, 2, "+", 3),
 	OperationInfo(1, 1, "+", 2),
 	OperationInfo(21, 3, "-", 18),
@@ -78,7 +96,7 @@ val listOfOperation = listOf(
 	OperationInfo(5, 2, "+", 7),
 )
 
-val listOfPerson = listOf(
+private val listOfPerson = listOf(
 	Person("Lisa", "Brown"),
 	Person("John", "Smith"),
 	Person("Drake", "Wolf"),

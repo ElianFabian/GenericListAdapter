@@ -1,4 +1,4 @@
-package com.elian.genericmultiitemadapter.adapter
+package com.elian.genericadapter.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

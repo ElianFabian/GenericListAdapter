@@ -1,10 +1,12 @@
-package com.elian.genericmultiitemadapter.adapter
+package com.elian.genericadapter.adapter
 
-import com.elian.genericmultiitemadapter.databinding.ItemOperationBinding
-import com.elian.genericmultiitemadapter.databinding.ItemPersonBinding
-import com.elian.genericmultiitemadapter.model.OperationInfo
-import com.elian.genericmultiitemadapter.model.Person
+import com.elian.genericadapter.databinding.ItemOperationBinding
+import com.elian.genericadapter.databinding.ItemPersonBinding
+import com.elian.genericadapter.model.OperationInfo
+import com.elian.genericadapter.model.Person
 
+
+// We can define extension functions to reuse the binding logic if need it
 fun ItemOperationBinding.bind(item: OperationInfo) = item.apply()
 {
 	tvFirstNumber.text = "$firstNumber"
@@ -22,7 +24,7 @@ fun ItemPersonBinding.bind(item: Person) = item.apply()
 @Suppress("FunctionName")
 fun OperationAdapter(items: List<OperationInfo>) = GenericAdapter(
 	inflate = ItemOperationBinding::inflate,
-) { item, _ ->
+) { item: OperationInfo, _ ->
 
 	bind(item)
 }.apply { submitList(items) }
@@ -30,7 +32,7 @@ fun OperationAdapter(items: List<OperationInfo>) = GenericAdapter(
 @Suppress("FunctionName")
 fun PersonAdapter(items: List<Person>) = GenericAdapter(
 	inflate = ItemPersonBinding::inflate,
-) { item, _ ->
+) { item: Person, _ ->
 
 	bind(item)
 }.apply { submitList(items) }

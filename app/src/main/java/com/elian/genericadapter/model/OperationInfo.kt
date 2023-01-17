@@ -1,4 +1,4 @@
-package com.elian.genericmultiitemadapter.model
+package com.elian.genericadapter.model
 
 data class OperationInfo(
 	val firstNumber: Int,

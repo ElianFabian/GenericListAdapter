@@ -1,4 +1,4 @@
-package com.elian.genericmultiitemadapter.model
+package com.elian.genericadapter.model
 
 data class Person(
 	val name: String,
