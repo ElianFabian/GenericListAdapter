@@ -9,8 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import kotlin.reflect.KClass
 
-class GenericMultiItemAdapter<ItemT : Any>(
-	items: List<ItemT> = emptyList(),
+open class GenericMultiItemAdapter<ItemT : Any>(
 	private val itemBindings: List<ItemBindingData<ItemT>>,
 	areItemsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
 	areContentsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
@@ -24,11 +23,6 @@ class GenericMultiItemAdapter<ItemT : Any>(
 	}
 )
 {
-	init
-	{
-		submitList(items)
-	}
-
 	inner class ViewHolder(val binding: ViewBinding, val bindingData: ItemBindingData<ItemT>) : RecyclerView.ViewHolder(binding.root)
 
 

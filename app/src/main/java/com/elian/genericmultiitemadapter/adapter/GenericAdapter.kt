@@ -9,9 +9,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 
-class GenericAdapter<ItemT : Any, VB : ViewBinding>(
+open class GenericAdapter<ItemT : Any, VB : ViewBinding>(
 	private val inflate: (LayoutInflater, ViewGroup, Boolean) -> VB,
-	items: List<ItemT> = emptyList(),
 	areItemsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
 	areContentsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
 	private inline val bind: VB.(item: ItemT, viewHolder: GenericAdapter<ItemT, VB>.ViewHolder) -> Unit,
@@ -25,11 +24,6 @@ class GenericAdapter<ItemT : Any, VB : ViewBinding>(
 	}
 )
 {
-	init
-	{
-		submitList(items)
-	}
-
 	inner class ViewHolder(view: View, val binding: VB) : RecyclerView.ViewHolder(view)
 
 

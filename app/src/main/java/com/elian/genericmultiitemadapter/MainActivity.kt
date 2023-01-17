@@ -36,13 +36,12 @@ class MainActivity : AppCompatActivity()
 			},
 		)
 
-		binding.rvMultiItems.adapter = multiItemAdapter
-
 		binding.fabShuffle.setOnClickListener()
 		{
 			multiItemAdapter.submitList(listOfMultiItem.shuffled())
 		}
 
+		binding.rvMultiItems.adapter = multiItemAdapter
 		//binding.rvMultiItems.adapter = OperationAdapter(listOfOperation)
 		//binding.rvMultiItems.adapter = PersonAdapter(listOfPerson)
 	}
