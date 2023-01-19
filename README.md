@@ -39,6 +39,7 @@ As this uses a ListAdapter and assuming you're using a data class for the item, 
 
 
 ![instantiation of the operation adapter](https://user-images.githubusercontent.com/86477169/213016492-ad71ff06-613d-46c8-9e59-aae0c08042f1.PNG)
+
 Now you only have to set your recyclerview adapter with the one we created and that's all.
 
 PD: for convention, the name of this type of function is in PascalCase as it's usage it's like instantiating a new instance of a custom class.
