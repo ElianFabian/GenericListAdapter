@@ -32,9 +32,9 @@ Finally, we're going to use the generic adapter, the way to go is to create a fu
 
 When we instantiate the GenericAdapter class we only have to provide the inflate function of our layout binding and a lambda with the actual binding.
 
-The **first parameter** of the lambda is the item we want to bind (you should indicate the type of the item in the lambda if you want to avoid putting it as a generic argument between the "<>" symbols).
-The **second parameter** (that in this case is not being used) is the viewholder which can be useful to have in some scenarios.
-In the lambda the context or in other words the **this** is the binding class so that's why you can access the members of the binding without typing "binding.whatever" every time.
+- The **first parameter** of the lambda is the item we want to bind (you should indicate the type of the item in the lambda if you want to avoid putting it as a generic argument between the "<>" symbols).
+- The **second parameter** (that in this case is not being used) is the viewholder which can be useful to have in some scenarios.
+- In the lambda the context or in other words the **this** is the binding class so that's why you can access the members of the binding without typing "binding.whatever" every time.
 
 As you can see at the bottom we use the submitList() function, that function is from the ListAdapter (the class that the GenericAdapter inherits from) and that step is optional it's just for having the list full when instatiating the adapter.
 
