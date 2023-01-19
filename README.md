@@ -19,6 +19,7 @@ Now to better illustrate the usage I will show you an example used in the app ab
 
 ###  The layout
 ![item_layout](https://user-images.githubusercontent.com/86477169/213011000-de3a436c-2efa-4376-8755-1c6ad792d12d.PNG)
+
 This is the xml layout we're going to use (to make it simpler, I won't show xml content in this readme).
 
 ### The item data class
