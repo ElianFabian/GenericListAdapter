@@ -27,6 +27,7 @@ This is the xml layout we're going to use (to make it simpler, I won't show xml 
 
 ### The binding
 Finally, we're going to use the generic adapter, the way to go is to create a function that will create an instance of the GenericAdapter with the information we want:
+
 ![binding](https://user-images.githubusercontent.com/86477169/213013201-9a12652e-b937-4457-bd14-60f29aa3d190.PNG)
 
 When we instantiate the GenericAdapter class we only have to provide the inflate function of our layout binding and a lambda with the actual binding.
