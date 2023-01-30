@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity()
 	}
 }
 
-// In here the list is of type any, in a real scenario you would probably better use a sealed class
+// In here the list is of type any, in a real scenario you should better use a sealed class
 private val listOfMultiItem: List<Any> = listOf(
 	OperationInfo(1, 2, "+", 3),
 	OperationInfo(1, 1, "+", 2),
