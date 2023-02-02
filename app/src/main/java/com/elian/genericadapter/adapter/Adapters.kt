@@ -5,7 +5,6 @@ import com.elian.genericadapter.databinding.ItemPersonBinding
 import com.elian.genericadapter.model.OperationInfo
 import com.elian.genericadapter.model.Person
 
-
 // We can define extension functions to reuse the binding logic if need it
 fun ItemOperationBinding.bind(item: OperationInfo) = item.apply()
 {
@@ -21,6 +20,7 @@ fun ItemPersonBinding.bind(item: Person) = item.apply()
 	tvLastname.text = lastname
 }
 
+
 @Suppress("FunctionName")
 fun OperationAdapter(items: List<OperationInfo>) = GenericAdapter(
 	inflate = ItemOperationBinding::inflate,
@@ -29,6 +29,8 @@ fun OperationAdapter(items: List<OperationInfo>) = GenericAdapter(
 	bind(item)
 }.apply { submitList(items) }
 
+
+
 @Suppress("FunctionName")
 fun PersonAdapter(items: List<Person>) = GenericAdapter(
 	inflate = ItemPersonBinding::inflate,
@@ -36,6 +38,8 @@ fun PersonAdapter(items: List<Person>) = GenericAdapter(
 
 	bind(item)
 }.apply { submitList(items) }
+
+
 
 @Suppress("FunctionName")
 fun OperationAndPersonAdapter(
