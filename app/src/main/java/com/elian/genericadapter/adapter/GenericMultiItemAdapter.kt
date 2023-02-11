@@ -26,7 +26,7 @@ open class GenericMultiItemAdapter<ItemT : Any>(
 	inner class ViewHolder(val binding: ViewBinding, val bindingData: ItemBindingData<ItemT>) : RecyclerView.ViewHolder(binding.root)
 
 
-	private val itemToBindingData = itemBindings.associateBy { it.itemClass }
+	private val itemClasses = itemBindings.map { it.itemClass }.toSet()
 
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder
@@ -44,14 +44,14 @@ open class GenericMultiItemAdapter<ItemT : Any>(
 	{
 		val item = getItem(position)
 
-		holder.bindingData.onBind(holder.binding, item, holder)
+		holder.bindingData.bindBlock(holder.binding, item, holder)
 	}
 
 	override fun getItemViewType(position: Int): Int
 	{
 		val item = getItem(position)
 
-		return itemToBindingData.keys.indexOf(item::class)
+		return itemClasses.indexOf(item::class)
 	}
 }
 
@@ -59,18 +59,18 @@ open class GenericMultiItemAdapter<ItemT : Any>(
 data class ItemBindingData<out ItemT : Any>(
 	val itemClass: KClass<@UnsafeVariance ItemT>,
 	val inflate: (LayoutInflater, ViewGroup, Boolean) -> ViewBinding,
-	val onBind: ViewBinding.(item: @UnsafeVariance ItemT, viewHolder: GenericMultiItemAdapter<@UnsafeVariance ItemT>.ViewHolder) -> Unit,
+	val bindBlock: ViewBinding.(item: @UnsafeVariance ItemT, holder: GenericMultiItemAdapter<@UnsafeVariance ItemT>.ViewHolder) -> Unit,
 )
 
 @Suppress("FunctionName", "UNCHECKED_CAST")
 inline fun <reified ItemT : Any, VB : ViewBinding> ItemBinding(
 	noinline inflate: (LayoutInflater, ViewGroup, Boolean) -> VB,
-	noinline onBind: VB.(item: ItemT, viewHolder: GenericMultiItemAdapter<ItemT>.ViewHolder) -> Unit,
+	noinline bindBlock: VB.(item: ItemT, holder: GenericMultiItemAdapter<ItemT>.ViewHolder) -> Unit,
 ): ItemBindingData<ItemT>
 {
 	return ItemBindingData(
 		itemClass = ItemT::class,
 		inflate = inflate,
-		onBind = onBind as ViewBinding.(item: ItemT, viewHolder: GenericMultiItemAdapter<ItemT>.ViewHolder) -> Unit,
+		bindBlock = bindBlock as ViewBinding.(item: ItemT, holder: GenericMultiItemAdapter<ItemT>.ViewHolder) -> Unit,
 	)
 }

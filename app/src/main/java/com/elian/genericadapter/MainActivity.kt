@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.elian.genericadapter.adapter.OperationAdapter
 import com.elian.genericadapter.adapter.OperationAndPersonAdapter
 import com.elian.genericadapter.databinding.ActivityMainBinding
+import com.elian.genericadapter.model.MultiItem
 import com.elian.genericadapter.model.OperationInfo
 import com.elian.genericadapter.model.Person
 
@@ -30,12 +31,10 @@ class MainActivity : AppCompatActivity()
 
 		val operationAndPersonAdapter = OperationAndPersonAdapter(
 			items = listOfMultiItem,
-			onOperationClick =
-			{
+			onOperationClick = {
 				Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
 			},
-			onPersonClick =
-			{
+			onPersonClick = {
 				Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
 			},
 		)
@@ -65,8 +64,7 @@ class MainActivity : AppCompatActivity()
 	}
 }
 
-// In here the list is of type any, in a real scenario you should better use a sealed class
-private val listOfMultiItem: List<Any> = listOf(
+private val listOfMultiItem: List<MultiItem> = listOf(
 	OperationInfo(1, 2, "+", 3),
 	OperationInfo(1, 1, "+", 2),
 	Person("Lisa", "Brown"),
@@ -84,7 +82,7 @@ private val listOfMultiItem: List<Any> = listOf(
 	OperationInfo(5, 2, "+", 7),
 )
 
-private val listOfOperation = listOf(
+private val listOfOperation: List<OperationInfo> = listOf(
 	OperationInfo(1, 2, "+", 3),
 	OperationInfo(1, 1, "+", 2),
 	OperationInfo(21, 3, "-", 18),
@@ -96,7 +94,7 @@ private val listOfOperation = listOf(
 	OperationInfo(5, 2, "+", 7),
 )
 
-private val listOfPerson = listOf(
+private val listOfPerson: List<Person> = listOf(
 	Person("Lisa", "Brown"),
 	Person("John", "Smith"),
 	Person("Drake", "Wolf"),
