@@ -28,6 +28,7 @@ The uuid in here may be relevant since the GenericAdapter inherits from the List
 
 ### The binding
 Finally, we're going to use the generic adapter, the way to go is to create a function that will create an instance of the GenericAdapter with the information we want:
+
 ![image](https://user-images.githubusercontent.com/86477169/218253729-9c4d6421-2799-4748-a1c3-9bc531846877.png)
 
 
@@ -42,13 +43,14 @@ As you can see at the bottom we use the submitList() function, that function is 
 As this uses a ListAdapter and assuming you're using a data class for the item, you should set the **areItemsTheSame** parameter in the GenericAdapter class to have an appropiate behaviour.
 But, in case your list is going to be static (never modified) it won't matter.
 
-
 ![instantiation of the operation adapter](https://user-images.githubusercontent.com/86477169/213016492-ad71ff06-613d-46c8-9e59-aae0c08042f1.PNG)
 
 If we want we can add more interaction to this adding a onItemClick parameter like this:
+
 ![image](https://user-images.githubusercontent.com/86477169/218253832-49c087fb-e9e6-47a7-9ccb-9e0fb06bd5ec.png)
 
 And then use it like this:
+
 ![image](https://user-images.githubusercontent.com/86477169/218253959-55be0b75-d2e3-4c57-bcc2-ece213eee0e7.png)
 
 Now you only have to set your recyclerview adapter with the one we created and that's all!
@@ -62,6 +64,7 @@ This one is very similar than the previous one, to make a good use of this class
 ![image](https://user-images.githubusercontent.com/86477169/218254258-aa34545b-4cdd-49c1-8124-4d8267f5dc01.png)
 
 Now let's create the adapter:
+
 ![image](https://user-images.githubusercontent.com/86477169/218254497-6d0051bf-1620-4265-ac84-05783fec18b4.png)
 
 In this case we now have a **list of bindings** and to create them we use the ItemBinding function.
@@ -69,6 +72,7 @@ In this case we now have a **list of bindings** and to create them we use the It
 As we use a sealed class it's easy to set the value of the **areItemsTheSame**.
 
 And this is how we use it:
+
 ![image](https://user-images.githubusercontent.com/86477169/218254383-6e2f4b00-1ab5-4666-95b4-9f323771950c.png)
 
 
