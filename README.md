@@ -46,7 +46,6 @@ But, in case your list is going to be static (never modified) it won't matter.
 ![instantiation of the operation adapter](https://user-images.githubusercontent.com/86477169/213016492-ad71ff06-613d-46c8-9e59-aae0c08042f1.PNG)
 
 If we want we can add more interaction to this adding a onItemClick parameter like this:
-
 ![image](https://user-images.githubusercontent.com/86477169/218253832-49c087fb-e9e6-47a7-9ccb-9e0fb06bd5ec.png)
 
 And then use it like this:
