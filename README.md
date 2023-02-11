@@ -23,6 +23,7 @@ This is the xml layout we're going to use (to make it simpler, I won't show xml 
 
 ### The item data class
 ![image](https://user-images.githubusercontent.com/86477169/218253563-8502eed6-a415-4365-bea6-45996addf399.png)
+
 The uuid in here may be relevant since the GenericAdapter inherits from the ListAdapter.
 
 ### The binding
