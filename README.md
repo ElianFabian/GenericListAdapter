@@ -62,7 +62,8 @@ This one is very similar than the previous one, to make a good use of this class
 ![image](https://user-images.githubusercontent.com/86477169/218254258-aa34545b-4cdd-49c1-8124-4d8267f5dc01.png)
 
 Now let's create the adapter:
-![image](https://user-images.githubusercontent.com/86477169/218254296-5805734e-603c-4361-9f51-6ad5ddc144b8.png)
+![image](https://user-images.githubusercontent.com/86477169/218254497-6d0051bf-1620-4265-ac84-05783fec18b4.png)
+
 In this case we now have a **list of bindings** and to create them we use the ItemBinding function.
 
 As we use a sealed class it's easy to set the value of the **areItemsTheSame**.
