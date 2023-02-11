@@ -5,7 +5,7 @@ import com.elian.genericadapter.databinding.ItemPersonBinding
 import com.elian.genericadapter.model.OperationInfo
 import com.elian.genericadapter.model.Person
 
-// We can define extension functions to reuse the binding logic if need it
+// We can define extension functions to reuse the binding logic if needed
 fun ItemOperationBinding.bind(item: OperationInfo) = item.apply()
 {
 	tvFirstNumber.text = "$firstNumber"
