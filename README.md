@@ -78,3 +78,5 @@ And this is how we use it:
 
 # Extra
 I hope you find this interesting and in case you want to understand it better try to play with the example of this repository.
+
+PD: If you see weird text colors it's because Android Studio can't color well sometimes with my custom style.
