@@ -2,7 +2,6 @@ package com.elian.genericadapter.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -11,7 +10,7 @@ import androidx.viewbinding.ViewBinding
 import kotlin.reflect.KClass
 
 open class GenericMultiItemAdapter<ItemT : Any>(
-    private val itemBindings: List<ItemBindingData<ItemT, *>>,
+    itemBindings: List<ItemBindingData<ItemT, *>>,
     areItemsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
     areContentsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
 ) : ListAdapter<ItemT, GenericMultiItemAdapter<ItemT>.ViewHolder>(
@@ -27,7 +26,8 @@ open class GenericMultiItemAdapter<ItemT : Any>(
     inner class ViewHolder(val binding: ViewBinding, val bindingData: ItemBindingData<ItemT, *>) : RecyclerView.ViewHolder(binding.root)
 
 
-    private val itemClasses = itemBindings.map { it.itemClass }.toSet()
+    private val bindings = itemBindings.distinct()
+    private val itemClassToViewType = itemBindings.mapIndexed { index, data -> data.itemClass to index }.toMap()
 
 
     @Suppress("Unused")
@@ -38,7 +38,7 @@ open class GenericMultiItemAdapter<ItemT : Any>(
     {
         val inflater = LayoutInflater.from(parent.context)
 
-        val itemBindingData = itemBindings[viewType]
+        val itemBindingData = bindings[viewType]
 
         val binding = itemBindingData.inflate(inflater, parent, false)
 
@@ -54,7 +54,7 @@ open class GenericMultiItemAdapter<ItemT : Any>(
     {
         val item = getItem(position)
 
-        return itemClasses.indexOf(item::class)
+        return itemClassToViewType[item::class]!!
     }
 }
 
@@ -69,7 +69,7 @@ data class ItemBindingData<out ItemT : Any, VB : ViewBinding>(
     ) -> Unit,
 )
 
-@Suppress("FunctionName", "UNCHECKED_CAST")
+@Suppress("FunctionName")
 inline fun <reified ItemT : Any, VB : ViewBinding> ItemBinding(
     noinline inflate: (LayoutInflater, ViewGroup, Boolean) -> VB,
     noinline bindBlock: VB.(item: ItemT) -> Unit,
