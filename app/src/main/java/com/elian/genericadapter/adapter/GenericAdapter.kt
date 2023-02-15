@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
+import com.elian.genericadapter.databinding.ItemOperationBinding
+import com.elian.genericadapter.model.OperationInfo
 
 open class GenericAdapter<ItemT : Any, VB : ViewBinding>(
 	private val inflate: (LayoutInflater, ViewGroup, Boolean) -> VB,
@@ -24,7 +26,7 @@ open class GenericAdapter<ItemT : Any, VB : ViewBinding>(
 	}
 )
 {
-	inner class ViewHolder(view: View, val binding: VB) : RecyclerView.ViewHolder(view)
+	inner class ViewHolder(val binding: VB) : RecyclerView.ViewHolder(binding.root)
 
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder
@@ -33,7 +35,7 @@ open class GenericAdapter<ItemT : Any, VB : ViewBinding>(
 
 		val binding = inflate(inflater, parent, false)
 
-		return ViewHolder(binding.root, binding)
+		return ViewHolder(binding)
 	}
 
 	override fun onBindViewHolder(holder: ViewHolder, position: Int)
