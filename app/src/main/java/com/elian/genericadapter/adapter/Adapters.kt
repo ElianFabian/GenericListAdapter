@@ -6,20 +6,28 @@ import com.elian.genericadapter.model.MultiItem
 import com.elian.genericadapter.model.OperationInfo
 import com.elian.genericadapter.model.Person
 
+/*
+ * In this file we define all the adapters, in here were using the simple version of both GenericAdapters,
+ * but in case you need a more complex use case like need to access the previous or next item
+ * you should instead instantiate the GenericAdapter or use the other version of the ItemBinding.
+ * You could even inherit from those classes and add extra functionality since they're mark as open.
+ */
+
+
 // We can define extension functions to reuse the binding logic if needed.
 
 fun ItemOperationBinding.bind(item: OperationInfo) = item.apply()
 {
-	tvFirstNumber.text = "$firstNumber"
-	tvSecondNumber.text = "$secondNumber"
-	tvOperationSymbol.text = operationSymbol
-	tvExpectedResult.text = "$result"
+    tvFirstNumber.text = "$firstNumber"
+    tvSecondNumber.text = "$secondNumber"
+    tvOperationSymbol.text = operationSymbol
+    tvExpectedResult.text = "$result"
 }
 
 fun ItemPersonBinding.bind(item: Person) = item.apply()
 {
-	tvName.text = name
-	tvLastname.text = lastname
+    tvName.text = name
+    tvLastname.text = lastname
 }
 
 // The GenericAdapter inherits from a ListAdapter, so you should always give a value
@@ -29,28 +37,28 @@ fun ItemPersonBinding.bind(item: Person) = item.apply()
 
 @Suppress("FunctionName")
 fun OperationAdapter(items: List<OperationInfo>) = GenericAdapter(
-	inflate = ItemOperationBinding::inflate,
-	areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },
-) { item: OperationInfo, _ ->
+    inflate = ItemOperationBinding::inflate,
+    areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },
+) { item: OperationInfo ->
 
-	bind(item)
+    bind(item)
 
 }.apply { submitList(items) }
 
 
 @Suppress("FunctionName")
 fun PersonAdapter(items: List<Person>) = GenericAdapter(
-	inflate = ItemPersonBinding::inflate,
-	areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },
-) { item: Person, _ ->
+    areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },
+    inflate = ItemPersonBinding::inflate,
+) { item: Person ->
 
-	bind(item)
+    bind(item)
 
 }.apply { submitList(items) }
 
 
 // For a MultiItem adapter it's pretty useful to make use of a sealed class/interface
-// it gives you better type safety and also a cleaner way to define the give a value to the areItemsTheSame parameter.
+// it gives you better type safety and also a cleaner way to define the value for the areItemsTheSame parameter.
 
 // If you do not use a sealed class you should do something like this for the areItemsTheSame parameter:
 //areItemsTheSame = { oldItem, newItem ->
@@ -64,23 +72,23 @@ fun PersonAdapter(items: List<Person>) = GenericAdapter(
 
 @Suppress("FunctionName")
 fun OperationAndPersonAdapter(
-	items: List<MultiItem>,
-	onOperationClick: ((OperationInfo) -> Unit)? = null,
-	onPersonClick: ((Person) -> Unit)? = null,
+    items: List<MultiItem>,
+    onOperationClick: ((OperationInfo) -> Unit)? = null,
+    onPersonClick: ((Person) -> Unit)? = null,
 ) = GenericMultiItemAdapter(
-	areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },
-	itemBindings = listOf(
-		ItemBinding(ItemOperationBinding::inflate) { item: OperationInfo, _ ->
+    areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },
+    itemBindings = listOf(
+        ItemBinding(ItemOperationBinding::inflate) { item: OperationInfo ->
 
-			bind(item)
+            bind(item)
 
-			root.setOnClickListener { onOperationClick?.invoke(item) }
-		},
-		ItemBinding(ItemPersonBinding::inflate) { item: Person, _ ->
+            root.setOnClickListener { onOperationClick?.invoke(item) }
+        },
+        ItemBinding(ItemPersonBinding::inflate) { item: Person ->
 
-			bind(item)
+            bind(item)
 
-			root.setOnClickListener { onPersonClick?.invoke(item) }
-		},
-	),
+            root.setOnClickListener { onPersonClick?.invoke(item) }
+        },
+    ),
 ).apply { submitList(items) }

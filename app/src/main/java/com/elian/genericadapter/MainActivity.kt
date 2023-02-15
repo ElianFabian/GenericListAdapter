@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.elian.genericadapter.adapter.OperationAdapter
 import com.elian.genericadapter.adapter.OperationAndPersonAdapter
+import com.elian.genericadapter.adapter.PersonAdapter
 import com.elian.genericadapter.databinding.ActivityMainBinding
 import com.elian.genericadapter.model.MultiItem
 import com.elian.genericadapter.model.OperationInfo

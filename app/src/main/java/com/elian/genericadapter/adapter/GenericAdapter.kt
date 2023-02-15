@@ -12,36 +12,53 @@ import com.elian.genericadapter.databinding.ItemOperationBinding
 import com.elian.genericadapter.model.OperationInfo
 
 open class GenericAdapter<ItemT : Any, VB : ViewBinding>(
-	private val inflate: (LayoutInflater, ViewGroup, Boolean) -> VB,
-	areItemsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
-	areContentsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
-	private inline val bindBlock: VB.(item: ItemT, viewHolder: GenericAdapter<ItemT, VB>.ViewHolder) -> Unit,
+    private val inflate: (LayoutInflater, ViewGroup, Boolean) -> VB,
+    areItemsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
+    areContentsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
+    private inline val bindBlock: VB.(item: ItemT, position: Int, adapter: GenericAdapter<ItemT, VB>) -> Unit,
 ) : ListAdapter<ItemT, GenericAdapter<ItemT, VB>.ViewHolder>(
-	object : DiffUtil.ItemCallback<ItemT>()
-	{
-		override fun areItemsTheSame(oldItem: ItemT, newItem: ItemT) = areItemsTheSame(oldItem, newItem)
+    object : DiffUtil.ItemCallback<ItemT>()
+    {
+        override fun areItemsTheSame(oldItem: ItemT, newItem: ItemT) = areItemsTheSame(oldItem, newItem)
 
-		@SuppressLint("DiffUtilEquals")
-		override fun areContentsTheSame(oldItem: ItemT, newItem: ItemT) = areContentsTheSame(oldItem, newItem)
-	}
+        @SuppressLint("DiffUtilEquals")
+        override fun areContentsTheSame(oldItem: ItemT, newItem: ItemT) = areContentsTheSame(oldItem, newItem)
+    }
 )
 {
-	inner class ViewHolder(val binding: VB) : RecyclerView.ViewHolder(binding.root)
+    inner class ViewHolder(val binding: VB) : RecyclerView.ViewHolder(binding.root)
 
 
-	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder
-	{
-		val inflater = LayoutInflater.from(parent.context)
+    @Suppress("Unused")
+    fun getItemAt(position: Int): ItemT? = getItem(position)
 
-		val binding = inflate(inflater, parent, false)
 
-		return ViewHolder(binding)
-	}
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder
+    {
+        val inflater = LayoutInflater.from(parent.context)
 
-	override fun onBindViewHolder(holder: ViewHolder, position: Int)
-	{
-		val item = getItem(position)
+        val binding = inflate(inflater, parent, false)
 
-		bindBlock(holder.binding, item, holder)
-	}
+        return ViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int)
+    {
+        bindBlock(holder.binding, getItem(position), position, this)
+    }
+}
+
+@Suppress("FunctionName")
+inline fun <ItemT : Any, VB : ViewBinding> GenericAdapter(
+    noinline inflate: (LayoutInflater, ViewGroup, Boolean) -> VB,
+    noinline areItemsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
+    noinline areContentsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
+    crossinline bindBlock: VB.(item: ItemT) -> Unit,
+) = GenericAdapter(
+    inflate = inflate,
+    areItemsTheSame = areItemsTheSame,
+    areContentsTheSame = areContentsTheSame,
+) { item, _, _ ->
+
+    bindBlock(item)
 }
