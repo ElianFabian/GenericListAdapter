@@ -10,7 +10,7 @@ import com.elian.genericadapter.model.Person
  * In this file we define all the adapters, in here were using the simple version of both GenericAdapters,
  * but in case you need a more complex use case like need to access the previous or next item
  * you should instead instantiate the GenericAdapter or use the other version of the ItemBinding.
- * You could even inherit from those classes and add extra functionality since they're mark as open.
+ * You could even inherit from those classes and add extra functionality since they're marked as open.
  */
 
 
