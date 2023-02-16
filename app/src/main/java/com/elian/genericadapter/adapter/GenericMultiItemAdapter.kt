@@ -10,9 +10,9 @@ import androidx.viewbinding.ViewBinding
 import kotlin.reflect.KClass
 
 open class GenericMultiItemAdapter<ItemT : Any>(
-    itemBindings: List<ItemBindingData<ItemT, *>>,
     areItemsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
     areContentsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
+    itemBindings: List<ItemBindingData<ItemT, *>>,
 ) : ListAdapter<ItemT, GenericMultiItemAdapter<ItemT>.ViewHolder>(
     object : DiffUtil.ItemCallback<ItemT>()
     {
@@ -58,6 +58,19 @@ open class GenericMultiItemAdapter<ItemT : Any>(
     }
 }
 
+@Suppress("FunctionName")
+fun <ItemT : Any> GenericAdapter(
+    areItemsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
+    areContentsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
+    itemBindings: List<ItemBindingData<ItemT, *>>,
+): GenericMultiItemAdapter<ItemT>
+{
+    return GenericMultiItemAdapter(
+        areItemsTheSame = areItemsTheSame,
+        areContentsTheSame = areContentsTheSame,
+        itemBindings = itemBindings,
+    )
+}
 
 data class ItemBindingData<out ItemT : Any, VB : ViewBinding>(
     val itemClass: KClass<@UnsafeVariance ItemT>,

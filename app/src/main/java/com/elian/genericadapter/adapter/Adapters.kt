@@ -75,7 +75,7 @@ fun OperationAndPersonAdapter(
     items: List<MultiItem>,
     onOperationClick: ((OperationInfo) -> Unit)? = null,
     onPersonClick: ((Person) -> Unit)? = null,
-) = GenericMultiItemAdapter(
+) = GenericAdapter(
     areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },
     itemBindings = listOf(
         ItemBinding(ItemOperationBinding::inflate) { item: OperationInfo ->

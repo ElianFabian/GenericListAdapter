@@ -2,21 +2,18 @@ package com.elian.genericadapter.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
-import com.elian.genericadapter.databinding.ItemOperationBinding
-import com.elian.genericadapter.model.OperationInfo
 
-open class GenericAdapter<ItemT : Any, VB : ViewBinding>(
+open class GenericSingleItemAdapter<ItemT : Any, VB : ViewBinding>(
     private val inflate: (LayoutInflater, ViewGroup, Boolean) -> VB,
     areItemsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
     areContentsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
-    private inline val bindBlock: VB.(item: ItemT, position: Int, adapter: GenericAdapter<ItemT, VB>) -> Unit,
-) : ListAdapter<ItemT, GenericAdapter<ItemT, VB>.ViewHolder>(
+    private inline val bindBlock: VB.(item: ItemT, position: Int, adapter: GenericSingleItemAdapter<ItemT, VB>) -> Unit,
+) : ListAdapter<ItemT, GenericSingleItemAdapter<ItemT, VB>.ViewHolder>(
     object : DiffUtil.ItemCallback<ItemT>()
     {
         override fun areItemsTheSame(oldItem: ItemT, newItem: ItemT) = areItemsTheSame(oldItem, newItem)
@@ -54,7 +51,7 @@ inline fun <ItemT : Any, VB : ViewBinding> GenericAdapter(
     noinline areItemsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
     noinline areContentsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
     crossinline bindBlock: VB.(item: ItemT) -> Unit,
-) = GenericAdapter(
+) = GenericSingleItemAdapter(
     inflate = inflate,
     areItemsTheSame = areItemsTheSame,
     areContentsTheSame = areContentsTheSame,
