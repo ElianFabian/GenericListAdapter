@@ -59,3 +59,21 @@ inline fun <ItemT : Any, VB : ViewBinding> GenericAdapter(
 
 	bindBlock(item)
 }
+
+@Suppress("FunctionName")
+inline fun <
+	A : Any,
+	B : Any,
+	ItemT : Pair<A, B>,
+	VB : ViewBinding> GenericAdapter(
+	noinline inflate: (LayoutInflater, ViewGroup, Boolean) -> VB,
+	noinline areItemsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
+	noinline areContentsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
+	crossinline bindBlock: VB.(A, B) -> Unit,
+) = GenericSingleItemAdapter(
+	inflate = inflate,
+	areItemsTheSame = areItemsTheSame,
+	areContentsTheSame = areContentsTheSame,
+) { item, _, _ ->
+	bindBlock(item.first, item.second)
+}
