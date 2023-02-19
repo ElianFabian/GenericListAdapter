@@ -56,7 +56,6 @@ inline fun <ItemT : Any, VB : ViewBinding> GenericAdapter(
 	areItemsTheSame = areItemsTheSame,
 	areContentsTheSame = areContentsTheSame,
 ) { item, _, _ ->
-
 	bindBlock(item)
 }
 
