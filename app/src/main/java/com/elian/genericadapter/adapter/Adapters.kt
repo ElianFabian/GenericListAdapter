@@ -16,20 +16,25 @@ import com.elian.genericadapter.model.Person
 
 // We can define extension functions to reuse the binding logic if needed.
 
-fun ItemOperationBinding.bind(item: OperationInfo) = item.apply()
+fun ItemOperationBinding.bind(item: OperationInfo)
 {
-	tvFirstNumber.text = "$firstNumber"
-	tvSecondNumber.text = "$secondNumber"
-	tvOperationSymbol.text = operationSymbol
-	tvExpectedResult.text = "$result"
+    item.apply()
+    {
+        tvFirstNumber.text = "$firstNumber"
+        tvSecondNumber.text = "$secondNumber"
+        tvOperationSymbol.text = operationSymbol
+        tvExpectedResult.text = "$result"
+    }
 }
 
-fun ItemPersonBinding.bind(item: Person) = item.apply()
+fun ItemPersonBinding.bind(item: Person)
 {
-	tvName.text = name
-	tvLastname.text = lastname
+    item.apply()
+    {
+        tvName.text = name
+        tvLastname.text = lastname
+    }
 }
-
 // The GenericAdapter inherits from a ListAdapter, so you should always give a value
 // to the areItemsTheSame parameter.
 // But, if the list is going to be static (never modified) then it won't be necessary.
@@ -37,22 +42,22 @@ fun ItemPersonBinding.bind(item: Person) = item.apply()
 
 @Suppress("FunctionName")
 fun OperationAdapter(items: List<OperationInfo>) = GenericAdapter(
-	inflate = ItemOperationBinding::inflate,
-	areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },
+    inflate = ItemOperationBinding::inflate,
+    areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },
 ) { item: OperationInfo ->
 
-	bind(item)
+    bind(item)
 
 }.apply { submitList(items) }
 
 
 @Suppress("FunctionName")
 fun PersonAdapter(items: List<Person>) = GenericAdapter(
-	areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },
-	inflate = ItemPersonBinding::inflate,
+    areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },
+    inflate = ItemPersonBinding::inflate,
 ) { item: Person ->
 
-	bind(item)
+    bind(item)
 
 }.apply { submitList(items) }
 
@@ -72,23 +77,23 @@ fun PersonAdapter(items: List<Person>) = GenericAdapter(
 
 @Suppress("FunctionName")
 fun OperationAndPersonAdapter(
-	items: List<MultiItem>,
-	onOperationClick: ((OperationInfo) -> Unit)? = null,
-	onPersonClick: ((Person) -> Unit)? = null,
+    items: List<MultiItem>,
+    onOperationClick: ((OperationInfo) -> Unit)? = null,
+    onPersonClick: ((Person) -> Unit)? = null,
 ) = GenericAdapter(
-	areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },
-	itemBindings = listOf(
-		Binding(ItemOperationBinding::inflate) { item: OperationInfo ->
+    areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },
+    itemBindings = listOf(
+        Binding(ItemOperationBinding::inflate) { item: OperationInfo ->
 
-			bind(item)
+            bind(item)
 
-			root.setOnClickListener { onOperationClick?.invoke(item) }
-		},
-		Binding(ItemPersonBinding::inflate) { item: Person ->
+            root.setOnClickListener { onOperationClick?.invoke(item) }
+        },
+        Binding(ItemPersonBinding::inflate) { item: Person ->
 
-			bind(item)
+            bind(item)
 
-			root.setOnClickListener { onPersonClick?.invoke(item) }
-		},
-	),
+            root.setOnClickListener { onPersonClick?.invoke(item) }
+        },
+    ),
 ).apply { submitList(items) }
