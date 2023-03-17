@@ -35,18 +35,20 @@ fun ItemPersonBinding.bind(item: Person)
 		tvLastname.text = lastname
 	}
 }
+
+
 // The GenericAdapter inherits from a ListAdapter, so you should always give a value
-// to the areItemsTheSame parameter.
-// But, if the list is going to be static (never modified) then it won't be necessary.
+// to the areItemsTheSame parameter...
+// Unless the list is going to be static (never modified) then it won't be necessary or if the content if going
+// to be different for all the items.
 // And the areContents the same in general I don't think you should define it unless you want a different behaviour.
 
 @Suppress("FunctionName")
 fun OperationAdapter(items: List<OperationInfo>) = GenericAdapter(
 	inflate = ItemOperationBinding::inflate,
-	areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },
-) { item: OperationInfo ->
+) { item: OperationInfo, binding ->
 
-	bind(item)
+	binding.bind(item)
 
 }.apply { submitList(items) }
 
@@ -55,9 +57,9 @@ fun OperationAdapter(items: List<OperationInfo>) = GenericAdapter(
 fun PersonAdapter(items: List<Person>) = GenericAdapter(
 	areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },
 	inflate = ItemPersonBinding::inflate,
-) { item: Person ->
+) { item: Person, binding ->
 
-	bind(item)
+	binding.bind(item)
 
 }.apply { submitList(items) }
 
@@ -83,17 +85,17 @@ fun OperationAndPersonAdapter(
 ) = GenericAdapter(
 	areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },
 	itemBindings = listOf(
-		Binding(ItemOperationBinding::inflate) { item: OperationInfo ->
+		Binding(ItemOperationBinding::inflate) { item: OperationInfo, binding ->
 
-			bind(item)
+			binding.bind(item)
 
-			root.setOnClickListener { onOperationClick?.invoke(item) }
+			binding.root.setOnClickListener { onOperationClick?.invoke(item) }
 		},
-		Binding(ItemPersonBinding::inflate) { item: Person ->
+		Binding(ItemPersonBinding::inflate) { item: Person, binding ->
 
-			bind(item)
+			binding.bind(item)
 
-			root.setOnClickListener { onPersonClick?.invoke(item) }
+			binding.root.setOnClickListener { onPersonClick?.invoke(item) }
 		},
 	),
 ).apply { submitList(items) }
