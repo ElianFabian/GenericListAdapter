@@ -46,6 +46,7 @@ fun ItemPersonBinding.bind(item: Person)
 @Suppress("FunctionName")
 fun OperationAdapter(items: List<OperationInfo>) = GenericAdapter(
 	inflate = ItemOperationBinding::inflate,
+	areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },
 ) { item: OperationInfo, binding ->
 
 	binding.bind(item)
@@ -55,8 +56,8 @@ fun OperationAdapter(items: List<OperationInfo>) = GenericAdapter(
 
 @Suppress("FunctionName")
 fun PersonAdapter(items: List<Person>) = GenericAdapter(
-	areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },
 	inflate = ItemPersonBinding::inflate,
+	areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },
 ) { item: Person, binding ->
 
 	binding.bind(item)
