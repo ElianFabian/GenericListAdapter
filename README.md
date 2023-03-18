@@ -1,5 +1,7 @@
 # GenericAdapter
 
+### This readme is outdated.
+
 This is a simple project for 2 classes that makes easier to work with adpaters for recyclerviews.
 
 One class is **GenericAdapter** that is used for single-item adapters and the other is **GenericMultiItemAdapter** to work with more than one type of item.
