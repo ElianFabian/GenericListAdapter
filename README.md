@@ -1,6 +1,7 @@
 # GenericAdapter
 
-### This readme is outdated.
+<h3 style="color:red">This readme is outdated.</h3>
+
 
 This is a simple project for 2 classes that makes easier to work with adpaters for recyclerviews.
 
