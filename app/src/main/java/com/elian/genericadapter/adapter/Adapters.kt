@@ -6,12 +6,7 @@ import com.elian.genericadapter.model.MultiItem
 import com.elian.genericadapter.model.OperationInfo
 import com.elian.genericadapter.model.Person
 
-/*
- * In this file we define all the adapters, in here were using the simple version of both GenericAdapters,
- * but in case you need a more complex use case like need to access the previous or next item
- * you should instead instantiate the GenericAdapter or use the other version of the ItemBinding.
- * You could even inherit from those classes and add extra functionality since they're marked as open.
- */
+// In this file we define all the adapters, in here were using the simple version of both GenericAdapters.
 
 
 // We can define extension functions to reuse the binding logic if needed.
@@ -41,7 +36,7 @@ fun ItemPersonBinding.bind(item: Person)
 // to the areItemsTheSame parameter...
 // Unless the list is going to be static (never modified) then it won't be necessary or if the content if going
 // to be different for all the items.
-// And the areContents the same in general I don't think you should define it unless you want a different behaviour.
+// And the areContentsTheame in general I don't think you should define it unless you want a different behaviour.
 
 @Suppress("FunctionName")
 fun OperationAdapter(items: List<OperationInfo>) = GenericAdapter(
