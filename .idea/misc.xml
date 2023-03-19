@@ -3,6 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Todo/Documentos/Git/AndroidStudio/GenericAdapter/app/src/main/res/layout/activity_generic_list.xml" value="0.22" />
+        <entry key="..\:/Todo/Documentos/Git/AndroidStudio/GenericAdapter/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Todo/Documentos/Git/AndroidStudio/GenericAdapter/app/src/main/res/layout/item_my_message.xml" value="0.3625" />
+        <entry key="..\:/Todo/Documentos/Git/AndroidStudio/GenericAdapter/app/src/main/res/layout/item_operation.xml" value="0.3625" />
+        <entry key="..\:/Todo/Documentos/Git/AndroidStudio/GenericAdapter/app/src/main/res/layout/item_other_message.xml" value="0.3614583333333333" />
+        <entry key="..\:/Todo/Documentos/Git/AndroidStudio/GenericAdapter/app/src/main/res/layout/item_person.xml" value="0.3625" />
+        <entry key="..\:/Todo/Documentos/Git/AndroidStudio/GenericAdapter/app/src/main/res/layout/item_skill.xml" value="0.3625" />
+        <entry key="..\:/Todo/Documentos/Git/AndroidStudio/GenericAdapter/app/src/main/res/layout/item_user_message.xml" value="0.2" />
         <entry key="..\:/Todo/Documentos/Programacion/Android/GenericMultiItemAdapter/app/src/main/res/drawable/ic_sort.xml" value="0.2155" />
         <entry key="..\:/Todo/Documentos/Programacion/Android/GenericMultiItemAdapter/app/src/main/res/layout/activity_main.xml" value="0.2159090909090909" />
         <entry key="..\:/Todo/Documentos/Programacion/Android/GenericMultiItemAdapter/app/src/main/res/layout/content_main.xml" value="0.2140625" />

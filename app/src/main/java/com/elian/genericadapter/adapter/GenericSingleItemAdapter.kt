@@ -33,6 +33,16 @@ class GenericSingleItemAdapter<ItemT : Any, VB : ViewBinding>(
 	@Suppress("Unused")
 	fun GenericSingleItemAdapter<ItemT, VB>.getItem(position: Int): ItemT? = getItem(position)
 
+	@Suppress("Unused")
+	inline fun <T> RecyclerView.setAdapterOrSubmitList(list: List<T>, getAdapter: () -> ListAdapter<T, *>)
+	{
+		val listAdapter = (adapter as? ListAdapter<T, RecyclerView.ViewHolder>) ?: getAdapter()
+
+		if (adapter == null) adapter = listAdapter
+
+		listAdapter.submitList(list)
+	}
+
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder
 	{
@@ -50,11 +60,11 @@ class GenericSingleItemAdapter<ItemT : Any, VB : ViewBinding>(
 }
 
 @Suppress("FunctionName")
-inline fun <ItemT : Any, VB : ViewBinding> GenericAdapter(
-	noinline inflate: (LayoutInflater, ViewGroup, Boolean) -> VB,
-	noinline areItemsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
-	noinline areContentsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
-	crossinline onBind: GenericSingleItemAdapter<ItemT, VB>.(
+fun <ItemT : Any, VB : ViewBinding> GenericAdapter(
+	inflate: (LayoutInflater, ViewGroup, Boolean) -> VB,
+	areItemsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
+	areContentsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
+	onBind: GenericSingleItemAdapter<ItemT, VB>.(
 		item: ItemT,
 		binding: VB,
 		position: Int,
@@ -69,11 +79,11 @@ inline fun <ItemT : Any, VB : ViewBinding> GenericAdapter(
 }
 
 @Suppress("FunctionName")
-inline fun <ItemT : Any, VB : ViewBinding> GenericAdapter(
-	noinline inflate: (LayoutInflater, ViewGroup, Boolean) -> VB,
-	noinline areItemsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
-	noinline areContentsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
-	crossinline onBind: GenericSingleItemAdapter<ItemT, VB>.(
+fun <ItemT : Any, VB : ViewBinding> GenericAdapter(
+	inflate: (LayoutInflater, ViewGroup, Boolean) -> VB,
+	areItemsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
+	areContentsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
+	onBind: GenericSingleItemAdapter<ItemT, VB>.(
 		item: ItemT,
 		binding: VB,
 	) -> Unit,
@@ -87,16 +97,16 @@ inline fun <ItemT : Any, VB : ViewBinding> GenericAdapter(
 }
 
 @Suppress("FunctionName")
-inline fun <
+fun <
 	A : Any,
 	B : Any,
 	ItemT : Pair<A, B>,
 	VB : ViewBinding,
 	> GenericAdapter(
-	noinline inflate: (LayoutInflater, ViewGroup, Boolean) -> VB,
-	noinline areItemsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
-	noinline areContentsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
-	crossinline onBind: GenericSingleItemAdapter<ItemT, VB>.(
+	inflate: (LayoutInflater, ViewGroup, Boolean) -> VB,
+	areItemsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
+	areContentsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
+	onBind: GenericSingleItemAdapter<ItemT, VB>.(
 		A, B,
 		binding: VB,
 		position: Int,
