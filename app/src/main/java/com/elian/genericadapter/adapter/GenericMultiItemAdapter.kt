@@ -34,7 +34,7 @@ class GenericMultiItemAdapter<ItemT : Any>(
 
 
 	@Suppress("Unused")
-	fun GenericMultiItemAdapter<ItemT>.getItem(position: Int): ItemT? = getItem(position)
+	fun GenericMultiItemAdapter<ItemT>.getItem(position: Int): ItemT = getItem(position)
 
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder
