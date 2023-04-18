@@ -22,7 +22,6 @@ class GenericSingleItemAdapter<ItemT : Any, VB : ViewBinding>(
 	{
 		override fun areItemsTheSame(oldItem: ItemT, newItem: ItemT) = areItemsTheSame(oldItem, newItem)
 
-		@SuppressLint("DiffUtilEquals")
 		override fun areContentsTheSame(oldItem: ItemT, newItem: ItemT) = areContentsTheSame(oldItem, newItem)
 	}
 )
