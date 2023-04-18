@@ -65,7 +65,7 @@ fun <ItemT : Any> GenericAdapter(
 	areItemsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
 	areContentsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
 	itemBindings: List<BindingData<ItemT, *>>,
-): GenericMultiItemAdapter<ItemT>
+): ListAdapter<ItemT, out RecyclerView.ViewHolder>
 {
 	return GenericMultiItemAdapter(
 		areItemsTheSame = areItemsTheSame,

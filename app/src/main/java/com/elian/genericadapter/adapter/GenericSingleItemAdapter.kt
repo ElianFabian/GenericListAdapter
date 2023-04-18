@@ -69,7 +69,7 @@ fun <ItemT : Any, VB : ViewBinding> GenericAdapter(
 		binding: VB,
 		position: Int,
 	) -> Unit,
-) = GenericSingleItemAdapter(
+): ListAdapter<ItemT, out RecyclerView.ViewHolder> = GenericSingleItemAdapter(
 	inflate = inflate,
 	areItemsTheSame = areItemsTheSame,
 	areContentsTheSame = areContentsTheSame,
@@ -87,7 +87,7 @@ fun <ItemT : Any, VB : ViewBinding> GenericAdapter(
 		item: ItemT,
 		binding: VB,
 	) -> Unit,
-) = GenericSingleItemAdapter(
+): ListAdapter<ItemT, out RecyclerView.ViewHolder> = GenericSingleItemAdapter(
 	inflate = inflate,
 	areItemsTheSame = areItemsTheSame,
 	areContentsTheSame = areContentsTheSame,
@@ -111,7 +111,7 @@ fun <
 		binding: VB,
 		position: Int,
 	) -> Unit,
-) = GenericSingleItemAdapter(
+): ListAdapter<ItemT, out RecyclerView.ViewHolder> = GenericSingleItemAdapter(
 	inflate = inflate,
 	areItemsTheSame = areItemsTheSame,
 	areContentsTheSame = areContentsTheSame,
