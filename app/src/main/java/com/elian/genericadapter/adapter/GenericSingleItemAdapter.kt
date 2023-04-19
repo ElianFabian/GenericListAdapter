@@ -29,7 +29,7 @@ class GenericSingleItemAdapter<ItemT : Any, VB : ViewBinding>(
 
 
 	@Suppress("Unused")
-	fun GenericSingleItemAdapter<ItemT, VB>.getItem(position: Int): ItemT? = getItem(position)
+	fun GenericSingleItemAdapter<ItemT, VB>.getItem(position: Int): ItemT = getItem(position)
 
 	@Suppress("Unused")
 	inline fun <T> RecyclerView.setAdapterOrSubmitList(list: List<T>, getAdapter: () -> ListAdapter<T, *>)
