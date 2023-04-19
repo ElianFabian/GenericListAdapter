@@ -31,8 +31,8 @@ class GenericMultiItemAdapter<ItemT : Any>(
 	private val itemClassToViewType = itemBindings.mapIndexed { index, data -> data.itemClass to index }.toMap()
 
 
-	@Suppress("Unused")
 	fun GenericMultiItemAdapter<ItemT>.getItem(position: Int): ItemT = getItem(position)
+	fun GenericMultiItemAdapter<ItemT>.getItemOrNull(position: Int): ItemT? = kotlin.runCatching { getItem(position) }.getOrNull()
 
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder

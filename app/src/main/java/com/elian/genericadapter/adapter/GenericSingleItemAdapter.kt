@@ -28,8 +28,8 @@ class GenericSingleItemAdapter<ItemT : Any, VB : ViewBinding>(
 	inner class ViewHolder(val binding: VB) : RecyclerView.ViewHolder(binding.root)
 
 
-	@Suppress("Unused")
 	fun GenericSingleItemAdapter<ItemT, VB>.getItem(position: Int): ItemT = getItem(position)
+	fun GenericSingleItemAdapter<ItemT, VB>.getItemOrNull(position: Int): ItemT? = kotlin.runCatching { getItem(position) }.getOrNull()
 
 	@Suppress("Unused")
 	inline fun <T> RecyclerView.setAdapterOrSubmitList(list: List<T>, getAdapter: () -> ListAdapter<T, *>)
