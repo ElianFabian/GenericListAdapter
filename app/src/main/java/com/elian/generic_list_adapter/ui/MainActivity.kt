@@ -1,12 +1,12 @@
-package com.elian.genericadapter.ui
+package com.elian.generic_list_adapter.ui
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.elian.genericadapter.databinding.ActivityMainBinding
-import com.elian.genericadapter.ui.multi_item.MultiItemActivity
-import com.elian.genericadapter.ui.nested_items.NestedItemsActivity
-import com.elian.genericadapter.ui.single_item.SingleItemActivity
+import com.elian.generic_list_adapter.databinding.ActivityMainBinding
+import com.elian.generic_list_adapter.ui.multi_item.MultiItemActivity
+import com.elian.generic_list_adapter.ui.nested_items.NestedItemsActivity
+import com.elian.generic_list_adapter.ui.single_item.SingleItemActivity
 
 class MainActivity : AppCompatActivity()
 {

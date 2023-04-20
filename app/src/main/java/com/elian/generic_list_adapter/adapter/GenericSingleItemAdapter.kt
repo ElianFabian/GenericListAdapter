@@ -1,4 +1,4 @@
-package com.elian.genericadapter.adapter
+package com.elian.generic_list_adapter.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -58,7 +58,7 @@ class GenericSingleItemAdapter<ItemT : Any, VB : ViewBinding>(
 }
 
 @Suppress("FunctionName")
-fun <ItemT : Any, VB : ViewBinding> GenericAdapter(
+fun <ItemT : Any, VB : ViewBinding> GenericListAdapter(
 	inflate: (LayoutInflater, ViewGroup, Boolean) -> VB,
 	areItemsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
 	areContentsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
@@ -77,7 +77,7 @@ fun <ItemT : Any, VB : ViewBinding> GenericAdapter(
 }
 
 @Suppress("FunctionName")
-fun <ItemT : Any, VB : ViewBinding> GenericAdapter(
+fun <ItemT : Any, VB : ViewBinding> GenericListAdapter(
 	inflate: (LayoutInflater, ViewGroup, Boolean) -> VB,
 	areItemsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
 	areContentsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
@@ -100,7 +100,7 @@ fun <
 	B : Any,
 	ItemT : Pair<A, B>,
 	VB : ViewBinding,
-	> GenericAdapter(
+	> GenericListAdapter(
 	inflate: (LayoutInflater, ViewGroup, Boolean) -> VB,
 	areItemsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
 	areContentsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },

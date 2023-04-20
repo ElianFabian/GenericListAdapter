@@ -1,6 +1,6 @@
-package com.elian.genericadapter.model
+package com.elian.generic_list_adapter.model
 
-import java.util.*
+import java.util.UUID
 
 data class SkillInfo(
 	val name: String,

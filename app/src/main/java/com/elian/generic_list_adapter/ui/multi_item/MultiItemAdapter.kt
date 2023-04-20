@@ -1,4 +1,4 @@
-package com.elian.genericadapter.ui.multi_item
+package com.elian.generic_list_adapter.ui.multi_item
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,14 +6,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
-import com.elian.genericadapter.R
-import com.elian.genericadapter.adapter.Binding
-import com.elian.genericadapter.adapter.GenericAdapter
-import com.elian.genericadapter.databinding.ItemOtherUserMessageBinding
-import com.elian.genericadapter.databinding.ItemUserMessageBinding
-import com.elian.genericadapter.model.Message
-import com.elian.genericadapter.model.OtherUserMessage
-import com.elian.genericadapter.model.UserMessage
+import com.elian.generic_list_adapter.R
+import com.elian.generic_list_adapter.adapter.Binding
+import com.elian.generic_list_adapter.adapter.GenericListAdapter
+import com.elian.generic_list_adapter.databinding.ItemOtherUserMessageBinding
+import com.elian.generic_list_adapter.databinding.ItemUserMessageBinding
+import com.elian.generic_list_adapter.model.Message
+import com.elian.generic_list_adapter.model.OtherUserMessage
+import com.elian.generic_list_adapter.model.UserMessage
 
 //region New way
 
@@ -22,7 +22,7 @@ fun MessagesAdapter_New(
 	messages: List<Message>,
 	onUserMessageClick: (message: UserMessage) -> Unit,
 	onOtherUserMessageClick: (message: OtherUserMessage) -> Unit,
-) = GenericAdapter(
+) = GenericListAdapter(
 	areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },
 	itemBindings = listOf(
 		Binding(ItemUserMessageBinding::inflate) { message: UserMessage, binding ->

@@ -1,4 +1,4 @@
-package com.elian.genericadapter.adapter
+package com.elian.generic_list_adapter.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -62,7 +62,7 @@ class GenericMultiItemAdapter<ItemT : Any>(
 
 
 @Suppress("FunctionName")
-fun <ItemT : Any> GenericAdapter(
+fun <ItemT : Any> GenericListAdapter(
 	areItemsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
 	areContentsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
 	itemBindings: List<BindingData<ItemT>>,
