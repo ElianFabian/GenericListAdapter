@@ -9,7 +9,6 @@ import androidx.viewbinding.ViewBinding
 import com.elian.genericadapter.R
 import com.elian.genericadapter.adapter.Binding
 import com.elian.genericadapter.adapter.GenericAdapter
-import com.elian.genericadapter.adapter.GenericMultiItemAdapter
 import com.elian.genericadapter.databinding.ItemOtherUserMessageBinding
 import com.elian.genericadapter.databinding.ItemUserMessageBinding
 import com.elian.genericadapter.model.Message
