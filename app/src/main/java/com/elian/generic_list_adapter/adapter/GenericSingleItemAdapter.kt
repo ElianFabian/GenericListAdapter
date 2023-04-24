@@ -11,7 +11,7 @@ class GenericSingleItemAdapter<ItemT : Any, VB : ViewBinding>(
 	private val inflate: (LayoutInflater, ViewGroup, Boolean) -> VB,
 	areItemsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
 	areContentsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
-	private inline val onBind: GenericSingleItemAdapter<ItemT, VB>.(
+	private val onBind: GenericSingleItemAdapter<ItemT, VB>.(
 		item: ItemT,
 		binding: VB,
 		position: Int,
