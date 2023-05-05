@@ -1,21 +1,21 @@
-package com.elian.generic_list_adapter.ui.single_item
+package com.elian.simple_list_adapter.ui.single_item
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.elian.generic_list_adapter.adapter.GenericListAdapter
-import com.elian.generic_list_adapter.databinding.ItemOperationBinding
-import com.elian.generic_list_adapter.model.OperationInfo
+import com.elian.simple_list_adapter.adapter.SimpleListAdapter
+import com.elian.simple_list_adapter.databinding.ItemOperationBinding
+import com.elian.simple_list_adapter.model.OperationInfo
 
 //region New way
 
 @Suppress("FunctionName")
-fun OperationAdapter_New(items: List<OperationInfo>) = GenericListAdapter(
+fun OperationAdapter_New(items: List<OperationInfo>) = SimpleListAdapter(
 	inflate = ItemOperationBinding::inflate,
 	areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },
-) { operation: OperationInfo, binding ->
+) { operation: OperationInfo, binding, _ ->
 
 	binding.apply()
 	{

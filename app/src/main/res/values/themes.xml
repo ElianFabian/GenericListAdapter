@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.GenericListAdapter" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.SimpleListAdapter" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">#2196F3</item>
         <item name="colorPrimaryVariant">#3F51B5</item>
@@ -14,12 +14,12 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.GenericListAdapter.NoActionBar">
+    <style name="Theme.SimpleListAdapter.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.GenericListAdapter.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.SimpleListAdapter.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="Theme.GenericListAdapter.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Theme.SimpleListAdapter.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

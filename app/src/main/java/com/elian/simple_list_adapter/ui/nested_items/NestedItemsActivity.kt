@@ -1,10 +1,10 @@
-package com.elian.generic_list_adapter.ui.nested_items
+package com.elian.simple_list_adapter.ui.nested_items
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.elian.generic_list_adapter.databinding.ActivityGenericListBinding
-import com.elian.generic_list_adapter.model.Person
-import com.elian.generic_list_adapter.model.SkillInfo
+import com.elian.simple_list_adapter.databinding.ActivityGenericListBinding
+import com.elian.simple_list_adapter.model.Person
+import com.elian.simple_list_adapter.model.SkillInfo
 
 class NestedItemsActivity : AppCompatActivity()
 {

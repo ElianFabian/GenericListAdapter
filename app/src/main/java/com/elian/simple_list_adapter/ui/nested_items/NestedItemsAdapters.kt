@@ -1,15 +1,15 @@
-package com.elian.generic_list_adapter.ui.nested_items
+package com.elian.simple_list_adapter.ui.nested_items
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.elian.generic_list_adapter.adapter.GenericListAdapter
-import com.elian.generic_list_adapter.databinding.ItemPersonBinding
-import com.elian.generic_list_adapter.databinding.ItemSkillBinding
-import com.elian.generic_list_adapter.model.Person
-import com.elian.generic_list_adapter.model.SkillInfo
+import com.elian.simple_list_adapter.adapter.SimpleListAdapter
+import com.elian.simple_list_adapter.databinding.ItemPersonBinding
+import com.elian.simple_list_adapter.databinding.ItemSkillBinding
+import com.elian.simple_list_adapter.model.Person
+import com.elian.simple_list_adapter.model.SkillInfo
 
 // In this example the items are grouped using a map, but it would also work
 // if you have a single data type that contains all the information
@@ -19,7 +19,7 @@ import com.elian.generic_list_adapter.model.SkillInfo
 //region New way
 
 @Suppress("FunctionName")
-fun SkillsByPersonAdapter_New(skillsByPerson: Map<Person, List<SkillInfo>>) = GenericListAdapter(
+fun SkillsByPersonAdapter_New(skillsByPerson: Map<Person, List<SkillInfo>>) = SimpleListAdapter(
 	inflate = ItemPersonBinding::inflate,
 	areItemsTheSame = { oldItem, newItem -> oldItem.first.uuid == newItem.first.uuid },
 ) { person: Person, skills: List<SkillInfo>, binding, _ ->
@@ -34,10 +34,10 @@ fun SkillsByPersonAdapter_New(skillsByPerson: Map<Person, List<SkillInfo>>) = Ge
 }.apply { submitList(skillsByPerson.toList()) }
 
 @Suppress("FunctionName")
-fun SkillAdapter_New() = GenericListAdapter(
+fun SkillAdapter_New() = SimpleListAdapter(
 	inflate = ItemSkillBinding::inflate,
 	areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },
-) { skill: SkillInfo, binding ->
+) { skill: SkillInfo, binding, _ ->
 
 	binding.apply()
 	{

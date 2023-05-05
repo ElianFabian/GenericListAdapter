@@ -1,4 +1,4 @@
-package com.elian.generic_list_adapter.model
+package com.elian.simple_list_adapter.model
 
 import java.util.UUID
 

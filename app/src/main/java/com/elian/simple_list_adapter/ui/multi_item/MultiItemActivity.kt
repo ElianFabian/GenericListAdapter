@@ -1,11 +1,11 @@
-package com.elian.generic_list_adapter.ui.multi_item
+package com.elian.simple_list_adapter.ui.multi_item
 
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.elian.generic_list_adapter.databinding.ActivityGenericListBinding
-import com.elian.generic_list_adapter.model.OtherUserMessage
-import com.elian.generic_list_adapter.model.UserMessage
+import com.elian.simple_list_adapter.databinding.ActivityGenericListBinding
+import com.elian.simple_list_adapter.model.OtherUserMessage
+import com.elian.simple_list_adapter.model.UserMessage
 
 class MultiItemActivity : AppCompatActivity()
 {

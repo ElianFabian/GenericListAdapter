@@ -1,9 +1,9 @@
-package com.elian.generic_list_adapter.model
+package com.elian.simple_list_adapter.model
 
 import java.util.UUID
 
-data class Person(
+data class SkillInfo(
 	val name: String,
-	val lastname: String,
+	val percentage: Int,
 	val uuid: String = UUID.randomUUID().toString(),
 )

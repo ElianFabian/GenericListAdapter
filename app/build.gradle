@@ -7,7 +7,7 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.elian.generic_list_adapter"
+        applicationId "com.elian.simple_list_adapter"
         minSdk 26
         targetSdk 32
         versionCode 1

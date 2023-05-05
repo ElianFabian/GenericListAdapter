@@ -1,4 +1,4 @@
-package com.elian.generic_list_adapter.adapter
+package com.elian.simple_list_adapter.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,11 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import kotlin.reflect.KClass
 
-class GenericMultiItemAdapter<ItemT : Any>(
+class SimpleMultiItemListAdapter<ItemT : Any>(
 	areItemsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
 	areContentsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
 	itemBindings: List<BindingData<ItemT>>,
-) : ListAdapter<ItemT, GenericMultiItemAdapter<ItemT>.ViewHolder>(
+) : ListAdapter<ItemT, SimpleMultiItemListAdapter<ItemT>.ViewHolder>(
 	object : DiffUtil.ItemCallback<ItemT>()
 	{
 		override fun areItemsTheSame(oldItem: ItemT, newItem: ItemT) = areItemsTheSame(oldItem, newItem)
@@ -31,8 +31,8 @@ class GenericMultiItemAdapter<ItemT : Any>(
 	private val itemClassToViewType = itemBindings.mapIndexed { index, data -> data.itemClass to index }.toMap()
 
 
-	fun GenericMultiItemAdapter<ItemT>.getItem(position: Int): ItemT = getItem(position)
-	fun GenericMultiItemAdapter<ItemT>.getItemOrNull(position: Int): ItemT? = kotlin.runCatching { getItem(position) }.getOrNull()
+	fun SimpleMultiItemListAdapter<ItemT>.getItem(position: Int): ItemT = getItem(position)
+	fun SimpleMultiItemListAdapter<ItemT>.getItemOrNull(position: Int): ItemT? = kotlin.runCatching { getItem(position) }.getOrNull()
 
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder
@@ -62,50 +62,33 @@ class GenericMultiItemAdapter<ItemT : Any>(
 
 
 @Suppress("FunctionName")
-fun <ItemT : Any> GenericListAdapter(
+fun <ItemT : Any> SimpleListAdapter(
 	areItemsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
 	areContentsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
 	itemBindings: List<BindingData<ItemT>>,
 ): ListAdapter<ItemT, out RecyclerView.ViewHolder>
 {
-	return GenericMultiItemAdapter(
+	return SimpleMultiItemListAdapter(
 		areItemsTheSame = areItemsTheSame,
 		areContentsTheSame = areContentsTheSame,
 		itemBindings = itemBindings,
 	)
 }
 
-data class BindingData<out ItemT : Any>(
-	val itemClass: KClass<@UnsafeVariance ItemT>,
+class BindingData<out ItemT : Any>(
+	inline val itemClass: KClass<@UnsafeVariance ItemT>,
 	inline val inflate: (LayoutInflater, ViewGroup, Boolean) -> ViewBinding,
-	inline val onBind: GenericMultiItemAdapter<@UnsafeVariance ItemT>.(
+	inline val onBind: SimpleMultiItemListAdapter<@UnsafeVariance ItemT>.(
 		item: @UnsafeVariance ItemT,
 		binding: ViewBinding,
 		position: Int,
 	) -> Unit,
 )
 
-@Suppress("FunctionName")
-inline fun <reified ItemT : Any, VB : ViewBinding> Binding(
-	noinline inflate: (LayoutInflater, ViewGroup, Boolean) -> VB,
-	noinline onBind: GenericMultiItemAdapter<@UnsafeVariance ItemT>.(
-		item: ItemT,
-		binding: VB,
-	) -> Unit,
-): BindingData<ItemT>
-{
-	return Binding(
-		inflate = inflate,
-		onBind = { item, binding, _ ->
-			onBind(item, binding)
-		},
-	)
-}
-
 @Suppress("FunctionName", "UNCHECKED_CAST")
 inline fun <reified ItemT : Any, VB : ViewBinding> Binding(
 	noinline inflate: (LayoutInflater, ViewGroup, Boolean) -> VB,
-	noinline onBind: GenericMultiItemAdapter<ItemT>.(
+	noinline onBind: SimpleMultiItemListAdapter<ItemT>.(
 		item: ItemT,
 		binding: VB,
 		position: Int,
@@ -115,7 +98,7 @@ inline fun <reified ItemT : Any, VB : ViewBinding> Binding(
 	return BindingData(
 		itemClass = ItemT::class,
 		inflate = inflate,
-		onBind = onBind as GenericMultiItemAdapter<@UnsafeVariance ItemT>.(
+		onBind = onBind as SimpleMultiItemListAdapter<@UnsafeVariance ItemT>.(
 			item: @UnsafeVariance ItemT,
 			binding: ViewBinding,
 			position: Int,

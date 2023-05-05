@@ -1,4 +1,4 @@
-package com.elian.generic_list_adapter.adapter
+package com.elian.simple_list_adapter.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,16 +7,16 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 
-class GenericSingleItemAdapter<ItemT : Any, VB : ViewBinding>(
+class SimpleSingleItemListAdapter<ItemT : Any, VB : ViewBinding>(
 	private val inflate: (LayoutInflater, ViewGroup, Boolean) -> VB,
 	areItemsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
 	areContentsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
-	private inline val onBind: GenericSingleItemAdapter<ItemT, VB>.(
+	private inline val onBind: SimpleSingleItemListAdapter<ItemT, VB>.(
 		item: ItemT,
 		binding: VB,
 		position: Int,
 	) -> Unit,
-) : ListAdapter<ItemT, GenericSingleItemAdapter<ItemT, VB>.ViewHolder>(
+) : ListAdapter<ItemT, SimpleSingleItemListAdapter<ItemT, VB>.ViewHolder>(
 	object : DiffUtil.ItemCallback<ItemT>()
 	{
 		override fun areItemsTheSame(oldItem: ItemT, newItem: ItemT) = areItemsTheSame(oldItem, newItem)
@@ -28,8 +28,8 @@ class GenericSingleItemAdapter<ItemT : Any, VB : ViewBinding>(
 	inner class ViewHolder(val binding: VB) : RecyclerView.ViewHolder(binding.root)
 
 
-	fun GenericSingleItemAdapter<ItemT, VB>.getItem(position: Int): ItemT = getItem(position)
-	fun GenericSingleItemAdapter<ItemT, VB>.getItemOrNull(position: Int): ItemT? = kotlin.runCatching { getItem(position) }.getOrNull()
+	fun SimpleSingleItemListAdapter<ItemT, VB>.getItem(position: Int): ItemT = getItem(position)
+	fun SimpleSingleItemListAdapter<ItemT, VB>.getItemOrNull(position: Int): ItemT? = kotlin.runCatching { getItem(position) }.getOrNull()
 
 	@Suppress("Unused")
 	inline fun <T> RecyclerView.setAdapterOrSubmitList(list: List<T>, getAdapter: () -> ListAdapter<T, *>)
@@ -58,16 +58,16 @@ class GenericSingleItemAdapter<ItemT : Any, VB : ViewBinding>(
 }
 
 @Suppress("FunctionName")
-fun <ItemT : Any, VB : ViewBinding> GenericListAdapter(
+fun <ItemT : Any, VB : ViewBinding> SimpleListAdapter(
 	inflate: (LayoutInflater, ViewGroup, Boolean) -> VB,
 	areItemsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
 	areContentsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
-	onBind: GenericSingleItemAdapter<ItemT, VB>.(
+	onBind: SimpleSingleItemListAdapter<ItemT, VB>.(
 		item: ItemT,
 		binding: VB,
 		position: Int,
 	) -> Unit,
-): ListAdapter<ItemT, out RecyclerView.ViewHolder> = GenericSingleItemAdapter(
+): ListAdapter<ItemT, out RecyclerView.ViewHolder> = SimpleSingleItemListAdapter(
 	inflate = inflate,
 	areItemsTheSame = areItemsTheSame,
 	areContentsTheSame = areContentsTheSame,
@@ -77,39 +77,21 @@ fun <ItemT : Any, VB : ViewBinding> GenericListAdapter(
 }
 
 @Suppress("FunctionName")
-fun <ItemT : Any, VB : ViewBinding> GenericListAdapter(
-	inflate: (LayoutInflater, ViewGroup, Boolean) -> VB,
-	areItemsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
-	areContentsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
-	onBind: GenericSingleItemAdapter<ItemT, VB>.(
-		item: ItemT,
-		binding: VB,
-	) -> Unit,
-): ListAdapter<ItemT, out RecyclerView.ViewHolder> = GenericSingleItemAdapter(
-	inflate = inflate,
-	areItemsTheSame = areItemsTheSame,
-	areContentsTheSame = areContentsTheSame,
-) { item, binding, _ ->
-
-	onBind(item, binding)
-}
-
-@Suppress("FunctionName")
 fun <
 	A : Any,
 	B : Any,
 	ItemT : Pair<A, B>,
 	VB : ViewBinding,
-	> GenericListAdapter(
+	> SimpleListAdapter(
 	inflate: (LayoutInflater, ViewGroup, Boolean) -> VB,
 	areItemsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
 	areContentsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
-	onBind: GenericSingleItemAdapter<ItemT, VB>.(
+	onBind: SimpleSingleItemListAdapter<ItemT, VB>.(
 		A, B,
 		binding: VB,
 		position: Int,
 	) -> Unit,
-): ListAdapter<ItemT, out RecyclerView.ViewHolder> = GenericSingleItemAdapter(
+): ListAdapter<ItemT, out RecyclerView.ViewHolder> = SimpleSingleItemListAdapter(
 	inflate = inflate,
 	areItemsTheSame = areItemsTheSame,
 	areContentsTheSame = areContentsTheSame,

@@ -1,9 +1,9 @@
-package com.elian.generic_list_adapter.ui.single_item
+package com.elian.simple_list_adapter.ui.single_item
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.elian.generic_list_adapter.databinding.ActivityGenericListBinding
-import com.elian.generic_list_adapter.model.OperationInfo
+import com.elian.simple_list_adapter.databinding.ActivityGenericListBinding
+import com.elian.simple_list_adapter.model.OperationInfo
 
 class SingleItemActivity : AppCompatActivity()
 {
