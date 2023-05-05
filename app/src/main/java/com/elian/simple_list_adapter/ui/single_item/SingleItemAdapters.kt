@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.elian.simple_list_adapter.adapter.Binding
 import com.elian.simple_list_adapter.adapter.SimpleListAdapter
 import com.elian.simple_list_adapter.databinding.ItemOperationBinding
 import com.elian.simple_list_adapter.model.OperationInfo
@@ -12,7 +13,10 @@ import com.elian.simple_list_adapter.model.OperationInfo
 //region New way
 
 @Suppress("FunctionName")
-fun OperationAdapter_New(items: List<OperationInfo>) = SimpleListAdapter(
+fun OperationAdapter_New(
+	items: List<OperationInfo>,
+	onItemClick: (operation: OperationInfo) -> Unit,
+) = SimpleListAdapter(
 	inflate = ItemOperationBinding::inflate,
 	areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },
 ) { operation: OperationInfo, binding, _ ->
@@ -25,13 +29,18 @@ fun OperationAdapter_New(items: List<OperationInfo>) = SimpleListAdapter(
 		tvExpectedResult.text = "${operation.result}"
 	}
 
+	binding.root.setOnClickListener { onItemClick(operation) }
+
 }.apply { submitList(items) }
 
 //endregion
 
 //region Old way
 
-class OperationAdapter_Old(items: List<OperationInfo>) : ListAdapter<OperationInfo, OperationAdapter_Old.ViewHolder>(
+class OperationAdapter_Old(
+	items: List<OperationInfo>,
+	private inline val onItemClick: (operation: OperationInfo) -> Unit,
+) : ListAdapter<OperationInfo, OperationAdapter_Old.ViewHolder>(
 	object : DiffUtil.ItemCallback<OperationInfo>()
 	{
 		override fun areItemsTheSame(oldItem: OperationInfo, newItem: OperationInfo) = oldItem.uuid == newItem.uuid
@@ -65,6 +74,8 @@ class OperationAdapter_Old(items: List<OperationInfo>) : ListAdapter<OperationIn
 			tvOperationSymbol.text = operation.operationSymbol
 			tvExpectedResult.text = "${operation.result}"
 		}
+
+		holder.binding.root.setOnClickListener { onItemClick(operation) }
 	}
 }
 

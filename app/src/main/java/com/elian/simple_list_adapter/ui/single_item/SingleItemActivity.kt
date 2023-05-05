@@ -1,6 +1,7 @@
 package com.elian.simple_list_adapter.ui.single_item
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.elian.simple_list_adapter.databinding.ActivityGenericListBinding
 import com.elian.simple_list_adapter.model.OperationInfo
@@ -24,8 +25,32 @@ class SingleItemActivity : AppCompatActivity()
 
 	private fun initUi()
 	{
-		val operationAdapter = OperationAdapter_New(listOfOperation)
-		//val operationAdapter = OperationAdapter_Old(listOfOperation)
+		val operationAdapter = OperationAdapter_New(
+			items = listOfOperation,
+			onItemClick = { operation ->
+				operation.apply()
+				{
+					Toast.makeText(
+						applicationContext,
+						"$firstNumber $operationSymbol $secondNumber = $result",
+						Toast.LENGTH_SHORT,
+					).show()
+				}
+			},
+		)
+//		val operationAdapter = OperationAdapter_Old(
+//			items = listOfOperation,
+//			onItemClick = { operation ->
+//				operation.apply()
+//				{
+//					Toast.makeText(
+//						applicationContext,
+//						"$firstNumber $operationSymbol $secondNumber = $result",
+//						Toast.LENGTH_SHORT,
+//					).show()
+//				}
+//			},
+//		)
 
 		binding.recyclerView.adapter = operationAdapter
 
