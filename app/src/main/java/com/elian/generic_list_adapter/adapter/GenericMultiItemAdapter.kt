@@ -77,8 +77,8 @@ fun <ItemT : Any> GenericListAdapter(
 
 data class BindingData<out ItemT : Any>(
 	val itemClass: KClass<@UnsafeVariance ItemT>,
-	val inflate: (LayoutInflater, ViewGroup, Boolean) -> ViewBinding,
-	val onBind: GenericMultiItemAdapter<@UnsafeVariance ItemT>.(
+	inline val inflate: (LayoutInflater, ViewGroup, Boolean) -> ViewBinding,
+	inline val onBind: GenericMultiItemAdapter<@UnsafeVariance ItemT>.(
 		item: @UnsafeVariance ItemT,
 		binding: ViewBinding,
 		position: Int,
