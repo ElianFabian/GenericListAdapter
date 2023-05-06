@@ -1,9 +1,14 @@
 
 # SimpleListAdapter
 
-This repository offers a simple method to create list adapters in Kotlin without the need for excessive code. It is important to note that this is not a library, but rather a demonstration of using specific classes and functions to streamline the adapter creation process. While this approach may not address every scenario, it can help you implement straightforward concepts in a clean and efficient manner. As there is no rigid workflow to define adapters, feel free to modify the code to suit your particular requirements.
+This repository offers a simple method to create list adapters in Kotlin without the need for excessive code. It is important to note that this is not a library, but rather a demonstration of using specific classes and functions to simplify the adapter creation process. While this approach may not address every scenario, it can help you implement straightforward concepts in a clean and efficient manner. As there is no rigid workflow to define adapters, feel free to modify the code to suit your particular requirements.
 
-To better understand the advantages of this approach, the repository includes a simple app that compares the conventional approach to creating list adapters with this more straightforward method.
+To better understand the advantages of this approach, the repository includes a simple app with 3 screens:
+- SingleItemAdapter
+- Nested adapters
+- MultiItemAdapter
+
+In the file with the adapter definitions you have a the same adapter twice, one applying the method proposed here and the regular one to allow an easy comparison.
 
 The primary focus of this simplification is on the binding aspect of adapters, which is typically the most important aspect of adapter creation.
 
