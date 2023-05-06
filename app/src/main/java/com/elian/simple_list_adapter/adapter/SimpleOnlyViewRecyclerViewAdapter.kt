@@ -5,6 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 
+/*
+ * This is for adapters that are only to inflate views without any item associated to it.
+ * I don't think this is a pretty common thing but I guess it can be useful when required.
+ */
+
 private class SimpleOnlyViewRecyclerViewAdapter<VB : ViewBinding>(
 	private inline val inflate: (LayoutInflater, ViewGroup, Boolean) -> VB,
 	private val count: Int = 1,
