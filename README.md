@@ -24,9 +24,9 @@ buildFeatures {
 
 Then add these files to your project:
 
-[For single item listadapter](https://github.com/ElianFabian/SimpleListAdapter/blob/main/app/src/main/java/com/elian/simple_list_adapter/adapter/SimpleSingleItemListAdapter.kt)
+[SingleItemListAdapter](https://github.com/ElianFabian/SimpleListAdapter/blob/main/app/src/main/java/com/elian/simple_list_adapter/adapter/SimpleSingleItemListAdapter.kt)
 
-[For multi item listadapter](https://github.com/ElianFabian/SimpleListAdapter/blob/main/app/src/main/java/com/elian/simple_list_adapter/adapter/SimpleMultiItemListAdapter.kt)
+[MultiItemListAdapter](https://github.com/ElianFabian/SimpleListAdapter/blob/main/app/src/main/java/com/elian/simple_list_adapter/adapter/SimpleMultiItemListAdapter.kt)
 
 ## Usage
 
