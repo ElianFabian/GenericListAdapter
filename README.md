@@ -189,4 +189,6 @@ fun MessagesAdapter(
 ).apply { submitList(messages) }
 ```
 
+In this case to specify the bindings we make use of the Binding() function, what it simply does is to return the data needed for the adapter to know how to bind any item type to its view.
+
 And there it is, a simple, clean, and ready-to-use multi-item adapter! Feel free to check out this [file](https://github.com/ElianFabian/SimpleListAdapter/blob/main/app/src/main/java/com/elian/simple_list_adapter/ui/multi_item/MultiItemAdapter.kt) to compare this solution to the regular one.
