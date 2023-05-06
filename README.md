@@ -164,7 +164,7 @@ fun MessagesAdapter(
 ) = SimpleListAdapter(
     areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },
     itemBindings = listOf(
-        Binding(ItemUserMessageBinding::inflate) { message: UserMessage, binding, _ ->
+        Binding(ItemUserMessageBinding::inflate) { message: UserMessage, binding, position ->
 
             binding.apply()
             {
@@ -174,7 +174,7 @@ fun MessagesAdapter(
 
             binding.root.setOnClickListener { onUserMessageClick(message) }
         },
-        Binding(ItemOtherUserMessageBinding::inflate) { message: OtherUserMessage, binding, _ ->
+        Binding(ItemOtherUserMessageBinding::inflate) { message: OtherUserMessage, binding, position ->
 
             binding.apply()
             {
