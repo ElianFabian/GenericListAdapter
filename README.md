@@ -23,7 +23,8 @@ Then add these files to your project:
 
 ## Usage
 
-Let's define a simple **single item type adapter**! In this case, we will create an adapter for simple arithmetic operations.
+### SingleItemAdapter
+Let's define a simple **single-item type adapter**! In this case, we will create an adapter for simple arithmetic operations.
 
 We have this **data class** for the item:
 ```kt
@@ -116,6 +117,7 @@ Also if you want to see how to do the same thing with **nested adapters** check 
 
 <br>
 
+### MultiItemAdapter
 Let's now define a **simple multi-item type adapter**! It's actually quite similar to what we have seen so far, but instead of a binding block, we have a list of binding blocks.
 
 For this adapter, we will be creating a chat message display. Here are our **sealed data classes**:
