@@ -9,11 +9,11 @@ sealed class Message
 
 data class UserMessage(
 	val content: String,
-	val hour: String
+	val hour: String,
 ) : Message()
 
 data class OtherUserMessage(
 	val senderName: String,
 	val content: String,
-	val hour: String
+	val hour: String,
 ) : Message()
