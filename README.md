@@ -140,10 +140,10 @@ data class OtherUserMessage(
 ```
 
 The own user message layout:
-![image](https://user-images.githubusercontent.com/86477169/236632639-dd883076-bcb6-468e-a3a8-1b38ed290595.png)
+<img src="https://user-images.githubusercontent.com/86477169/236632639-dd883076-bcb6-468e-a3a8-1b38ed290595.png" height="250" />
 
 The other user message layout:
-![image](https://user-images.githubusercontent.com/86477169/236632705-d7107ccb-6666-4d7a-82b8-4c2a69005690.png)
+<img src="https://user-images.githubusercontent.com/86477169/236632705-d7107ccb-6666-4d7a-82b8-4c2a69005690.png" height="250" />
 
 Now, we are ready to define our adapter:
 ```kt
