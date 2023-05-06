@@ -1,85 +1,180 @@
-# GenericAdapter
 
-### THIS README IS OUTDATED.
+# SimpleListAdapter
 
+This repository offers a simple method to create list adapters in Kotlin without the need for excessive code. It is important to note that this is not a library, but rather a demonstration of using specific classes and functions to streamline the adapter creation process. While this approach may not address every scenario, it can help you implement straightforward concepts in a clean and efficient manner. As there is no rigid workflow to define adapters, feel free to modify the code to suit your particular requirements.
 
-This is a simple project for 2 classes that makes easier to work with adpaters for recyclerviews.
+To better understand the advantages of this approach, the repository includes a simple app that compares the conventional approach to creating list adapters with this more straightforward method.
 
-One class is **GenericAdapter** that is used for single-item adapters and the other is **GenericMultiItemAdapter** to work with more than one type of item.
+The primary focus of this simplification is on the binding aspect of adapters, which is typically the most important aspect of adapter creation.
 
-Firstly, this is **not a serious project**, I just made it because I found the idea interesting and I think there may be people who may like it, at least the concept.
+## Setup
 
-Now let's see how to use them:
+This method only requieres the ViewBinding feature:
 
-## GenericAdapter  class
+```
+buildFeatures {  
+  viewBinding true  
+}
+```
 
-Let's first think what the essential parts of an adapter are actually relevant:
-- The xml layout of the item.
-- The data type of the item (which in Kotlin will regularly be a data class).
-- The binding of both.
+Then add these files to your project:
+[For single item listadapter](https://github.com/ElianFabian/SimpleListAdapter/blob/main/app/src/main/java/com/elian/simple_list_adapter/adapter/SimpleSingleItemListAdapter.kt)
+[For multi item listadapter](https://github.com/ElianFabian/SimpleListAdapter/blob/main/app/src/main/java/com/elian/simple_list_adapter/adapter/SimpleMultiItemListAdapter.kt)
 
-Now to better illustrate the usage I will show you an example used in the app about an item of a simple math operation:
+## Usage
 
-###  The layout
-![item_layout](https://user-images.githubusercontent.com/86477169/213011000-de3a436c-2efa-4376-8755-1c6ad792d12d.PNG)
-This is the xml layout we're going to use (to make it simpler, I won't show xml content in this readme).
+Let's define a simple **single item type adapter**! In this case, we will create an adapter for simple arithmetic operations.
 
-### The item data class
-![image](https://user-images.githubusercontent.com/86477169/218253563-8502eed6-a415-4365-bea6-45996addf399.png)
+We have this **data class** for the item:
+```kt
+data class OperationInfo(  
+    val firstNumber: Int,  
+    val secondNumber: Int,  
+    val operationSymbol: String,  
+    val result: Int,  
+    val uuid: String = UUID.randomUUID().toString(),  
+)
+```
+Next, we have the ** XML** layout that we will use for the item. We won't show the XML code here to keep it simple:![item_layout](https://user-images.githubusercontent.com/86477169/213011000-de3a436c-2efa-4376-8755-1c6ad792d12d.PNG)
 
-The uuid in here may be relevant since the GenericAdapter inherits from the ListAdapter.
+Now, let's create our adapter. We'll start with a simple version:
+```kt
+@Suppress("FunctionName")  
+fun OperationAdapter() = SimpleListAdapter(  
+	inflate = ItemOperationBinding::inflate,  
+) { operation: OperationInfo, binding, position ->  
+  
+	binding.apply()  
+	{  
+		tvFirstNumber.text = "${operation.firstNumber}"  
+		tvSecondNumber.text = "${operation.secondNumber}"  
+        tvOperationSymbol.text = operation.operationSymbol  
+        tvExpectedResult.text = "${operation.result}"  
+     }  
+}
+```
+And there you have it! A list adapter that's ready to use. Let's go into more detail:
 
-### The binding
-Finally, we're going to use the generic adapter, the way to go is to create a function that will create an instance of the GenericAdapter with the information we want:
+As you can see, we're defining a function to create the adapter. Since it's meant to be used like a regular adapter, we'll use PascalCase naming convention (but of course, you can name it however you prefer).
 
-![image](https://user-images.githubusercontent.com/86477169/218253729-9c4d6421-2799-4748-a1c3-9bc531846877.png)
+We then indicate which *Binding class we're going to use by passing the inflate method as a reference. In the lambda block, we define the binding logic.
 
+We also need to specify which item class we want to use. We could do this by using type parameters, but I think it's more elegant to put it in the lambda parameter.
 
-When we instantiate the GenericAdapter class we only have to provide the inflate function of our layout binding and a lambda with the actual binding.
+Now let's say we want to be able to modify our list without any problem, pass an onItemClick lambda and a list when creating an instance of our adapter:
+```kt
+@Suppress("FunctionName")  
+fun OperationAdapter_New(  
+    items: List<OperationInfo>,  
+    onItemClick: (operation: OperationInfo) -> Unit,  
+) = SimpleListAdapter(  
+    inflate = ItemOperationBinding::inflate,  
+    areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },  
+) { operation: OperationInfo, binding, _ ->  
+  
+	binding.apply()  
+	{  
+		tvFirstNumber.text = "${operation.firstNumber}"  
+		tvSecondNumber.text = "${operation.secondNumber}"  
+		tvOperationSymbol.text = operation.operationSymbol  
+		tvExpectedResult.text = "${operation.result}"  
+  }
+  
+  binding.root.setOnClickListener { onItemClick(operation) }  
+  
+}.apply { submitList(items) }
+```
+Now we're done! We can use it like any regular list adapter. By the way, you can also give a value to the areContentsTheSame parameter, but most of the time, it won't be necessary since its default value is:
 
-The **first parameter** of the lambda is the item we want to bind (you should indicate the type of the item in the lambda if you want to avoid putting it as a generic argument between the "<>" symbols).
-The **second parameter** (that in this case is not being used) is the viewholder which can be useful to have in some scenarios.
-In the lambda the context or in other words the **this** is the binding class so that's why you can access the members of the binding without typing "binding.whatever" every time.
+```kt
+areContentsTheSame = { oldItem, newItem -> oldItem == newItem }
+```
+It's also worth mentioning that the scope of the lambda is the adapter's one, so you can access its functions without any problem. However, since getItem() is protected, I defined extension functions for getItem and getItemOrNull to use them when needed. Also, since the return type of the SimpleListAdapter function is just ListAdapter, you won't be able to access those extension functions outside of the lambda to respect the design of the list adapter.
 
-As you can see at the bottom we use the submitList() function, that function is from the ListAdapter (the class that the GenericAdapter inherits from) and that step is optional it's just for having the list full when instatiating the adapter.
+Now we could use it like this in an Activity or a Fragment:
+```kt
+val operationAdapter = OperationAdapter_New(  
+	items = listOfOperation,  
+	onItemClick = { operation ->  
+		operation.apply()  
+		{  
+			Toast.makeText(  
+				applicationContext,  
+				"$firstNumber $operationSymbol $secondNumber = $result",  
+				Toast.LENGTH_SHORT,  
+			).show()  
+		}  
+	},  
+)
 
-As this uses a ListAdapter and assuming you're using a data class for the item, you should set the **areItemsTheSame** parameter in the GenericAdapter class to have an appropiate behaviour.
-But, in case your list is going to be static (never modified) it won't matter.
+binding.recyclerView.adapter = operationAdapter
+```
+Feel free to check this [file](https://github.com/ElianFabian/SimpleListAdapter/blob/main/app/src/main/java/com/elian/simple_list_adapter/ui/single_item/SingleItemAdapters.kt) to compare this solution to the regular one.
 
-![instantiation of the operation adapter](https://user-images.githubusercontent.com/86477169/213016492-ad71ff06-613d-46c8-9e59-aae0c08042f1.PNG)
+Also if you want to see how to do the same thing with **nested adapters** check this [one](https://github.com/ElianFabian/SimpleListAdapter/blob/main/app/src/main/java/com/elian/simple_list_adapter/ui/nested_items/NestedItemsAdapters.kt).
 
-If we want we can add more interaction to this adding a onItemClick parameter like this:
+<br>
 
-![image](https://user-images.githubusercontent.com/86477169/218253832-49c087fb-e9e6-47a7-9ccb-9e0fb06bd5ec.png)
+Let's now define a **simple multi-item type adapter**! It's actually quite similar to what we have seen so far, but instead of a binding block, we have a list of binding blocks.
 
-And then use it like this:
+For this adapter, we will be creating a chat message display. Here are our **sealed data classes**:
+```kt
+sealed class Message  
+{  
+	val uuid: String = UUID.randomUUID().toString()  
+}  
+  
+data class UserMessage(  
+    val content: String,  
+    val hour: String  
+) : Message()  
+  
+data class OtherUserMessage(  
+    val senderName: String,  
+    val content: String,  
+    val hour: String  
+) : Message()
+```
 
-![image](https://user-images.githubusercontent.com/86477169/218253959-55be0b75-d2e3-4c57-bcc2-ece213eee0e7.png)
+The own user message layout:
+![image](https://user-images.githubusercontent.com/86477169/236632639-dd883076-bcb6-468e-a3a8-1b38ed290595.png)
 
-Now you only have to set your recyclerview adapter with the one we created and that's all!
+The other user message layout:
+![image](https://user-images.githubusercontent.com/86477169/236632705-d7107ccb-6666-4d7a-82b8-4c2a69005690.png)
 
-PD: for convention, the name of this type of function is in PascalCase as it's usage it's like instantiating a new instance of a custom class.
+Now, we are ready to define our adapter:
+```kt
+@Suppress("FunctionName")  
+fun MessagesAdapter(  
+    messages: List<Message>,  
+    onUserMessageClick: (message: UserMessage) -> Unit,  
+    onOtherUserMessageClick: (message: OtherUserMessage) -> Unit,  
+) = SimpleListAdapter(  
+    areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },  
+	itemBindings = listOf(  
+		Binding(ItemUserMessageBinding::inflate) { message: UserMessage, binding, _ ->  
+  
+			binding.apply()  
+		    {
+			     tvContent.text = message.content  
+				 tvTime.text = message.hour  
+			}  
+  
+		    binding.root.setOnClickListener { onUserMessageClick(message) }  
+		},  
+        Binding(ItemOtherUserMessageBinding::inflate) { message: OtherUserMessage, binding, _ ->  
+  
+		    binding.apply()  
+		    {  
+				tvSenderName.text = message.senderName  
+				tvContent.text = message.content  
+				tvTime.text = message.hour  
+			}  
+  
+			binding.root.setOnClickListener { onOtherUserMessageClick(message) }  
+	    },  
+	)
+).apply { submitList(messages) }
+```
 
-## GenericMultiItemAdapter  class
-
-This one is very similar than the previous one, to make a good use of this class we should define a sealed class/interface for best practice:
-
-![image](https://user-images.githubusercontent.com/86477169/218254258-aa34545b-4cdd-49c1-8124-4d8267f5dc01.png)
-
-Now let's create the adapter:
-
-![image](https://user-images.githubusercontent.com/86477169/218254497-6d0051bf-1620-4265-ac84-05783fec18b4.png)
-
-In this case we now have a **list of bindings** and to create them we use the ItemBinding function.
-
-As we use a sealed class it's easy to set the value of the **areItemsTheSame**.
-
-And this is how we use it:
-
-![image](https://user-images.githubusercontent.com/86477169/218254383-6e2f4b00-1ab5-4666-95b4-9f323771950c.png)
-
-
-# Extra
-I hope you find this interesting and in case you want to understand it better try to play with the example of this repository.
-
-PD: If you see weird text colors it's because Android Studio can't color well sometimes with my custom style.
+And there it is, a simple, clean, and ready-to-use multi-item adapter! Feel free to check out this [file](https://github.com/ElianFabian/SimpleListAdapter/blob/main/app/src/main/java/com/elian/simple_list_adapter/ui/multi_item/MultiItemAdapter.kt) to compare this solution to the regular one.
