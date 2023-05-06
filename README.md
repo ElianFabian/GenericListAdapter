@@ -46,11 +46,11 @@ fun OperationAdapter() = SimpleListAdapter(
   
 	binding.apply()  
 	{  
-		tvFirstNumber.text = "${operation.firstNumber}"  
-		tvSecondNumber.text = "${operation.secondNumber}"  
-        tvOperationSymbol.text = operation.operationSymbol  
-        tvExpectedResult.text = "${operation.result}"  
-     }  
+            tvFirstNumber.text = "${operation.firstNumber}"  
+	    tvSecondNumber.text = "${operation.secondNumber}"  
+            tvOperationSymbol.text = operation.operationSymbol  
+            tvExpectedResult.text = "${operation.result}"  
+        }  
 }
 ```
 And there you have it! A list adapter that's ready to use. Let's go into more detail:
@@ -74,14 +74,14 @@ fun OperationAdapter_New(
   
 	binding.apply()  
 	{  
-		tvFirstNumber.text = "${operation.firstNumber}"  
-		tvSecondNumber.text = "${operation.secondNumber}"  
-		tvOperationSymbol.text = operation.operationSymbol  
-		tvExpectedResult.text = "${operation.result}"  
-  }
+	    tvFirstNumber.text = "${operation.firstNumber}"  
+	    tvSecondNumber.text = "${operation.secondNumber}"  
+            tvOperationSymbol.text = operation.operationSymbol  
+	    tvExpectedResult.text = "${operation.result}"  
+         }
   
-  binding.root.setOnClickListener { onItemClick(operation) }  
-  
+         binding.root.setOnClickListener { onItemClick(operation) }  
+
 }.apply { submitList(items) }
 ```
 Now we're done! We can use it like any regular list adapter. By the way, you can also give a value to the areContentsTheSame parameter, but most of the time, it won't be necessary since its default value is:
@@ -144,36 +144,36 @@ The other user message layout:
 
 Now, we are ready to define our adapter:
 ```kt
-@Suppress("FunctionName")  
-fun MessagesAdapter(  
-    messages: List<Message>,  
-    onUserMessageClick: (message: UserMessage) -> Unit,  
-    onOtherUserMessageClick: (message: OtherUserMessage) -> Unit,  
-) = SimpleListAdapter(  
-    areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },  
-	itemBindings = listOf(  
-		Binding(ItemUserMessageBinding::inflate) { message: UserMessage, binding, _ ->  
-  
-			binding.apply()  
-		    {
-			     tvContent.text = message.content  
-				 tvTime.text = message.hour  
-			}  
-  
-		    binding.root.setOnClickListener { onUserMessageClick(message) }  
-		},  
-        Binding(ItemOtherUserMessageBinding::inflate) { message: OtherUserMessage, binding, _ ->  
-  
-		    binding.apply()  
-		    {  
-				tvSenderName.text = message.senderName  
-				tvContent.text = message.content  
-				tvTime.text = message.hour  
-			}  
-  
-			binding.root.setOnClickListener { onOtherUserMessageClick(message) }  
-	    },  
-	)
+@Suppress("FunctionName")
+fun MessagesAdapter_New(
+	messages: List<Message>,
+	onUserMessageClick: (message: UserMessage) -> Unit,
+	onOtherUserMessageClick: (message: OtherUserMessage) -> Unit,
+) = SimpleListAdapter(
+	areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },
+	itemBindings = listOf(
+		Binding(ItemUserMessageBinding::inflate) { message: UserMessage, binding, _ ->
+
+			binding.apply()
+			{
+				tvContent.text = message.content
+				tvTime.text = message.hour
+			}
+
+			binding.root.setOnClickListener { onUserMessageClick(message) }
+		},
+		Binding(ItemOtherUserMessageBinding::inflate) { message: OtherUserMessage, binding, _ ->
+
+			binding.apply()
+			{
+				tvSenderName.text = message.senderName
+				tvContent.text = message.content
+				tvTime.text = message.hour
+			}
+
+			binding.root.setOnClickListener { onOtherUserMessageClick(message) }
+		},
+	),
 ).apply { submitList(messages) }
 ```
 
