@@ -13,7 +13,7 @@ This method only requieres the ViewBinding feature:
 
 ```
 buildFeatures {  
-  viewBinding true  
+    viewBinding true  
 }
 ```
 
