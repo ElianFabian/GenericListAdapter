@@ -39,18 +39,19 @@ Next, we have the ** XML** layout that we will use for the item. We won't show t
 
 Now, let's create our adapter. We'll start with a simple version:
 ```kt
-@Suppress("FunctionName")  
-fun OperationAdapter() = SimpleListAdapter(  
-	inflate = ItemOperationBinding::inflate,  
-) { operation: OperationInfo, binding, position ->  
-  
-	binding.apply()  
-	{  
-            tvFirstNumber.text = "${operation.firstNumber}"  
-	    tvSecondNumber.text = "${operation.secondNumber}"  
-            tvOperationSymbol.text = operation.operationSymbol  
-            tvExpectedResult.text = "${operation.result}"  
-        }  
+@Suppress("FunctionName")
+fun OperationAdapter() = SimpleListAdapter(
+	inflate = ItemOperationBinding::inflate,
+	areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },
+) { operation: OperationInfo, binding, _ ->
+
+	binding.apply()
+	{
+		tvFirstNumber.text = "${operation.firstNumber}"
+		tvSecondNumber.text = "${operation.secondNumber}"
+		tvOperationSymbol.text = operation.operationSymbol
+		tvExpectedResult.text = "${operation.result}"
+	}
 }
 ```
 And there you have it! A list adapter that's ready to use. Let's go into more detail:
@@ -63,24 +64,24 @@ We also need to specify which item class we want to use. We could do this by usi
 
 Now let's say we want to be able to modify our list without any problem, pass an onItemClick lambda and a list when creating an instance of our adapter:
 ```kt
-@Suppress("FunctionName")  
-fun OperationAdapter_New(  
-    items: List<OperationInfo>,  
-    onItemClick: (operation: OperationInfo) -> Unit,  
-) = SimpleListAdapter(  
-    inflate = ItemOperationBinding::inflate,  
-    areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },  
-) { operation: OperationInfo, binding, _ ->  
-  
-	binding.apply()  
-	{  
-	    tvFirstNumber.text = "${operation.firstNumber}"  
-	    tvSecondNumber.text = "${operation.secondNumber}"  
-            tvOperationSymbol.text = operation.operationSymbol  
-	    tvExpectedResult.text = "${operation.result}"  
-         }
-  
-         binding.root.setOnClickListener { onItemClick(operation) }  
+@Suppress("FunctionName")
+fun OperationAdapter(
+	items: List<OperationInfo>,
+	onItemClick: (operation: OperationInfo) -> Unit,
+) = SimpleListAdapter(
+	inflate = ItemOperationBinding::inflate,
+	areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },
+) { operation: OperationInfo, binding, _ ->
+
+	binding.apply()
+	{
+		tvFirstNumber.text = "${operation.firstNumber}"
+		tvSecondNumber.text = "${operation.secondNumber}"
+		tvOperationSymbol.text = operation.operationSymbol
+		tvExpectedResult.text = "${operation.result}"
+	}
+
+	binding.root.setOnClickListener { onItemClick(operation) }
 
 }.apply { submitList(items) }
 ```
@@ -93,18 +94,18 @@ It's also worth mentioning that the scope of the lambda is the adapter's one, so
 
 Now we could use it like this in an Activity or a Fragment:
 ```kt
-val operationAdapter = OperationAdapter_New(  
-	items = listOfOperation,  
-	onItemClick = { operation ->  
-		operation.apply()  
-		{  
-			Toast.makeText(  
-				applicationContext,  
-				"$firstNumber $operationSymbol $secondNumber = $result",  
-				Toast.LENGTH_SHORT,  
-			).show()  
-		}  
-	},  
+val operationAdapter = OperationAdapter_New(
+	items = listOfOperation,
+	onItemClick = { operation ->
+		operation.apply()
+		{
+			Toast.makeText(
+				applicationContext,
+				"$firstNumber $operationSymbol $secondNumber = $result",
+				Toast.LENGTH_SHORT,
+			).show()
+		}
+	},
 )
 
 binding.recyclerView.adapter = operationAdapter
@@ -119,20 +120,20 @@ Let's now define a **simple multi-item type adapter**! It's actually quite simil
 
 For this adapter, we will be creating a chat message display. Here are our **sealed data classes**:
 ```kt
-sealed class Message  
-{  
-	val uuid: String = UUID.randomUUID().toString()  
-}  
-  
-data class UserMessage(  
-    val content: String,  
-    val hour: String  
-) : Message()  
-  
-data class OtherUserMessage(  
-    val senderName: String,  
-    val content: String,  
-    val hour: String  
+sealed class Message
+{
+	val uuid: String = UUID.randomUUID().toString()
+}
+
+data class UserMessage(
+	val content: String,
+	val hour: String
+) : Message()
+
+data class OtherUserMessage(
+	val senderName: String,
+	val content: String,
+	val hour: String
 ) : Message()
 ```
 
@@ -145,7 +146,7 @@ The other user message layout:
 Now, we are ready to define our adapter:
 ```kt
 @Suppress("FunctionName")
-fun MessagesAdapter_New(
+fun MessagesAdapter(
 	messages: List<Message>,
 	onUserMessageClick: (message: UserMessage) -> Unit,
 	onOtherUserMessageClick: (message: OtherUserMessage) -> Unit,
