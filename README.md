@@ -14,7 +14,7 @@ The primary focus of this simplification is on the binding aspect of adapters, w
 
 ## Setup
 
-This method only requieres the ViewBinding feature:
+This method only requieres the ViewBinding feature in the build.gradle app:
 
 ```
 buildFeatures {  
