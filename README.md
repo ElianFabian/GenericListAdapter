@@ -65,7 +65,7 @@ We also need to specify which item class we want to use. We could do this by usi
 Now let's say we want to be able to modify our list without any problem, pass an onItemClick lambda and a list when creating an instance of our adapter:
 ```kt
 @Suppress("FunctionName")
-fun OperationAdapter_New(
+fun OperationAdapter(
     items: List<OperationInfo>,
     onItemClick: (operation: OperationInfo) -> Unit,
 ) = SimpleListAdapter(
@@ -146,7 +146,7 @@ The other user message layout:
 Now, we are ready to define our adapter:
 ```kt
 @Suppress("FunctionName")
-fun MessagesAdapter_New(
+fun MessagesAdapter(
     messages: List<Message>,
     onUserMessageClick: (message: UserMessage) -> Unit,
     onOtherUserMessageClick: (message: OtherUserMessage) -> Unit,
