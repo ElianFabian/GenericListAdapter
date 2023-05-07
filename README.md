@@ -93,7 +93,7 @@ fun OperationAdapter(
 
 }.apply { submitList(items) }
 ```
-Now we're done! We can use it like any regular list adapter. By the way, you can also give a value to the areContentsTheSame parameter, but most of the time, it won't be necessary since its default value is:
+Now we're done! We can use it like any regular list adapter. By the way, you can also give a value to the areContentsTheSame parameter, but most of the time, it wouldn't be necessary since its default value is:
 
 ```kt
 areContentsTheSame = { oldItem, newItem -> oldItem == newItem }
