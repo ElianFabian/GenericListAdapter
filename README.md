@@ -98,7 +98,7 @@ Now we're done! We can use it like any regular list adapter. By the way, you can
 ```kt
 areContentsTheSame = { oldItem, newItem -> oldItem == newItem }
 ```
-It's also worth mentioning that the scope of the lambda is the adapter's one, so you can access its functions without any problem. However, since getItem() is protected, We've defined extension functions inside the custom adapter class for **getItem()** and **getItemOrNull()** to use them when needed. Also, since the return type of the SimpleListAdapter function is just ListAdapter, you won't be able to access those extension functions outside of the lambda to respect the design of the getItem in the ListAdapter class.
+It's also worth mentioning that the scope of the lambda is the adapter's one, so you can access its functions without any problem. However, since getItem() is marked as protected we've defined several extension functions inside the custom adapter class for **getItem()** and **getItemOrNull()** to use when needed. Also, since the return type of the SimpleListAdapter function is just ListAdapter, you won't be able to access those extension functions outside of the lambda to respect the original restriction of the getItem function in the ListAdapter class.
 
 Now we could use it like this in an Activity or a Fragment:
 ```kt
