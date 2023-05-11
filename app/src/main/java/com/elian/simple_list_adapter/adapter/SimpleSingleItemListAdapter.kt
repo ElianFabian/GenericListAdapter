@@ -12,8 +12,8 @@ class SimpleSingleItemListAdapter<ItemT : Any, VB : ViewBinding>(
 	areItemsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
 	areContentsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
 	private inline val onBind: SimpleSingleItemListAdapter<ItemT, VB>.(
-		item: ItemT,
 		binding: VB,
+		item: ItemT,
 		position: Int,
 	) -> Unit,
 ) : ListAdapter<ItemT, SimpleSingleItemListAdapter<ItemT, VB>.ViewHolder>(
@@ -53,7 +53,7 @@ class SimpleSingleItemListAdapter<ItemT : Any, VB : ViewBinding>(
 
 	override fun onBindViewHolder(holder: ViewHolder, position: Int)
 	{
-		onBind(getItem(position), holder.binding, position)
+		onBind(holder.binding, getItem(position), position)
 	}
 }
 
@@ -63,17 +63,17 @@ fun <ItemT : Any, VB : ViewBinding> SimpleListAdapter(
 	areItemsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
 	areContentsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
 	onBind: SimpleSingleItemListAdapter<ItemT, VB>.(
-		item: ItemT,
 		binding: VB,
+		item: ItemT,
 		position: Int,
 	) -> Unit,
 ): ListAdapter<ItemT, out RecyclerView.ViewHolder> = SimpleSingleItemListAdapter(
 	inflate = inflate,
 	areItemsTheSame = areItemsTheSame,
 	areContentsTheSame = areContentsTheSame,
-) { item, binding, position ->
+) { binding, item, position ->
 
-	onBind(item, binding, position)
+	onBind(binding, item, position)
 }
 
 @Suppress("FunctionName")
@@ -87,15 +87,15 @@ fun <
 	areItemsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
 	areContentsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
 	onBind: SimpleSingleItemListAdapter<ItemT, VB>.(
-		A, B,
 		binding: VB,
+		A, B,
 		position: Int,
 	) -> Unit,
 ): ListAdapter<ItemT, out RecyclerView.ViewHolder> = SimpleSingleItemListAdapter(
 	inflate = inflate,
 	areItemsTheSame = areItemsTheSame,
 	areContentsTheSame = areContentsTheSame,
-) { item, binding, position ->
+) { binding, item, position ->
 
-	onBind(item.first, item.second, binding, position)
+	onBind(binding, item.first, item.second, position)
 }

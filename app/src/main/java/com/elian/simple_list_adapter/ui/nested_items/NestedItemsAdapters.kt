@@ -22,7 +22,7 @@ import com.elian.simple_list_adapter.model.SkillInfo
 fun SkillsByPersonAdapter_New(skillsByPerson: Map<Person, List<SkillInfo>>) = SimpleListAdapter(
 	inflate = ItemPersonBinding::inflate,
 	areItemsTheSame = { oldItem, newItem -> oldItem.first.uuid == newItem.first.uuid },
-) { person: Person, skills: List<SkillInfo>, binding, _ ->
+) { binding, person: Person, skills: List<SkillInfo>, _ ->
 
 	binding.apply()
 	{
@@ -37,7 +37,7 @@ fun SkillsByPersonAdapter_New(skillsByPerson: Map<Person, List<SkillInfo>>) = Si
 fun SkillAdapter_New() = SimpleListAdapter(
 	inflate = ItemSkillBinding::inflate,
 	areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },
-) { skill: SkillInfo, binding, _ ->
+) { binding, skill: SkillInfo, _ ->
 
 	binding.apply()
 	{

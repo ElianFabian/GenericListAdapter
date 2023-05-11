@@ -48,7 +48,7 @@ class SimpleMultiItemListAdapter<ItemT : Any>(
 
 	override fun onBindViewHolder(holder: ViewHolder, position: Int)
 	{
-		holder.bindingData.onBind(this, getItem(position), holder.binding, position)
+		holder.bindingData.onBind(this, holder.binding, getItem(position), position)
 	}
 
 	override fun getItemViewType(position: Int): Int
@@ -58,7 +58,6 @@ class SimpleMultiItemListAdapter<ItemT : Any>(
 		return itemClassToViewType[item::class]!!
 	}
 }
-
 
 
 @Suppress("FunctionName")
@@ -79,8 +78,8 @@ class BindingData<out ItemT : Any>(
 	inline val itemClass: KClass<@UnsafeVariance ItemT>,
 	inline val inflate: (LayoutInflater, ViewGroup, Boolean) -> ViewBinding,
 	inline val onBind: SimpleMultiItemListAdapter<@UnsafeVariance ItemT>.(
-		item: @UnsafeVariance ItemT,
 		binding: ViewBinding,
+		item: @UnsafeVariance ItemT,
 		position: Int,
 	) -> Unit,
 )
@@ -89,8 +88,8 @@ class BindingData<out ItemT : Any>(
 inline fun <reified ItemT : Any, VB : ViewBinding> Binding(
 	noinline inflate: (LayoutInflater, ViewGroup, Boolean) -> VB,
 	noinline onBind: SimpleMultiItemListAdapter<ItemT>.(
-		item: ItemT,
 		binding: VB,
+		item: ItemT,
 		position: Int,
 	) -> Unit,
 ): BindingData<ItemT>
@@ -99,8 +98,8 @@ inline fun <reified ItemT : Any, VB : ViewBinding> Binding(
 		itemClass = ItemT::class,
 		inflate = inflate,
 		onBind = onBind as SimpleMultiItemListAdapter<@UnsafeVariance ItemT>.(
-			item: @UnsafeVariance ItemT,
 			binding: ViewBinding,
+			item: @UnsafeVariance ItemT,
 			position: Int,
 		) -> Unit,
 	)
