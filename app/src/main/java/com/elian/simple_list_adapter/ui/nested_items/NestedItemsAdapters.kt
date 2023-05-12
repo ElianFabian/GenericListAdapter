@@ -83,7 +83,7 @@ class SkillsByPersonAdapter_Old(skillsByPerson: Map<Person, List<SkillInfo>>) : 
 			tvLastname.text = person.lastname
 
 
-			// This is for optimization, creating a new adapter every time the view is binded to the object
+			// This is for optimization, creating a new adapter every time the view is binded with the object
 			// it's really slow
 			val listAdapter = (rvSkills.adapter as? ListAdapter<SkillInfo, RecyclerView.ViewHolder>) ?: SkillAdapter_Old()
 

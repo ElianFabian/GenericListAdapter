@@ -51,7 +51,7 @@ Now, let's create our adapter. We'll start with a simple version:
 fun OperationAdapter() = SimpleListAdapter(
     inflate = ItemOperationBinding::inflate,
     areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },
-) { operation: OperationInfo, binding, position ->
+) { binding, operation: OperationInfo, position ->
 
     binding.apply()
     {
@@ -79,7 +79,7 @@ fun OperationAdapter(
 ) = SimpleListAdapter(
     inflate = ItemOperationBinding::inflate,
     areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },
-) { operation: OperationInfo, binding, _ ->
+) { binding, operation: OperationInfo, _ ->
 
     binding.apply()
     {
@@ -166,7 +166,7 @@ fun MessagesAdapter(
 ) = SimpleListAdapter(
     areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },
     itemBindings = listOf(
-        Binding(ItemUserMessageBinding::inflate) { message: UserMessage, binding, position ->
+        Binding(ItemUserMessageBinding::inflate) { binding, message: UserMessage, position ->
 
             binding.apply()
             {
@@ -176,7 +176,7 @@ fun MessagesAdapter(
 
             binding.root.setOnClickListener { onUserMessageClick(message) }
         },
-        Binding(ItemOtherUserMessageBinding::inflate) { message: OtherUserMessage, binding, position ->
+        Binding(ItemOtherUserMessageBinding::inflate) { binding, message: OtherUserMessage, position ->
 
             binding.apply()
             {
