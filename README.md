@@ -103,14 +103,14 @@ It's also worth mentioning that the scope of the lambda is the adapter's one, so
 Now we could use it like this in an Activity or a Fragment:
 ```kotlin
 val operationAdapter = OperationAdapter_New(
-	items = listOfOperation,
-	onItemClick = { operation ->
-		Toast.makeText(
-			applicationContext,
-			operation.run { "$firstNumber $operationSymbol $secondNumber = $result" },
-			Toast.LENGTH_SHORT,
-		).show()
-	},
+    items = listOfOperation,
+    onItemClick = { operation ->
+        Toast.makeText(
+            applicationContext,
+            operation.run { "$firstNumber $operationSymbol $secondNumber = $result" },
+            Toast.LENGTH_SHORT,
+        ).show()
+    },
 )
 
 binding.recyclerView.adapter = operationAdapter
