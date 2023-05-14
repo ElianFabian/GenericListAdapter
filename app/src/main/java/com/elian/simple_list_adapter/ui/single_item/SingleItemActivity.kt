@@ -28,27 +28,21 @@ class SingleItemActivity : AppCompatActivity()
 		val operationAdapter = OperationAdapter_New(
 			items = listOfOperation,
 			onItemClick = { operation ->
-				operation.apply()
-				{
-					Toast.makeText(
-						applicationContext,
-						"$firstNumber $operationSymbol $secondNumber = $result",
-						Toast.LENGTH_SHORT,
-					).show()
-				}
+				Toast.makeText(
+					applicationContext,
+					operation.run { "$firstNumber $operationSymbol $secondNumber = $result" },
+					Toast.LENGTH_SHORT,
+				).show()
 			},
 		)
 //		val operationAdapter = OperationAdapter_Old(
 //			items = listOfOperation,
 //			onItemClick = { operation ->
-//				operation.apply()
-//				{
-//					Toast.makeText(
-//						applicationContext,
-//						"$firstNumber $operationSymbol $secondNumber = $result",
-//						Toast.LENGTH_SHORT,
-//					).show()
-//				}
+//				Toast.makeText(
+//					applicationContext,
+//					operation.run { "$firstNumber $operationSymbol $secondNumber = $result" },
+//					Toast.LENGTH_SHORT,
+//				).show()
 //			},
 //		)
 
