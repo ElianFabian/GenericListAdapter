@@ -62,7 +62,7 @@ fun OperationAdapter() = SimpleListAdapter(
     }
 }
 ```
-And there you have it! A list adapter that's ready to use. Let's go into more detail:
+And there you have it! A list adapter that's ready to use. Let's explain the rest of the details:
 
 As you can see, we're defining a function to create the adapter. Since it's meant to be used like a regular adapter, we'll use PascalCase naming convention (but of course, you can name it however you prefer).
 
