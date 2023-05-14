@@ -34,7 +34,7 @@ Then add these files to your project:
 Let's define a simple **single-item type adapter**! In this case, we will create an adapter for simple arithmetic operations.
 
 We have this **data class** for the item:
-```kt
+```kotlin
 data class OperationInfo(  
     val firstNumber: Int,  
     val secondNumber: Int,  
@@ -46,7 +46,7 @@ data class OperationInfo(
 Next, we have the ** XML** layout that we will use for the item. We won't show the XML code here to keep it simple:![item_layout](https://user-images.githubusercontent.com/86477169/213011000-de3a436c-2efa-4376-8755-1c6ad792d12d.PNG)
 
 Now, let's create our adapter. We'll start with a simple version:
-```kt
+```kotlin
 @Suppress("FunctionName")
 fun OperationAdapter() = SimpleListAdapter(
     inflate = ItemOperationBinding::inflate,
@@ -71,7 +71,7 @@ We then indicate which *Binding class we're going to use by passing the inflate 
 We also need to specify which item class we want to use. We could do this by using type parameters, but I think it's more elegant to put it in the lambda parameter.
 
 Now let's say we want to be able to modify our list without any problem, pass an onItemClick lambda and a list when creating an instance of our adapter:
-```kt
+```kotlin
 @Suppress("FunctionName")
 fun OperationAdapter(
     items: List<OperationInfo>,
@@ -95,13 +95,13 @@ fun OperationAdapter(
 ```
 Now we're done! We can use it like any regular list adapter. By the way, you can also give a value to the areContentsTheSame parameter, but most of the time, it wouldn't be necessary since its default value is:
 
-```kt
+```kotlin
 areContentsTheSame = { oldItem, newItem -> oldItem == newItem }
 ```
 It's also worth mentioning that the scope of the lambda is the adapter's one, so you can access its functions without any problem. However, since getItem() is marked as protected we've defined several extension functions inside the custom adapter class for **getItem()** and **getItemOrNull()** to use when needed. Also, since the return type of the SimpleListAdapter function is just ListAdapter, you won't be able to access those extension functions outside of the lambda to respect the original restriction of the getItem function in the ListAdapter class.
 
 Now we could use it like this in an Activity or a Fragment:
-```kt
+```kotlin
 val operationAdapter = OperationAdapter(
     items = listOfOperation,
     onItemClick = { operation ->
@@ -128,7 +128,7 @@ Also if you want to see how to do the same thing with **nested adapters** check 
 Let's now define a **simple multi-item type adapter**! It's actually quite similar to what we have seen so far, but instead of a binding block, we have a list of binding blocks.
 
 For this adapter, we will be creating a chat message display. Here are our **sealed data classes**:
-```kt
+```kotlin
 sealed class Message
 {
     val uuid: String = UUID.randomUUID().toString()
@@ -157,7 +157,7 @@ The other user message layout:
 </p>
 
 Now, we are ready to define our adapter:
-```kt
+```kotlin
 @Suppress("FunctionName")
 fun MessagesAdapter(
     messages: List<Message>,
