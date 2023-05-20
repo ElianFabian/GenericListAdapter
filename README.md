@@ -79,7 +79,7 @@ fun OperationAdapter(
 ) = SimpleListAdapter(
     inflate = ItemOperationBinding::inflate,
     areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },
-) { binding, operation: OperationInfo, _ ->
+) { binding, operation: OperationInfo, position ->
 
     binding.apply()
     {
