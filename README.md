@@ -103,7 +103,9 @@ Now we could use it like this in an Activity or a Fragment:
 val operationAdapter = OperationAdapter_New(
     items = listOfOperation,
     onItemClick = { operation ->
+
         val message = operation.run { "$firstNumber $operationSymbol $secondNumber = $result" }
+
         Toast.makeText(
             applicationContext,
             message,
