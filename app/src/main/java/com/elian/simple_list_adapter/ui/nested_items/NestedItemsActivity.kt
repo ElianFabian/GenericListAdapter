@@ -6,13 +6,11 @@ import com.elian.simple_list_adapter.databinding.ActivityGenericListBinding
 import com.elian.simple_list_adapter.model.Person
 import com.elian.simple_list_adapter.model.SkillInfo
 
-class NestedItemsActivity : AppCompatActivity()
-{
+class NestedItemsActivity : AppCompatActivity() {
 	private lateinit var binding: ActivityGenericListBinding
 
 
-	override fun onCreate(savedInstanceState: Bundle?)
-	{
+	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 
 		binding = ActivityGenericListBinding.inflate(layoutInflater)
@@ -23,15 +21,13 @@ class NestedItemsActivity : AppCompatActivity()
 	}
 
 
-	private fun initUi()
-	{
+	private fun initUi() {
 		val skillsByPersonAdapter = SkillsByPersonAdapter_New(skillsByPerson)
 		//val skillsByPersonAdapter = SkillsByPersonAdapter_Old(skillsByPerson)
 
 		binding.recyclerView.adapter = skillsByPersonAdapter
 
-		binding.fabShuffle.setOnClickListener()
-		{
+		binding.fabShuffle.setOnClickListener {
 			skillsByPersonAdapter.submitList(skillsByPerson.map { it.key to it.value.shuffled() }.shuffled())
 		}
 	}

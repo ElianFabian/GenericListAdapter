@@ -6,13 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import com.elian.simple_list_adapter.databinding.ActivityGenericListBinding
 import com.elian.simple_list_adapter.model.OperationInfo
 
-class SingleItemActivity : AppCompatActivity()
-{
+class SingleItemActivity : AppCompatActivity() {
+
 	private lateinit var binding: ActivityGenericListBinding
 
 
-	override fun onCreate(savedInstanceState: Bundle?)
-	{
+	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 
 		binding = ActivityGenericListBinding.inflate(layoutInflater)
@@ -23,14 +22,17 @@ class SingleItemActivity : AppCompatActivity()
 	}
 
 
-	private fun initUi()
-	{
+	private fun initUi() {
+
 		val operationAdapter = OperationAdapter_New(
 			items = listOfOperation,
 			onItemClick = { operation ->
+
+				val message = operation.run { "$firstNumber $operationSymbol $secondNumber = $result" }
+
 				Toast.makeText(
 					applicationContext,
-					operation.run { "$firstNumber $operationSymbol $secondNumber = $result" },
+					message,
 					Toast.LENGTH_SHORT,
 				).show()
 			},
@@ -38,9 +40,12 @@ class SingleItemActivity : AppCompatActivity()
 //		val operationAdapter = OperationAdapter_Old(
 //			items = listOfOperation,
 //			onItemClick = { operation ->
+//
+//				val message = operation.run { "$firstNumber $operationSymbol $secondNumber = $result" }
+//
 //				Toast.makeText(
 //					applicationContext,
-//					operation.run { "$firstNumber $operationSymbol $secondNumber = $result" },
+//					message,
 //					Toast.LENGTH_SHORT,
 //				).show()
 //			},
@@ -48,8 +53,7 @@ class SingleItemActivity : AppCompatActivity()
 
 		binding.recyclerView.adapter = operationAdapter
 
-		binding.fabShuffle.setOnClickListener()
-		{
+		binding.fabShuffle.setOnClickListener {
 			operationAdapter.submitList(listOfOperation.shuffled())
 		}
 	}

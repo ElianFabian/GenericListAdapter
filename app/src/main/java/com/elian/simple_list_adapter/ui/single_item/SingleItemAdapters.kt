@@ -41,30 +41,25 @@ class OperationAdapter_Old(
 	items: List<OperationInfo>,
 	private inline val onItemClick: (operation: OperationInfo) -> Unit,
 ) : ListAdapter<OperationInfo, OperationAdapter_Old.ViewHolder>(
-	object : DiffUtil.ItemCallback<OperationInfo>()
-	{
+	object : DiffUtil.ItemCallback<OperationInfo>() {
 		override fun areItemsTheSame(oldItem: OperationInfo, newItem: OperationInfo) = oldItem.uuid == newItem.uuid
 
 		override fun areContentsTheSame(oldItem: OperationInfo, newItem: OperationInfo) = oldItem == newItem
 	}
-)
-{
-	init
-	{
+) {
+	init {
 		submitList(items)
 	}
 
 	class ViewHolder(val binding: ItemOperationBinding) : RecyclerView.ViewHolder(binding.root)
 
-	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder
-	{
+	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 		val binding = ItemOperationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
 		return ViewHolder(binding)
 	}
 
-	override fun onBindViewHolder(holder: ViewHolder, position: Int)
-	{
+	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 		val operation = getItem(position)
 
 		holder.binding.apply()

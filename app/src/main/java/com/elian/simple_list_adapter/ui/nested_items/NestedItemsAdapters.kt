@@ -24,8 +24,7 @@ fun SkillsByPersonAdapter_New(skillsByPerson: Map<Person, List<SkillInfo>>) = Si
 	areItemsTheSame = { oldItem, newItem -> oldItem.first.uuid == newItem.first.uuid },
 ) { binding, person: Person, skills: List<SkillInfo>, _ ->
 
-	binding.apply()
-	{
+	binding.apply {
 		tvName.text = person.name
 		tvLastname.text = person.lastname
 
@@ -39,8 +38,7 @@ fun SkillAdapter_New() = SimpleListAdapter(
 	areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },
 ) { binding, skill: SkillInfo, _ ->
 
-	binding.apply()
-	{
+	binding.apply {
 		tvSkillName.text = skill.name
 		tvPercentage.text = "${skill.percentage} %"
 	}
@@ -51,34 +49,28 @@ fun SkillAdapter_New() = SimpleListAdapter(
 //region Old way
 
 class SkillsByPersonAdapter_Old(skillsByPerson: Map<Person, List<SkillInfo>>) : ListAdapter<Pair<Person, List<SkillInfo>>, SkillsByPersonAdapter_Old.ViewHolder>(
-	object : DiffUtil.ItemCallback<Pair<Person, List<SkillInfo>>>()
-	{
+	object : DiffUtil.ItemCallback<Pair<Person, List<SkillInfo>>>() {
 		override fun areItemsTheSame(oldItem: Pair<Person, List<SkillInfo>>, newItem: Pair<Person, List<SkillInfo>>) = oldItem.first.uuid == newItem.first.uuid
 
 		override fun areContentsTheSame(oldItem: Pair<Person, List<SkillInfo>>, newItem: Pair<Person, List<SkillInfo>>) = oldItem == newItem
 	}
-)
-{
-	init
-	{
+) {
+	init {
 		submitList(skillsByPerson.toList())
 	}
 
 	class ViewHolder(val binding: ItemPersonBinding) : RecyclerView.ViewHolder(binding.root)
 
-	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder
-	{
+	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 		val binding = ItemPersonBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
 		return ViewHolder(binding)
 	}
 
-	override fun onBindViewHolder(holder: ViewHolder, position: Int)
-	{
+	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 		val (person, skills) = getItem(position)
 
-		holder.binding.apply()
-		{
+		holder.binding.apply {
 			tvName.text = person.name
 			tvLastname.text = person.lastname
 
@@ -95,29 +87,24 @@ class SkillsByPersonAdapter_Old(skillsByPerson: Map<Person, List<SkillInfo>>) : 
 }
 
 class SkillAdapter_Old : ListAdapter<SkillInfo, SkillAdapter_Old.ViewHolder>(
-	object : DiffUtil.ItemCallback<SkillInfo>()
-	{
+	object : DiffUtil.ItemCallback<SkillInfo>() {
 		override fun areItemsTheSame(oldItem: SkillInfo, newItem: SkillInfo) = oldItem.uuid == newItem.uuid
 
 		override fun areContentsTheSame(oldItem: SkillInfo, newItem: SkillInfo) = oldItem == newItem
 	}
-)
-{
+) {
 	class ViewHolder(val binding: ItemSkillBinding) : RecyclerView.ViewHolder(binding.root)
 
-	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder
-	{
+	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 		val binding = ItemSkillBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
 		return ViewHolder(binding)
 	}
 
-	override fun onBindViewHolder(holder: ViewHolder, position: Int)
-	{
+	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 		val skill = getItem(position)
 
-		holder.binding.apply()
-		{
+		holder.binding.apply {
 			tvSkillName.text = skill.name
 			tvPercentage.text = "${skill.percentage} %"
 		}

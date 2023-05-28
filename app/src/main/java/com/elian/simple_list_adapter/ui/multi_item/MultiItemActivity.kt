@@ -7,13 +7,12 @@ import com.elian.simple_list_adapter.databinding.ActivityGenericListBinding
 import com.elian.simple_list_adapter.model.OtherUserMessage
 import com.elian.simple_list_adapter.model.UserMessage
 
-class MultiItemActivity : AppCompatActivity()
-{
+class MultiItemActivity : AppCompatActivity() {
+
 	private lateinit var binding: ActivityGenericListBinding
 
 
-	override fun onCreate(savedInstanceState: Bundle?)
-	{
+	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 
 		binding = ActivityGenericListBinding.inflate(layoutInflater)
@@ -24,8 +23,7 @@ class MultiItemActivity : AppCompatActivity()
 	}
 
 
-	private fun initUi()
-	{
+	private fun initUi() {
 		val messagesAdapter = MessagesAdapter_New(
 			messages = messages,
 			onUserMessageClick = {
@@ -47,8 +45,7 @@ class MultiItemActivity : AppCompatActivity()
 
 		binding.recyclerView.adapter = messagesAdapter
 
-		binding.fabShuffle.setOnClickListener()
-		{
+		binding.fabShuffle.setOnClickListener {
 			messagesAdapter.submitList(messages.shuffled())
 		}
 	}

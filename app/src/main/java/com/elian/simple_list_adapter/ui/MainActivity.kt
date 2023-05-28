@@ -8,13 +8,12 @@ import com.elian.simple_list_adapter.ui.multi_item.MultiItemActivity
 import com.elian.simple_list_adapter.ui.nested_items.NestedItemsActivity
 import com.elian.simple_list_adapter.ui.single_item.SingleItemActivity
 
-class MainActivity : AppCompatActivity()
-{
+class MainActivity : AppCompatActivity() {
+
 	private lateinit var binding: ActivityMainBinding
 
 
-	override fun onCreate(savedInstanceState: Bundle?)
-	{
+	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 
 		binding = ActivityMainBinding.inflate(layoutInflater)
@@ -24,20 +23,16 @@ class MainActivity : AppCompatActivity()
 	}
 
 
-	private fun initUi()
-	{
-		binding.apply()
-		{
-			btnGoToSingleItem.setOnClickListener()
-			{
+	private fun initUi() {
+
+		binding.apply {
+			btnGoToSingleItem.setOnClickListener {
 				startActivity(Intent(this@MainActivity, SingleItemActivity::class.java))
 			}
-			btnGoToNestedItems.setOnClickListener()
-			{
+			btnGoToNestedItems.setOnClickListener {
 				startActivity(Intent(this@MainActivity, NestedItemsActivity::class.java))
 			}
-			btnGoToMultiItem.setOnClickListener()
-			{
+			btnGoToMultiItem.setOnClickListener {
 				startActivity(Intent(this@MainActivity, MultiItemActivity::class.java))
 			}
 		}

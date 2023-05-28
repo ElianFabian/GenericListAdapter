@@ -2,8 +2,7 @@ package com.elian.simple_list_adapter.model
 
 import java.util.UUID
 
-sealed class Message
-{
+sealed class Message {
 	val uuid: String = UUID.randomUUID().toString()
 }
 

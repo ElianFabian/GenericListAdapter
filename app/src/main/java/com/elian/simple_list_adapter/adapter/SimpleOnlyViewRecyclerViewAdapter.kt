@@ -17,8 +17,8 @@ private class SimpleOnlyViewRecyclerViewAdapter<VB : ViewBinding>(
 		binding: VB,
 		position: Int,
 	) -> Unit
-) : RecyclerView.Adapter<SimpleOnlyViewRecyclerViewAdapter<VB>.ViewHolder>()
-{
+) : RecyclerView.Adapter<SimpleOnlyViewRecyclerViewAdapter<VB>.ViewHolder>() {
+
 	inner class ViewHolder(val binding: VB) : RecyclerView.ViewHolder(binding.root)
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
@@ -30,6 +30,7 @@ private class SimpleOnlyViewRecyclerViewAdapter<VB : ViewBinding>(
 	override fun getItemCount() = count
 }
 
+
 @Suppress("FunctionName")
 fun <VB : ViewBinding> SimpleRecyclerViewAdapter(
 	inflate: (LayoutInflater, ViewGroup, Boolean) -> VB,
@@ -37,7 +38,7 @@ fun <VB : ViewBinding> SimpleRecyclerViewAdapter(
 ) = SimpleRecyclerViewAdapter(
 	inflate = inflate,
 	itemCount = itemCount,
-	onBind = { _: VB, _: Int -> },
+	onBind = { _, _ -> },
 )
 
 @Suppress("FunctionName")
