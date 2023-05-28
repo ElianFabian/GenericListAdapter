@@ -53,8 +53,7 @@ fun OperationAdapter() = SimpleListAdapter(
     areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },
 ) { binding, operation: OperationInfo, position ->
 
-    binding.apply()
-    {
+    binding.apply {
         tvFirstNumber.text = "${operation.firstNumber}"
         tvSecondNumber.text = "${operation.secondNumber}"
         tvOperationSymbol.text = operation.operationSymbol
@@ -81,8 +80,7 @@ fun OperationAdapter(
     areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },
 ) { binding, operation: OperationInfo, position ->
 
-    binding.apply()
-    {
+    binding.apply {
         tvFirstNumber.text = "${operation.firstNumber}"
         tvSecondNumber.text = "${operation.secondNumber}"
         tvOperationSymbol.text = operation.operationSymbol
@@ -105,9 +103,10 @@ Now we could use it like this in an Activity or a Fragment:
 val operationAdapter = OperationAdapter_New(
     items = listOfOperation,
     onItemClick = { operation ->
+        val message = operation.run { "$firstNumber $operationSymbol $secondNumber = $result" }
         Toast.makeText(
             applicationContext,
-            operation.run { "$firstNumber $operationSymbol $secondNumber = $result" },
+            message,
             Toast.LENGTH_SHORT,
         ).show()
     },
@@ -126,8 +125,7 @@ Let's now define a **simple multi-item type adapter**! It's actually quite simil
 
 For this adapter, we will be creating a chat message display. Here are our **sealed data classes**:
 ```kotlin
-sealed class Message
-{
+sealed class Message {
     val uuid: String = UUID.randomUUID().toString()
 }
 
@@ -165,8 +163,7 @@ fun MessagesAdapter(
     itemBindings = listOf(
         Binding(ItemUserMessageBinding::inflate) { binding, message: UserMessage, position ->
 
-            binding.apply()
-            {
+            binding.apply {
                 tvContent.text = message.content
                 tvTime.text = message.hour
             }
@@ -175,8 +172,7 @@ fun MessagesAdapter(
         },
         Binding(ItemOtherUserMessageBinding::inflate) { binding, message: OtherUserMessage, position ->
 
-            binding.apply()
-            {
+            binding.apply {
                 tvSenderName.text = message.senderName
                 tvContent.text = message.content
                 tvTime.text = message.hour
