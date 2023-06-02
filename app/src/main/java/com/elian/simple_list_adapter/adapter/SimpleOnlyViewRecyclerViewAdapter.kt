@@ -35,20 +35,10 @@ private class SimpleOnlyViewRecyclerViewAdapter<VB : ViewBinding>(
 fun <VB : ViewBinding> SimpleRecyclerViewAdapter(
 	inflate: (LayoutInflater, ViewGroup, Boolean) -> VB,
 	itemCount: Int = 1,
-) = SimpleRecyclerViewAdapter(
-	inflate = inflate,
-	itemCount = itemCount,
-	onBind = { _, _ -> },
-)
-
-@Suppress("FunctionName")
-fun <VB : ViewBinding> SimpleRecyclerViewAdapter(
-	inflate: (LayoutInflater, ViewGroup, Boolean) -> VB,
-	itemCount: Int = 1,
 	onBind: RecyclerView.Adapter<out RecyclerView.ViewHolder>.(
 		binding: VB,
 		position: Int,
-	) -> Unit,
+	) -> Unit = { _, _ -> },
 ): RecyclerView.Adapter<out RecyclerView.ViewHolder> = SimpleOnlyViewRecyclerViewAdapter(
 	inflate = inflate,
 	count = itemCount,
