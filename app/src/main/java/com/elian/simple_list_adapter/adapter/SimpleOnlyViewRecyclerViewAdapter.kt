@@ -16,7 +16,7 @@ private class SimpleOnlyViewRecyclerViewAdapter<VB : ViewBinding>(
 	private inline val onBind: RecyclerView.Adapter<out RecyclerView.ViewHolder>.(
 		binding: VB,
 		position: Int,
-	) -> Unit
+	) -> Unit,
 ) : RecyclerView.Adapter<SimpleOnlyViewRecyclerViewAdapter<VB>.ViewHolder>() {
 
 	inner class ViewHolder(val binding: VB) : RecyclerView.ViewHolder(binding.root)
