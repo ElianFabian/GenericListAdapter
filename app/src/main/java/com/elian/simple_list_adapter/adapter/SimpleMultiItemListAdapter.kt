@@ -11,6 +11,7 @@ import kotlin.reflect.KClass
 class SimpleMultiItemListAdapter<ItemT : Any>(
 	areItemsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
 	areContentsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
+	private val getItemCount: SimpleMultiItemListAdapter<ItemT>.(count: Int) -> Int = { count -> count },
 	itemBindings: List<BindingData<ItemT>>,
 ) : ListAdapter<ItemT, SimpleMultiItemListAdapter<ItemT>.ViewHolder>(
 	object : DiffUtil.ItemCallback<ItemT>() {
@@ -55,6 +56,8 @@ class SimpleMultiItemListAdapter<ItemT : Any>(
 
 		return itemClassToViewType[item::class]!!
 	}
+
+	override fun getItemCount() = getItemCount(this, super.getItemCount())
 }
 
 
@@ -63,12 +66,14 @@ fun <ItemT : Any> SimpleListAdapter(
 	areItemsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
 	areContentsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
 	itemBindings: List<BindingData<ItemT>>,
+	getItemCount: SimpleMultiItemListAdapter<ItemT>.(count: Int) -> Int = { count -> count },
 ): ListAdapter<ItemT, out RecyclerView.ViewHolder> {
 
 	return SimpleMultiItemListAdapter(
 		areItemsTheSame = areItemsTheSame,
 		areContentsTheSame = areContentsTheSame,
 		itemBindings = itemBindings,
+		getItemCount = getItemCount,
 	)
 }
 
