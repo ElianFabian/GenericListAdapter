@@ -1,5 +1,6 @@
 package com.elian.simple_list_adapter.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -9,21 +10,14 @@ import androidx.viewbinding.ViewBinding
 
 class SimpleSingleItemListAdapter<VB : ViewBinding, ItemT : Any>(
 	private val inflate: (LayoutInflater, ViewGroup, Boolean) -> VB,
-	areItemsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
-	areContentsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
+	diffCallback: DiffUtil.ItemCallback<ItemT>,
 	private val getItemCount: SimpleSingleItemListAdapter<VB, ItemT>.(count: Int) -> Int = { count -> count },
 	private inline val onBind: SimpleSingleItemListAdapter<VB, ItemT>.(
 		binding: VB,
 		item: ItemT,
 		position: Int,
 	) -> Unit,
-) : ListAdapter<ItemT, SimpleSingleItemListAdapter<VB, ItemT>.ViewHolder>(
-	object : DiffUtil.ItemCallback<ItemT>() {
-		override fun areItemsTheSame(oldItem: ItemT, newItem: ItemT) = areItemsTheSame(oldItem, newItem)
-
-		override fun areContentsTheSame(oldItem: ItemT, newItem: ItemT) = areContentsTheSame(oldItem, newItem)
-	}
-) {
+) : ListAdapter<ItemT, SimpleSingleItemListAdapter<VB, ItemT>.ViewHolder>(diffCallback) {
 	inner class ViewHolder(val binding: VB) : RecyclerView.ViewHolder(binding.root)
 
 
@@ -46,15 +40,25 @@ class SimpleSingleItemListAdapter<VB : ViewBinding, ItemT : Any>(
 
 	fun SimpleSingleItemListAdapter<VB, ItemT>.getItem(position: Int): ItemT = getItem(position)
 	fun SimpleSingleItemListAdapter<VB, ItemT>.getItemOrNull(position: Int): ItemT? = kotlin.runCatching { getItem(position) }.getOrNull()
+}
 
-	inline fun <T> RecyclerView.setAdapterOrSubmitList(list: List<T>, getAdapter: () -> ListAdapter<T, *>) {
+@Suppress("FunctionName")
+fun <ItemT : Any, VB : ViewBinding> SimpleListAdapter(
+	inflate: (LayoutInflater, ViewGroup, Boolean) -> VB,
+	diffCallback: DiffUtil.ItemCallback<ItemT>,
+	getItemCount: SimpleSingleItemListAdapter<VB, ItemT>.(count: Int) -> Int = { count -> count },
+	onBind: SimpleSingleItemListAdapter<VB, ItemT>.(
+		binding: VB,
+		item: ItemT,
+		position: Int,
+	) -> Unit,
+): ListAdapter<ItemT, out RecyclerView.ViewHolder> = SimpleSingleItemListAdapter(
+	inflate = inflate,
+	getItemCount = getItemCount,
+	diffCallback = diffCallback,
+) { binding, item, position ->
 
-		val listAdapter = (adapter as? ListAdapter<T, RecyclerView.ViewHolder>) ?: getAdapter()
-
-		if (adapter == null) adapter = listAdapter
-
-		listAdapter.submitList(list)
-	}
+	onBind(binding, item, position)
 }
 
 @Suppress("FunctionName")
@@ -70,12 +74,38 @@ fun <ItemT : Any, VB : ViewBinding> SimpleListAdapter(
 	) -> Unit,
 ): ListAdapter<ItemT, out RecyclerView.ViewHolder> = SimpleSingleItemListAdapter(
 	inflate = inflate,
-	areItemsTheSame = areItemsTheSame,
-	areContentsTheSame = areContentsTheSame,
 	getItemCount = getItemCount,
+	diffCallback = object : DiffUtil.ItemCallback<ItemT>() {
+		override fun areItemsTheSame(oldItem: ItemT, newItem: ItemT) = areItemsTheSame(oldItem, newItem)
+		override fun areContentsTheSame(oldItem: ItemT, newItem: ItemT) = areContentsTheSame(oldItem, newItem)
+	}
 ) { binding, item, position ->
 
 	onBind(binding, item, position)
+}
+
+@Suppress("FunctionName")
+fun <
+	A : Any,
+	B : Any,
+	ItemT : Pair<A, B>,
+	VB : ViewBinding,
+	> SimpleListAdapter(
+	inflate: (LayoutInflater, ViewGroup, Boolean) -> VB,
+	diffCallback: DiffUtil.ItemCallback<ItemT>,
+	getItemCount: SimpleSingleItemListAdapter<VB, ItemT>.(count: Int) -> Int = { count -> count },
+	onBind: SimpleSingleItemListAdapter<VB, ItemT>.(
+		binding: VB,
+		A, B,
+		position: Int,
+	) -> Unit,
+): ListAdapter<ItemT, out RecyclerView.ViewHolder> = SimpleListAdapter(
+	inflate = inflate,
+	diffCallback = diffCallback,
+	getItemCount = getItemCount,
+) { binding, item, position ->
+
+	onBind(binding, item.first, item.second, position)
 }
 
 @Suppress("FunctionName")
@@ -94,7 +124,7 @@ fun <
 		A, B,
 		position: Int,
 	) -> Unit,
-): ListAdapter<ItemT, out RecyclerView.ViewHolder> = SimpleSingleItemListAdapter(
+): ListAdapter<ItemT, out RecyclerView.ViewHolder> = SimpleListAdapter(
 	inflate = inflate,
 	areItemsTheSame = areItemsTheSame,
 	areContentsTheSame = areContentsTheSame,

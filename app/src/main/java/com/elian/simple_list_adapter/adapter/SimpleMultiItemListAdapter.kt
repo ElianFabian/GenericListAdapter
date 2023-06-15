@@ -9,17 +9,10 @@ import androidx.viewbinding.ViewBinding
 import kotlin.reflect.KClass
 
 class SimpleMultiItemListAdapter<ItemT : Any>(
-	areItemsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
-	areContentsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
 	private val getItemCount: SimpleMultiItemListAdapter<ItemT>.(count: Int) -> Int = { count -> count },
+	diffCallback: DiffUtil.ItemCallback<ItemT>,
 	itemBindings: List<BindingData<ItemT>>,
-) : ListAdapter<ItemT, SimpleMultiItemListAdapter<ItemT>.ViewHolder>(
-	object : DiffUtil.ItemCallback<ItemT>() {
-		override fun areItemsTheSame(oldItem: ItemT, newItem: ItemT) = areItemsTheSame(oldItem, newItem)
-
-		override fun areContentsTheSame(oldItem: ItemT, newItem: ItemT) = areContentsTheSame(oldItem, newItem)
-	}
-) {
+) : ListAdapter<ItemT, SimpleMultiItemListAdapter<ItemT>.ViewHolder>(diffCallback) {
 	inner class ViewHolder(
 		val binding: ViewBinding,
 		val bindingData: BindingData<ItemT>,
@@ -60,6 +53,19 @@ class SimpleMultiItemListAdapter<ItemT : Any>(
 	override fun getItemCount() = getItemCount(this, super.getItemCount())
 }
 
+@Suppress("FunctionName")
+fun <ItemT : Any> SimpleListAdapter(
+	itemBindings: List<BindingData<ItemT>>,
+	diffCallback: DiffUtil.ItemCallback<ItemT>,
+	getItemCount: SimpleMultiItemListAdapter<ItemT>.(count: Int) -> Int = { count -> count },
+): ListAdapter<ItemT, out RecyclerView.ViewHolder> {
+
+	return SimpleMultiItemListAdapter(
+		diffCallback = diffCallback,
+		itemBindings = itemBindings,
+		getItemCount = getItemCount,
+	)
+}
 
 @Suppress("FunctionName")
 fun <ItemT : Any> SimpleListAdapter(
@@ -70,8 +76,10 @@ fun <ItemT : Any> SimpleListAdapter(
 ): ListAdapter<ItemT, out RecyclerView.ViewHolder> {
 
 	return SimpleMultiItemListAdapter(
-		areItemsTheSame = areItemsTheSame,
-		areContentsTheSame = areContentsTheSame,
+		diffCallback = object : DiffUtil.ItemCallback<ItemT>() {
+			override fun areItemsTheSame(oldItem: ItemT, newItem: ItemT) = areItemsTheSame(oldItem, newItem)
+			override fun areContentsTheSame(oldItem: ItemT, newItem: ItemT) = areContentsTheSame(oldItem, newItem)
+		},
 		itemBindings = itemBindings,
 		getItemCount = getItemCount,
 	)

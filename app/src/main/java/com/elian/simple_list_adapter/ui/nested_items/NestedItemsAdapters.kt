@@ -10,6 +10,7 @@ import com.elian.simple_list_adapter.databinding.ItemPersonBinding
 import com.elian.simple_list_adapter.databinding.ItemSkillBinding
 import com.elian.simple_list_adapter.model.Person
 import com.elian.simple_list_adapter.model.SkillInfo
+import com.elian.simple_list_adapter.setAdapterOrSubmitList
 
 // In this example the items are grouped using a map, but it would also work
 // if you have a single data type that contains all the information
