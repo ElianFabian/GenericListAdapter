@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.elian.simple_list_adapter.adapter.Binding
 import com.elian.simple_list_adapter.adapter.SimpleListAdapter
 import com.elian.simple_list_adapter.databinding.ItemOperationBinding
 import com.elian.simple_list_adapter.model.OperationInfo
