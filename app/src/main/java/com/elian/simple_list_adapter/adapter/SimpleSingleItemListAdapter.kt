@@ -18,8 +18,6 @@ class SimpleSingleItemListAdapter<VB : ViewBinding, ItemT : Any>(
 		position: Int,
 	) -> Unit,
 ) : ListAdapter<ItemT, SimpleSingleItemListAdapter<VB, ItemT>.ViewHolder>(diffCallback) {
-	inner class ViewHolder(val binding: VB) : RecyclerView.ViewHolder(binding.root)
-
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
@@ -38,8 +36,11 @@ class SimpleSingleItemListAdapter<VB : ViewBinding, ItemT : Any>(
 	override fun getItemCount() = getItemCount(this, super.getItemCount())
 
 
-	fun SimpleSingleItemListAdapter<VB, ItemT>.getItem(position: Int): ItemT = getItem(position)
-	fun SimpleSingleItemListAdapter<VB, ItemT>.getItemOrNull(position: Int): ItemT? = kotlin.runCatching { getItem(position) }.getOrNull()
+	fun SimpleSingleItemListAdapter<VB, ItemT>.getItem(position: Int): ItemT = currentList[position]
+	fun SimpleSingleItemListAdapter<VB, ItemT>.getItemOrNull(position: Int): ItemT? = currentList.getOrNull(position)
+
+
+	inner class ViewHolder(val binding: VB) : RecyclerView.ViewHolder(binding.root)
 }
 
 @Suppress("FunctionName")
