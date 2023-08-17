@@ -6,8 +6,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
+import com.elian.simple_list_adapter.DiffCallback
 import com.elian.simple_list_adapter.R
 import com.elian.simple_list_adapter.adapter.Binding
+import com.elian.simple_list_adapter.adapter.MultiItemListAdapter
 import com.elian.simple_list_adapter.adapter.SimpleListAdapter
 import com.elian.simple_list_adapter.databinding.ItemOtherUserMessageBinding
 import com.elian.simple_list_adapter.databinding.ItemUserMessageBinding
@@ -17,14 +19,55 @@ import com.elian.simple_list_adapter.model.UserMessage
 
 //region New way
 
+@Suppress("ClassName")
+class MessageAdapter_New(
+	messages: List<Message>,
+	onUserMessageClick: (message: UserMessage) -> Unit,
+	onOtherUserMessageClick: (message: OtherUserMessage) -> Unit,
+) : MultiItemListAdapter<Message>(MessageDiffCallback) {
+
+	init {
+		submitList(messages)
+	}
+
+	override val bindingDataList = listOf(
+		Binding(ItemUserMessageBinding::inflate) { binding, message: UserMessage, _ ->
+			binding.apply {
+				tvContent.text = message.content
+				tvTime.text = message.hour
+			}
+
+			binding.root.setOnClickListener { onUserMessageClick(message) }
+		},
+		Binding(ItemOtherUserMessageBinding::inflate) { binding, message: OtherUserMessage, _ ->
+			binding.apply {
+				tvSenderName.text = message.senderName
+				tvContent.text = message.content
+				tvTime.text = message.hour
+			}
+
+			binding.root.setOnClickListener { onOtherUserMessageClick(message) }
+		}
+	)
+}
+
+private val MessageDiffCallback = DiffCallback<Message> { oldItem, newItem ->
+	oldItem.uuid == newItem.uuid
+}
+
+//endregion
+
+
+//region Functional way
+
 @Suppress("FunctionName")
-fun MessagesAdapter_New(
+fun MessageAdapter(
 	messages: List<Message>,
 	onUserMessageClick: (message: UserMessage) -> Unit,
 	onOtherUserMessageClick: (message: OtherUserMessage) -> Unit,
 ) = SimpleListAdapter(
 	areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },
-	itemBindings = listOf(
+	bindingDataList = listOf(
 		Binding(ItemUserMessageBinding::inflate) { binding, message: UserMessage, _ ->
 
 			binding.apply {
@@ -52,14 +95,13 @@ fun MessagesAdapter_New(
 
 //region Old way
 
-
 // On the internet you may find different ways to implement a MultiItemAdapter, but all in the end are boilerplate code like this.
-
-class MessagesAdapter_Old(
+@Suppress("ClassName")
+class MessageAdapter_Old(
 	messages: List<Message>,
 	private val onUserMessageClick: (userMessage: UserMessage) -> Unit,
 	private val onOtherUserMessageClick: (userMessage: OtherUserMessage) -> Unit,
-) : ListAdapter<Message, MessagesAdapter_Old.MessageViewHolder<Message, ViewBinding>>(
+) : ListAdapter<Message, MessageAdapter_Old.MessageViewHolder<Message, ViewBinding>>(
 	object : DiffUtil.ItemCallback<Message>() {
 		override fun areItemsTheSame(oldItem: Message, newItem: Message) = oldItem.uuid == newItem.uuid
 		override fun areContentsTheSame(oldItem: Message, newItem: Message) = oldItem == newItem

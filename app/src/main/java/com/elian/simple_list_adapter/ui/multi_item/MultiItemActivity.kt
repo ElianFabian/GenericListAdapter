@@ -24,22 +24,22 @@ class MultiItemActivity : AppCompatActivity() {
 
 
 	private fun initUi() {
-		val messagesAdapter = MessagesAdapter_New(
+		val messagesAdapter = MessageAdapter_New(
 			messages = messages,
-			onUserMessageClick = {
-				Toast.makeText(this, "You sent '${it.content}' at ${it.hour}", Toast.LENGTH_SHORT).show()
+			onUserMessageClick = { message ->
+				Toast.makeText(this, "You sent '${message.content}' at ${message.hour}", Toast.LENGTH_SHORT).show()
 			},
-			onOtherUserMessageClick = {
-				Toast.makeText(this, "${it.senderName} sent '${it.content}' at ${it.hour}", Toast.LENGTH_SHORT).show()
+			onOtherUserMessageClick = { message ->
+				Toast.makeText(this, "${message.senderName} sent '${message.content}' at ${message.hour}", Toast.LENGTH_SHORT).show()
 			}
 		)
 //		val messagesAdapter = MessagesAdapter_Old(
 //			messages = messages,
-//			onUserMessageClick = {
-//				Toast.makeText(this, "You sent '${it.content}' at ${it.hour}", Toast.LENGTH_SHORT).show()
+//			onUserMessageClick = { message ->
+//				Toast.makeText(this, "You sent '${message.content}' at ${message.hour}", Toast.LENGTH_SHORT).show()
 //			},
-//			onOtherUserMessageClick = {
-//				Toast.makeText(this, "${it.senderName} sent '${it.content}' at ${it.hour}", Toast.LENGTH_SHORT).show()
+//			onOtherUserMessageClick = { message ->
+//				Toast.makeText(this, "${message.senderName} sent '${message.content}' at ${message.hour}", Toast.LENGTH_SHORT).show()
 //			}
 //		)
 

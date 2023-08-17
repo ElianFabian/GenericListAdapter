@@ -5,14 +5,49 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.elian.simple_list_adapter.DiffCallback
 import com.elian.simple_list_adapter.adapter.SimpleListAdapter
+import com.elian.simple_list_adapter.adapter.SingleItemListAdapter
 import com.elian.simple_list_adapter.databinding.ItemOperationBinding
 import com.elian.simple_list_adapter.model.OperationInfo
 
 //region New way
 
+@Suppress("ClassName")
+class OperationAdapter_New(
+	items: List<OperationInfo>,
+	private val onItemClick: (operation: OperationInfo) -> Unit,
+) : SingleItemListAdapter<ItemOperationBinding, OperationInfo>(
+	inflate = ItemOperationBinding::inflate,
+	diffCallback = OperationDiffCallback,
+) {
+	init {
+		submitList(items)
+	}
+
+	override fun onBindItem(binding: ItemOperationBinding, item: OperationInfo, position: Int) {
+		binding.apply {
+			tvFirstNumber.text = "${item.firstNumber}"
+			tvSecondNumber.text = "${item.secondNumber}"
+			tvOperationSymbol.text = item.operationSymbol
+			tvExpectedResult.text = "${item.result}"
+		}
+
+		binding.root.setOnClickListener { onItemClick(item) }
+	}
+}
+
+private val OperationDiffCallback = DiffCallback<OperationInfo> { oldItem, newItem ->
+	oldItem.uuid == newItem.uuid
+}
+
+//endregion
+
+
+//region Functional way
+
 @Suppress("FunctionName")
-fun OperationAdapter_New(
+fun OperationAdapter(
 	items: List<OperationInfo>,
 	onItemClick: (operation: OperationInfo) -> Unit,
 ) = SimpleListAdapter(
@@ -20,8 +55,7 @@ fun OperationAdapter_New(
 	areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },
 ) { binding, operation: OperationInfo, _ ->
 
-	binding.apply()
-	{
+	binding.apply {
 		tvFirstNumber.text = "${operation.firstNumber}"
 		tvSecondNumber.text = "${operation.secondNumber}"
 		tvOperationSymbol.text = operation.operationSymbol
@@ -34,8 +68,10 @@ fun OperationAdapter_New(
 
 //endregion
 
+
 //region Old way
 
+@Suppress("ClassName")
 class OperationAdapter_Old(
 	items: List<OperationInfo>,
 	private inline val onItemClick: (operation: OperationInfo) -> Unit,
@@ -61,8 +97,7 @@ class OperationAdapter_Old(
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 		val operation = getItem(position)
 
-		holder.binding.apply()
-		{
+		holder.binding.apply {
 			tvFirstNumber.text = "${operation.firstNumber}"
 			tvSecondNumber.text = "${operation.secondNumber}"
 			tvOperationSymbol.text = operation.operationSymbol
