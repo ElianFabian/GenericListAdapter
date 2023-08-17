@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.elian.simple_list_adapter.DiffCallback
-import com.elian.simple_list_adapter.adapter.SimpleListAdapter
-import com.elian.simple_list_adapter.adapter.SingleItemListAdapter
+import com.elian.simple_list_adapter.adapters.SimpleListAdapter
+import com.elian.simple_list_adapter.adapters.SingleItemListAdapter
 import com.elian.simple_list_adapter.databinding.ItemOperationBinding
 import com.elian.simple_list_adapter.model.OperationInfo
 

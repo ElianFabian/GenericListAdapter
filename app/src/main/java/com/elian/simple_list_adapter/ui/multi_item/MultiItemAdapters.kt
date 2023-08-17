@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.elian.simple_list_adapter.DiffCallback
 import com.elian.simple_list_adapter.R
-import com.elian.simple_list_adapter.adapter.Binding
-import com.elian.simple_list_adapter.adapter.MultiItemListAdapter
-import com.elian.simple_list_adapter.adapter.SimpleListAdapter
+import com.elian.simple_list_adapter.adapters.Binding
+import com.elian.simple_list_adapter.adapters.MultiItemListAdapter
+import com.elian.simple_list_adapter.adapters.SimpleListAdapter
 import com.elian.simple_list_adapter.databinding.ItemOtherUserMessageBinding
 import com.elian.simple_list_adapter.databinding.ItemUserMessageBinding
 import com.elian.simple_list_adapter.model.Message

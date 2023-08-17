@@ -1,4 +1,4 @@
-package com.elian.simple_list_adapter.adapter
+package com.elian.simple_list_adapter.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
