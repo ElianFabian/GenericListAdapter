@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.elian.simple_list_adapter.DiffCallback
 import com.elian.simple_list_adapter.adapters.SimpleListAdapter
 import com.elian.simple_list_adapter.adapters.SingleItemListAdapter
@@ -25,7 +26,7 @@ class OperationAdapter_New(
 		submitList(items)
 	}
 
-	override fun onBindItem(binding: ItemOperationBinding, item: OperationInfo, position: Int) {
+	override fun onBindItem(binding: ItemOperationBinding, item: OperationInfo, position: Int, holder: ViewHolder) {
 		binding.apply {
 			tvFirstNumber.text = "${item.firstNumber}"
 			tvSecondNumber.text = "${item.secondNumber}"

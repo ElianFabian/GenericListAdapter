@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import androidx.viewbinding.ViewBinding
 
 // Set of functions to simplify the creation of list adapters
@@ -24,7 +25,7 @@ fun <VB : ViewBinding, ItemT : Any> SimpleListAdapter(
 		inflate = inflate,
 		diffCallback = diffCallback,
 	) {
-		override fun onBindItem(binding: VB, item: ItemT, position: Int) {
+		override fun onBindItem(binding: VB, item: ItemT, position: Int, holder: ViewHolder) {
 			onBind(binding, item, position)
 		}
 	}
@@ -51,7 +52,7 @@ fun <ItemT : Any, VB : ViewBinding> SimpleListAdapter(
 		inflate = inflate,
 		diffCallback = diffCallback,
 	) {
-		override fun onBindItem(binding: VB, item: ItemT, position: Int) {
+		override fun onBindItem(binding: VB, item: ItemT, position: Int, holder: ViewHolder) {
 			onBind(binding, item, position)
 		}
 	}

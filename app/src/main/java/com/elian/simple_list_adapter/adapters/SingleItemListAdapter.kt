@@ -14,7 +14,7 @@ abstract class SingleItemListAdapter<VB : ViewBinding, ItemT : Any>(
 	diffCallback: DiffUtil.ItemCallback<ItemT>,
 ) : ListAdapter<ItemT, SingleItemListAdapter<VB, ItemT>.SingleItemViewHolder>(diffCallback) {
 
-	protected abstract fun onBindItem(binding: VB, item: ItemT, position: Int)
+	protected abstract fun onBindItem(binding: VB, item: ItemT, position: Int, holder: RecyclerView.ViewHolder)
 
 	protected inline fun getItemOrNull(position: Int): ItemT? = currentList.getOrNull(position)
 
@@ -31,9 +31,9 @@ abstract class SingleItemListAdapter<VB : ViewBinding, ItemT : Any>(
 	}
 
 	override fun onBindViewHolder(holder: SingleItemViewHolder, position: Int) {
-		onBindItem(holder.binding, getItem(position), position)
+		onBindItem(holder.binding, getItem(position), position, holder)
 	}
 
 
-	open inner class SingleItemViewHolder(val binding: VB) : RecyclerView.ViewHolder(binding.root)
+	inner class SingleItemViewHolder(val binding: VB) : RecyclerView.ViewHolder(binding.root)
 }

@@ -31,7 +31,7 @@ class MessageAdapter_New(
 	}
 
 	override val bindingDataList = listOf(
-		Binding(ItemUserMessageBinding::inflate) { binding, message: UserMessage, _ ->
+		Binding(ItemUserMessageBinding::inflate) { binding, message: UserMessage, _, _ ->
 			binding.apply {
 				tvContent.text = message.content
 				tvTime.text = message.hour
@@ -39,7 +39,7 @@ class MessageAdapter_New(
 
 			binding.root.setOnClickListener { onUserMessageClick(message) }
 		},
-		Binding(ItemOtherUserMessageBinding::inflate) { binding, message: OtherUserMessage, _ ->
+		Binding(ItemOtherUserMessageBinding::inflate) { binding, message: OtherUserMessage, _, _ ->
 			binding.apply {
 				tvSenderName.text = message.senderName
 				tvContent.text = message.content
@@ -68,7 +68,7 @@ fun MessageAdapter(
 ) = SimpleListAdapter(
 	areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },
 	bindingDataList = listOf(
-		Binding(ItemUserMessageBinding::inflate) { binding, message: UserMessage, _ ->
+		Binding(ItemUserMessageBinding::inflate) { binding, message: UserMessage, _, _ ->
 
 			binding.apply {
 				tvContent.text = message.content
@@ -77,7 +77,7 @@ fun MessageAdapter(
 
 			binding.root.setOnClickListener { onUserMessageClick(message) }
 		},
-		Binding(ItemOtherUserMessageBinding::inflate) { binding, message: OtherUserMessage, _ ->
+		Binding(ItemOtherUserMessageBinding::inflate) { binding, message: OtherUserMessage, _, _ ->
 
 			binding.apply {
 				tvSenderName.text = message.senderName

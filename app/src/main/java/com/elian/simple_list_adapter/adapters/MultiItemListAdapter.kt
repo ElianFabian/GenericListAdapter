@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import androidx.viewbinding.ViewBinding
 import kotlin.reflect.KClass
 
@@ -41,7 +41,7 @@ abstract class MultiItemListAdapter<ItemT : Any>(
 	override fun onBindViewHolder(holder: MultiItemViewHolder, position: Int) {
 		val item = getItem(position)
 
-		holder.bindingData.onBind(holder.binding, item, position)
+		holder.bindingData.onBind(holder.binding, item, position, holder)
 	}
 
 	override fun getItemViewType(position: Int): Int {
@@ -54,7 +54,7 @@ abstract class MultiItemListAdapter<ItemT : Any>(
 	open inner class MultiItemViewHolder(
 		val binding: ViewBinding,
 		val bindingData: BindingData<ItemT>,
-	) : RecyclerView.ViewHolder(binding.root)
+	) : ViewHolder(binding.root)
 }
 
 
@@ -65,6 +65,7 @@ class BindingData<out ItemT : Any>(
 		binding: ViewBinding,
 		item: @UnsafeVariance ItemT,
 		position: Int,
+		holder: ViewHolder,
 	) -> Unit,
 )
 
@@ -75,6 +76,7 @@ inline fun <VB : ViewBinding, reified ItemT : Any> Binding(
 		binding: VB,
 		item: ItemT,
 		position: Int,
+		holder: ViewHolder,
 	) -> Unit,
 ): BindingData<ItemT> {
 
@@ -85,6 +87,7 @@ inline fun <VB : ViewBinding, reified ItemT : Any> Binding(
 			binding: ViewBinding,
 			item: @UnsafeVariance ItemT,
 			position: Int,
+			holder: ViewHolder,
 		) -> Unit,
 	)
 }
