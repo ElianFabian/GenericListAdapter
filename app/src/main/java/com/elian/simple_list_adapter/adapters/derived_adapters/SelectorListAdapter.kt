@@ -8,8 +8,8 @@ import com.elian.simple_list_adapter.adapters.SingleItemListAdapter
 
 abstract class SelectorListAdapter<VB : ViewBinding, ItemT : Any>(
 	inflate: (LayoutInflater, ViewGroup, Boolean) -> VB,
-	private var isSelectionRequired: Boolean = false,
-	private var isSingleSelection: Boolean = false,
+	private var isSelectionRequired: Boolean = true,
+	private var isSingleSelection: Boolean = true,
 	private val onItemSelected: (ItemT) -> Unit = {},
 	private val onItemUnselected: (ItemT) -> Unit = {},
 	diffCallback: DiffUtil.ItemCallback<ItemT>,
@@ -76,6 +76,10 @@ abstract class SelectorListAdapter<VB : ViewBinding, ItemT : Any>(
 
 	protected fun isItemSelected(item: ItemT): Boolean {
 		return item in _selectedItems
+	}
+
+	protected fun isItemSelectedAt(position: Int): Boolean {
+		return isItemSelected(getItem(position))
 	}
 
 	/**

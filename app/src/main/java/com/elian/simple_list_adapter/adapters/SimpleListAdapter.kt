@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import androidx.viewbinding.ViewBinding
 
@@ -20,13 +19,13 @@ fun <VB : ViewBinding, ItemT : Any> SimpleListAdapter(
 		item: ItemT,
 		position: Int,
 	) -> Unit,
-): ListAdapter<ItemT, out RecyclerView.ViewHolder> {
+): ListAdapter<ItemT, out ViewHolder> {
 	return object : SingleItemListAdapter<VB, ItemT>(
 		inflate = inflate,
 		diffCallback = diffCallback,
 	) {
-		override fun onBindItem(binding: VB, item: ItemT, position: Int, holder: ViewHolder) {
-			onBind(binding, item, position)
+		override fun onBind(binding: VB, position: Int, holder: ViewHolder) {
+			onBind(binding, getItem(position), position)
 		}
 	}
 }
@@ -41,7 +40,7 @@ fun <ItemT : Any, VB : ViewBinding> SimpleListAdapter(
 		item: ItemT,
 		position: Int,
 	) -> Unit,
-): ListAdapter<ItemT, out RecyclerView.ViewHolder> {
+): ListAdapter<ItemT, out ViewHolder> {
 
 	val diffCallback = object : DiffUtil.ItemCallback<ItemT>() {
 		override fun areItemsTheSame(oldItem: ItemT, newItem: ItemT) = areItemsTheSame(oldItem, newItem)
@@ -52,8 +51,8 @@ fun <ItemT : Any, VB : ViewBinding> SimpleListAdapter(
 		inflate = inflate,
 		diffCallback = diffCallback,
 	) {
-		override fun onBindItem(binding: VB, item: ItemT, position: Int, holder: ViewHolder) {
-			onBind(binding, item, position)
+		override fun onBind(binding: VB, position: Int, holder: ViewHolder) {
+			onBind(binding, getItem(position), position)
 		}
 	}
 }
@@ -95,7 +94,7 @@ fun <
 		A, B,
 		position: Int,
 	) -> Unit,
-): ListAdapter<ItemT, out RecyclerView.ViewHolder> = SimpleListAdapter(
+): ListAdapter<ItemT, out ViewHolder> = SimpleListAdapter(
 	inflate = inflate,
 	areItemsTheSame = areItemsTheSame,
 	areContentsTheSame = areContentsTheSame,
@@ -109,7 +108,7 @@ fun <
 fun <ItemT : Any> SimpleListAdapter(
 	bindingDataList: List<BindingData<ItemT>>,
 	diffCallback: DiffUtil.ItemCallback<ItemT>
-): ListAdapter<ItemT, out RecyclerView.ViewHolder> {
+): ListAdapter<ItemT, out ViewHolder> {
 	return object : MultiItemListAdapter<ItemT>(diffCallback) {
 		override val bindingDataList = bindingDataList
 	}
@@ -120,7 +119,7 @@ fun <ItemT : Any> SimpleListAdapter(
 	bindingDataList: List<BindingData<ItemT>>,
 	areItemsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
 	areContentsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
-): ListAdapter<ItemT, out RecyclerView.ViewHolder> {
+): ListAdapter<ItemT, out ViewHolder> {
 
 	val diffCallback = object : DiffUtil.ItemCallback<ItemT>() {
 		override fun areItemsTheSame(oldItem: ItemT, newItem: ItemT) = areItemsTheSame(oldItem, newItem)

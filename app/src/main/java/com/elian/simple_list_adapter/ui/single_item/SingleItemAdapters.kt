@@ -26,15 +26,18 @@ class OperationAdapter_New(
 		submitList(items)
 	}
 
-	override fun onBindItem(binding: ItemOperationBinding, item: OperationInfo, position: Int, holder: ViewHolder) {
+	override fun onBind(binding: ItemOperationBinding, position: Int, holder: ViewHolder) {
+
+		val operation = getItem(position)
+
 		binding.apply {
-			tvFirstNumber.text = "${item.firstNumber}"
-			tvSecondNumber.text = "${item.secondNumber}"
-			tvOperationSymbol.text = item.operationSymbol
-			tvExpectedResult.text = "${item.result}"
+			tvFirstNumber.text = "${operation.firstNumber}"
+			tvSecondNumber.text = "${operation.secondNumber}"
+			tvOperationSymbol.text = operation.operationSymbol
+			tvExpectedResult.text = "${operation.result}"
 		}
 
-		binding.root.setOnClickListener { onItemClick(item) }
+		binding.root.setOnClickListener { onItemClick(operation) }
 	}
 }
 
