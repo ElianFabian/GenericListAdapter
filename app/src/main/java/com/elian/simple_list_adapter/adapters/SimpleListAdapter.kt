@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import androidx.viewbinding.ViewBinding
 
-// Set of functions to simplify the creation of list adapters
+// Set of functions for common use cases for the creation of list adapters
 // using the SingleItemListAdapter and MultiItemListAdapter classes.
 
 @Suppress("FunctionName")
