@@ -51,7 +51,7 @@ abstract class MultiItemListAdapter<ItemT : Any>(
 	}
 
 
-	open inner class MultiItemViewHolder(
+	inner class MultiItemViewHolder(
 		val binding: ViewBinding,
 		val bindingData: BindingData<ItemT>,
 	) : ViewHolder(binding.root)
