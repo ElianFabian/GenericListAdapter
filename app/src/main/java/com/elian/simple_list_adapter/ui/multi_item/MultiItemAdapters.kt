@@ -107,7 +107,7 @@ class MessageAdapter_Old(
 	messages: List<Message>,
 	private val onUserMessageClick: (userMessage: UserMessage) -> Unit,
 	private val onOtherUserMessageClick: (userMessage: OtherUserMessage) -> Unit,
-) : ListAdapter<Message, MessageAdapter_Old.MessageViewHolder<Message, ViewBinding>>(
+) : ListAdapter<Message, MessageAdapter_Old.MessageViewHolder<ViewBinding, Message>>(
 	object : DiffUtil.ItemCallback<Message>() {
 		override fun areItemsTheSame(oldItem: Message, newItem: Message) = oldItem.uuid == newItem.uuid
 		override fun areContentsTheSame(oldItem: Message, newItem: Message) = oldItem == newItem
@@ -117,11 +117,11 @@ class MessageAdapter_Old(
 		submitList(messages)
 	}
 
-	abstract class MessageViewHolder<out M : Message, out VB : ViewBinding>(val binding: VB) : RecyclerView.ViewHolder(binding.root) {
+	abstract class MessageViewHolder<out VB : ViewBinding, out M : Message>(val binding: VB) : RecyclerView.ViewHolder(binding.root) {
 		abstract fun bind(message: @UnsafeVariance M)
 	}
 
-	inner class UserMessageViewHolder(binding: ItemUserMessageBinding) : MessageViewHolder<UserMessage, ItemUserMessageBinding>(binding) {
+	inner class UserMessageViewHolder(binding: ItemUserMessageBinding) : MessageViewHolder<ItemUserMessageBinding, UserMessage>(binding) {
 		override fun bind(message: UserMessage) {
 			binding.apply {
 				tvContent.text = message.content
@@ -132,7 +132,7 @@ class MessageAdapter_Old(
 		}
 	}
 
-	inner class OtherUserMessageViewHolder(binding: ItemOtherUserMessageBinding) : MessageViewHolder<OtherUserMessage, ItemOtherUserMessageBinding>(binding) {
+	inner class OtherUserMessageViewHolder(binding: ItemOtherUserMessageBinding) : MessageViewHolder<ItemOtherUserMessageBinding, OtherUserMessage>(binding) {
 		override fun bind(message: OtherUserMessage) {
 			binding.apply {
 				tvSenderName.text = message.senderName
@@ -144,7 +144,7 @@ class MessageAdapter_Old(
 		}
 	}
 
-	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder<Message, ViewBinding> {
+	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder<ViewBinding, Message> {
 		val layoutInflater = LayoutInflater.from(parent.context)
 
 		return when (viewType) {
@@ -159,7 +159,7 @@ class MessageAdapter_Old(
 		is OtherUserMessage -> R.layout.item_other_user_message
 	}
 
-	override fun onBindViewHolder(holder: MessageViewHolder<Message, ViewBinding>, position: Int) {
+	override fun onBindViewHolder(holder: MessageViewHolder<ViewBinding, Message>, position: Int) {
 		holder.bind(getItem(position))
 	}
 }
