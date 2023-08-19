@@ -105,6 +105,20 @@ fun <
 
 
 @Suppress("FunctionName")
+inline fun <reified VB : ViewBinding, reified ItemT : Any> Binding(
+	crossinline onBind: MultiItemListAdapter<ItemT>.(
+		binding: VB,
+		item: ItemT,
+	) -> Unit
+): BindingData<ItemT> {
+	return Binding<VB, ItemT>(
+		onBind = { binding, position, _ ->
+			onBind(binding, currentList[position])
+		}
+	)
+}
+
+@Suppress("FunctionName")
 fun <ItemT : Any> SimpleListAdapter(
 	bindingDataList: List<BindingData<ItemT>>,
 	diffCallback: DiffUtil.ItemCallback<ItemT>

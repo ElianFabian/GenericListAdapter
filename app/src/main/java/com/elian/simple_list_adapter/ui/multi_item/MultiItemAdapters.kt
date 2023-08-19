@@ -31,7 +31,10 @@ class MessageAdapter_New(
 	}
 
 	override val bindingDataList = listOf(
-		Binding(ItemUserMessageBinding::inflate) { binding, message: UserMessage, _, _ ->
+		Binding<ItemUserMessageBinding, UserMessage> { binding, position, _ ->
+
+			val message = getItem(position)
+
 			binding.apply {
 				tvContent.text = message.content
 				tvTime.text = message.hour
@@ -39,7 +42,10 @@ class MessageAdapter_New(
 
 			binding.root.setOnClickListener { onUserMessageClick(message) }
 		},
-		Binding(ItemOtherUserMessageBinding::inflate) { binding, message: OtherUserMessage, _, _ ->
+		Binding<ItemOtherUserMessageBinding, OtherUserMessage> { binding, position, _ ->
+
+			val message = getItem(position)
+
 			binding.apply {
 				tvSenderName.text = message.senderName
 				tvContent.text = message.content
@@ -47,7 +53,7 @@ class MessageAdapter_New(
 			}
 
 			binding.root.setOnClickListener { onOtherUserMessageClick(message) }
-		}
+		},
 	)
 }
 
@@ -68,7 +74,7 @@ fun MessageAdapter(
 ) = SimpleListAdapter(
 	areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },
 	bindingDataList = listOf(
-		Binding(ItemUserMessageBinding::inflate) { binding, message: UserMessage, _, _ ->
+		Binding<ItemUserMessageBinding, UserMessage> { binding, message ->
 
 			binding.apply {
 				tvContent.text = message.content
@@ -77,7 +83,7 @@ fun MessageAdapter(
 
 			binding.root.setOnClickListener { onUserMessageClick(message) }
 		},
-		Binding(ItemOtherUserMessageBinding::inflate) { binding, message: OtherUserMessage, _, _ ->
+		Binding<ItemOtherUserMessageBinding, OtherUserMessage> { binding, message ->
 
 			binding.apply {
 				tvSenderName.text = message.senderName
@@ -86,7 +92,7 @@ fun MessageAdapter(
 			}
 
 			binding.root.setOnClickListener { onOtherUserMessageClick(message) }
-		},
+		}
 	),
 ).apply { submitList(messages) }
 

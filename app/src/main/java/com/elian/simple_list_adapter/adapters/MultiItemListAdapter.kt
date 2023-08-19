@@ -20,7 +20,9 @@ abstract class MultiItemListAdapter<ItemT : Any>(
 		bindingDataList.mapIndexed { index, data -> data.itemClass to index }.toMap()
 	}
 
-	protected inline fun getItemOrNull(position: Int): ItemT? = currentList.getOrNull(position)
+	protected inline fun <T : ItemT> MultiItemListAdapter<T>.getItem(position: Int): T = currentList[position]
+
+	protected inline fun <T : ItemT> MultiItemListAdapter<T>.getItemOrNull(position: Int): T? = currentList.getOrNull(position)
 
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MultiItemViewHolder {
@@ -39,9 +41,7 @@ abstract class MultiItemListAdapter<ItemT : Any>(
 	}
 
 	override fun onBindViewHolder(holder: MultiItemViewHolder, position: Int) {
-		val item = getItem(position)
-
-		holder.bindingData.onBind(holder.binding, item, position, holder)
+		holder.bindingData.onBind(this, holder.binding, position, holder)
 	}
 
 	override fun getItemViewType(position: Int): Int {
@@ -61,33 +61,33 @@ abstract class MultiItemListAdapter<ItemT : Any>(
 class BindingData<out ItemT : Any>(
 	inline val itemClass: KClass<@UnsafeVariance ItemT>,
 	inline val inflate: (LayoutInflater, ViewGroup, Boolean) -> ViewBinding,
-	inline val onBind: (
+	inline val onBind: MultiItemListAdapter<@UnsafeVariance ItemT>.(
 		binding: ViewBinding,
-		item: @UnsafeVariance ItemT,
 		position: Int,
 		holder: ViewHolder,
 	) -> Unit,
 )
 
-@Suppress("FunctionName", "UNCHECKED_CAST")
-inline fun <VB : ViewBinding, reified ItemT : Any> Binding(
-	noinline inflate: (LayoutInflater, ViewGroup, Boolean) -> VB,
-	noinline onBind: (
+@Suppress("FunctionName")
+inline fun <reified VB : ViewBinding, reified ItemT : Any> Binding(
+	crossinline onBind: MultiItemListAdapter<ItemT>.(
 		binding: VB,
-		item: ItemT,
 		position: Int,
-		holder: ViewHolder,
-	) -> Unit,
+		holder: ViewHolder
+	) -> Unit
 ): BindingData<ItemT> {
+
+	val inflate: (LayoutInflater, ViewGroup, Boolean) -> VB = { inflater, parent, attachToParent ->
+		VB::class.java
+			.getMethod("inflate", LayoutInflater::class.java, ViewGroup::class.java, Boolean::class.java)
+			.invoke(null, inflater, parent, attachToParent) as VB
+	}
 
 	return BindingData(
 		itemClass = ItemT::class,
 		inflate = inflate,
-		onBind = onBind as (
-			binding: ViewBinding,
-			item: @UnsafeVariance ItemT,
-			position: Int,
-			holder: ViewHolder,
-		) -> Unit,
+		onBind = { binding, position, holder ->
+			onBind(binding as VB, position, holder)
+		}
 	)
 }
