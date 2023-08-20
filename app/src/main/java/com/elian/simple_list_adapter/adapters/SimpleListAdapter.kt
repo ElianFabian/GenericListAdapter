@@ -104,14 +104,13 @@ fun <
 }
 
 
-@Suppress("FunctionName")
-inline fun <reified VB : ViewBinding, reified ItemT : Any> Binding(
+inline fun <reified VB : ViewBinding, reified ItemT : Any> bindingOf(
 	crossinline onBind: MultiItemListAdapter<ItemT>.(
 		binding: VB,
 		item: ItemT,
 	) -> Unit
 ): BindingData<ItemT> {
-	return Binding<VB, ItemT>(
+	return bindingOf<VB, ItemT>(
 		onBind = { binding, position, _ ->
 			onBind(binding, currentList[position])
 		}

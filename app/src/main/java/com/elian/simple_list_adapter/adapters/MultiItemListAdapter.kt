@@ -68,8 +68,7 @@ class BindingData<out ItemT : Any>(
 	) -> Unit,
 )
 
-@Suppress("FunctionName")
-inline fun <reified VB : ViewBinding, reified ItemT : Any> Binding(
+inline fun <reified VB : ViewBinding, reified ItemT : Any> bindingOf(
 	crossinline onBind: MultiItemListAdapter<ItemT>.(
 		binding: VB,
 		position: Int,
