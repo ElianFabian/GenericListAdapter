@@ -80,7 +80,7 @@ inline fun <reified VB : ViewBinding, reified ItemT : Any> bindingOf(
 		.getMethod("inflate", LayoutInflater::class.java, ViewGroup::class.java, Boolean::class.java)
 
 	val inflate: (LayoutInflater, ViewGroup, Boolean) -> VB = { inflater, parent, attachToParent ->
-		inflateMethod.invoke(null, inflater, parent, attachToParent) as VB
+		inflateMethod(null, inflater, parent, attachToParent) as VB
 	}
 
 	return BindingData(
