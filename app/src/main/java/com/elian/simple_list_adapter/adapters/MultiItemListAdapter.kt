@@ -14,10 +14,10 @@ abstract class MultiItemListAdapter<ItemT : Any>(
 	diffCallback: DiffUtil.ItemCallback<ItemT>
 ) : ListAdapter<ItemT, MultiItemListAdapter<ItemT>.MultiItemViewHolder>(diffCallback) {
 
-	abstract val bindingDataList: List<BindingData<ItemT>>
+	abstract val bindings: List<BindingData<ItemT>>
 
 	protected val itemClassToViewType by lazy {
-		bindingDataList.mapIndexed { index, data -> data.itemClass to index }.toMap()
+		bindings.mapIndexed { index, data -> data.itemClass to index }.toMap()
 	}
 
 	protected inline fun <T : ItemT> MultiItemListAdapter<T>.getItem(position: Int): T = currentList[position]
@@ -29,7 +29,7 @@ abstract class MultiItemListAdapter<ItemT : Any>(
 
 		val inflater = LayoutInflater.from(parent.context)
 
-		val bindingData = bindingDataList[viewType]
+		val bindingData = bindings[viewType]
 
 		val binding = bindingData.inflate(inflater, parent, false)
 

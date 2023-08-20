@@ -119,17 +119,17 @@ inline fun <reified VB : ViewBinding, reified ItemT : Any> bindingOf(
 
 @Suppress("FunctionName")
 fun <ItemT : Any> SimpleListAdapter(
-	bindingDataList: List<BindingData<ItemT>>,
+	bindings: List<BindingData<ItemT>>,
 	diffCallback: DiffUtil.ItemCallback<ItemT>
 ): ListAdapter<ItemT, out ViewHolder> {
 	return object : MultiItemListAdapter<ItemT>(diffCallback) {
-		override val bindingDataList = bindingDataList
+		override val bindings = bindings
 	}
 }
 
 @Suppress("FunctionName")
 fun <ItemT : Any> SimpleListAdapter(
-	bindingDataList: List<BindingData<ItemT>>,
+	bindings: List<BindingData<ItemT>>,
 	areItemsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
 	areContentsTheSame: (oldItem: ItemT, newItem: ItemT) -> Boolean = { oldItem, newItem -> oldItem == newItem },
 ): ListAdapter<ItemT, out ViewHolder> {
@@ -140,6 +140,6 @@ fun <ItemT : Any> SimpleListAdapter(
 	}
 
 	return object : MultiItemListAdapter<ItemT>(diffCallback) {
-		override val bindingDataList = bindingDataList
+		override val bindings = bindings
 	}
 }

@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.elian.simple_list_adapter.DiffCallback
 import com.elian.simple_list_adapter.R
-import com.elian.simple_list_adapter.adapters.bindingOf
 import com.elian.simple_list_adapter.adapters.MultiItemListAdapter
 import com.elian.simple_list_adapter.adapters.SimpleListAdapter
+import com.elian.simple_list_adapter.adapters.bindingOf
 import com.elian.simple_list_adapter.databinding.ItemOtherUserMessageBinding
 import com.elian.simple_list_adapter.databinding.ItemUserMessageBinding
 import com.elian.simple_list_adapter.model.Message
@@ -30,7 +30,7 @@ class MessageAdapter_New(
 		submitList(messages)
 	}
 
-	override val bindingDataList = listOf(
+	override val bindings = listOf(
 		bindingOf<ItemUserMessageBinding, UserMessage> { binding, position, _ ->
 
 			val message = getItem(position)
@@ -73,7 +73,7 @@ fun MessageAdapter(
 	onOtherUserMessageClick: (message: OtherUserMessage) -> Unit,
 ) = SimpleListAdapter(
 	areItemsTheSame = { oldItem, newItem -> oldItem.uuid == newItem.uuid },
-	bindingDataList = listOf(
+	bindings = listOf(
 		bindingOf<ItemUserMessageBinding, UserMessage> { binding, message ->
 
 			binding.apply {
