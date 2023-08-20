@@ -47,7 +47,11 @@ abstract class MultiItemListAdapter<ItemT : Any>(
 	override fun getItemViewType(position: Int): Int {
 		val item = getItem(position)
 
-		return itemClassToViewType[item::class]!!
+		val itemClass = item::class
+
+		return itemClassToViewType[itemClass] ?: throw MissingBindingException(
+			"No binding found for ${itemClass.qualifiedName}. Make sure to add a binding to all the item types."
+		)
 	}
 
 
@@ -56,6 +60,9 @@ abstract class MultiItemListAdapter<ItemT : Any>(
 		val bindingData: BindingData<ItemT>,
 	) : ViewHolder(binding.root)
 }
+
+
+class MissingBindingException(message: String) : RuntimeException(message)
 
 
 class BindingData<out ItemT : Any>(
