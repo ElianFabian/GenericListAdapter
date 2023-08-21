@@ -25,7 +25,7 @@ abstract class MultiItemListAdapter<ItemT : Any>(
 	protected inline fun <T : ItemT> MultiItemListAdapter<T>.getItemOrNull(position: Int): T? = currentList.getOrNull(position)
 
 
-	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MultiItemViewHolder {
+	final override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MultiItemViewHolder {
 
 		val inflater = LayoutInflater.from(parent.context)
 
@@ -36,11 +36,11 @@ abstract class MultiItemListAdapter<ItemT : Any>(
 		return onCreateViewHolder(binding, bindingData)
 	}
 
-	protected open fun onCreateViewHolder(binding: ViewBinding, bindingData: BindingData<ItemT>): MultiItemViewHolder {
+	private fun onCreateViewHolder(binding: ViewBinding, bindingData: BindingData<ItemT>): MultiItemViewHolder {
 		return MultiItemViewHolder(binding, bindingData)
 	}
 
-	override fun onBindViewHolder(holder: MultiItemViewHolder, position: Int) {
+	final override fun onBindViewHolder(holder: MultiItemViewHolder, position: Int) {
 		holder.bindingData.onBind(this, holder.binding, position, holder)
 	}
 

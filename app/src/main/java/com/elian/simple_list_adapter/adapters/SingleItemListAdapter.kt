@@ -21,11 +21,11 @@ abstract class SingleItemListAdapter<VB : ViewBinding, ItemT : Any>(
 
 	protected inline fun getItemOrNull(position: Int): ItemT? = currentList.getOrNull(position)
 
-	protected open fun onCreateViewHolder(binding: VB): SingleItemViewHolder {
+	protected fun onCreateViewHolder(binding: VB): SingleItemViewHolder {
 		return SingleItemViewHolder(binding)
 	}
 
-	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SingleItemViewHolder {
+	final override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SingleItemViewHolder {
 		val inflater = LayoutInflater.from(parent.context)
 
 		val binding = inflate(inflater, parent, false)
@@ -33,7 +33,7 @@ abstract class SingleItemListAdapter<VB : ViewBinding, ItemT : Any>(
 		return onCreateViewHolder(binding)
 	}
 
-	override fun onBindViewHolder(holder: SingleItemViewHolder, position: Int) {
+	final override fun onBindViewHolder(holder: SingleItemViewHolder, position: Int) {
 		onBind(holder.binding, position, holder)
 	}
 
