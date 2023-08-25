@@ -67,11 +67,13 @@ abstract class SelectorListAdapter<VB : ViewBinding, ItemT : Any>(
 
 	fun unselectAllItems() {
 		val selectedItemsIndices = _selectedItems.map { currentList.indexOf(it) }
-		selectedItemsIndices.forEach {
-			_selectedItems.removeAt(it)
-			onItemUnselected(_selectedItems[it])
-			notifyItemChanged(it)
+
+		_selectedItems.forEachIndexed { index, item ->
+			onItemUnselected(item)
+			notifyItemChanged(selectedItemsIndices[index])
 		}
+
+		_selectedItems.clear()
 	}
 
 	protected fun isItemSelected(item: ItemT): Boolean {
@@ -100,8 +102,7 @@ abstract class SelectorListAdapter<VB : ViewBinding, ItemT : Any>(
 			if (!isSelectionRequired || (!isSingleSelection && areThereAnyOtherSelectedItem)) {
 				unselectItem(item)
 			}
-		}
-		else {
+		} else {
 			selectItem(item)
 		}
 	}
