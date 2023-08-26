@@ -8,11 +8,10 @@ import com.elian.simple_list_adapter.adapters.SingleItemListAdapter
 
 abstract class SelectorListAdapter<VB : ViewBinding, ItemT : Any>(
 	inflate: (LayoutInflater, ViewGroup, Boolean) -> VB,
+	diffCallback: DiffUtil.ItemCallback<ItemT>,
 	private var isSelectionRequired: Boolean = true,
 	private var isSingleSelection: Boolean = true,
-	private val onItemSelected: (ItemT) -> Unit = {},
-	private val onItemUnselected: (ItemT) -> Unit = {},
-	diffCallback: DiffUtil.ItemCallback<ItemT>,
+	private val onItemSelectedChanged: (ItemT, isSelected: Boolean) -> Unit = { _, _ -> },
 ) : SingleItemListAdapter<VB, ItemT>(
 	inflate = inflate,
 	diffCallback = diffCallback,
@@ -49,7 +48,7 @@ abstract class SelectorListAdapter<VB : ViewBinding, ItemT : Any>(
 		_selectedItems.add(item)
 
 		val indexOfSelectedItem = currentList.indexOf(item)
-		onItemSelected(item)
+		onItemSelectedChanged(item, true)
 		notifyItemChanged(indexOfSelectedItem)
 	}
 
@@ -59,17 +58,17 @@ abstract class SelectorListAdapter<VB : ViewBinding, ItemT : Any>(
 		}
 
 		val indexOfUnselectedItem = currentList.indexOf(item)
-		onItemUnselected(item)
+		onItemSelectedChanged(item, false)
 		_selectedItems.remove(item)
 
 		notifyItemChanged(indexOfUnselectedItem)
 	}
 
-	fun unselectAllItems() {
+	fun clearSelection() {
 		val selectedItemsIndices = _selectedItems.map { currentList.indexOf(it) }
 
 		_selectedItems.forEachIndexed { index, item ->
-			onItemUnselected(item)
+			onItemSelectedChanged(item, false)
 			notifyItemChanged(selectedItemsIndices[index])
 		}
 
@@ -102,7 +101,8 @@ abstract class SelectorListAdapter<VB : ViewBinding, ItemT : Any>(
 			if (!isSelectionRequired || (!isSingleSelection && areThereAnyOtherSelectedItem)) {
 				unselectItem(item)
 			}
-		} else {
+		}
+		else {
 			selectItem(item)
 		}
 	}
@@ -116,7 +116,18 @@ abstract class SelectorListAdapter<VB : ViewBinding, ItemT : Any>(
 			selectItem(firstItem)
 		}
 		if (currentList.isEmpty()) {
-			unselectAllItems()
+			clearSelection()
 		}
 	}
+}
+
+
+fun <T : Any> SelectorListAdapter<*, T>.selectItemIf(condition: (T) -> Boolean) {
+	val item = currentList.firstOrNull(condition) ?: return
+	selectItem(item)
+}
+
+fun <T : Any> SelectorListAdapter<*, T>.unselectItemIf(condition: (T) -> Boolean) {
+	val item = currentList.firstOrNull(condition) ?: return
+	unselectItem(item)
 }
